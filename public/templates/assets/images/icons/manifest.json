@@ -2,7 +2,7 @@
  "name": "PSIS Mobile App",
  "short_name": "PSIS",
  "lang": "en-US",
- "start_url": "/zStudentApp/public/",
+ "start_url": "/camappgit/studentapp/public/",
  "background_color": "#ffffff",
  "theme_color": "#37474F",
  "display": "standalone",

@@ -245,6 +245,7 @@ START PAGE VIEW TITLE
 =======================*/
 .blog-page-title {
 	position:relative;
+	min-height: 100px !important;
 }
 h5.sec-page-tit {
     color: #fff;
@@ -274,9 +275,30 @@ span.sec-page-desc {
 END PAGE VIEW TITLE
 =======================*/
 
+.main-page-list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: block;
+}
 /*====================
 START SCORE LIST VIEW
 =======================*/
+.bl-schedule-list-row,
+.bl-attedance-list-row,
+.bl-score-list-row {
+    padding: 10px 0;
+}
+.bl-score-list-row {
+    background: #fff;
+    opacity: 0.9;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -40px;
+    z-index: -1;
+}
 .score-list-info {
     background: #ffffff;
     opacity: 0.8;
@@ -329,7 +351,7 @@ START SCORE LIST VIEW
 }
 #listRecord .blg-score-left:before,
 #listRecord .blg-score-left:after{
-	background: #f6f7f9;
+	background: #ffffff;
 	position: absolute;
 	right: -15px;
 }

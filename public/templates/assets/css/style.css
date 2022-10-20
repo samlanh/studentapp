@@ -210,19 +210,12 @@ body .bgBody {
     z-index: -1;
 }
 body .bgBody-listview{
-	width: 100%;
-    height: 30%;
-    min-height: 30%;
-    min-width: 100%;
-    max-height: 30%;
-    max-width: 100%;
-    position: absolute;
-    top: 0px;
-    left: auto;
-    z-index: 0;
+	top: 0px;
+	left: auto;
 	background: #056e76;
 	border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+	border-bottom-right-radius: 50px;
+	padding-top: 55px;
 }
 body .bgBody-listview.gradientBlue {
     background-image: linear-gradient(to right bottom, #056e76, #2b9fb6);
@@ -1319,7 +1312,7 @@ nav .nav-wrapper{
 
 nav.navigation{
   /* background-color: #095988; */
-  position: relative;
+  position: absolute;
 }
 
 
