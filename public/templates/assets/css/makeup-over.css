@@ -552,7 +552,7 @@ START SCHDEULE LIST VIEW
 
 span.schedule-info strong.mark-title {
     color: #0b7681;
-    font-weight: normal;
+    display: block;
 }
 span.time-schedule {
     font-size: 18px;
@@ -581,7 +581,7 @@ h2.subject-title {
 span.schedule-info {
     display: block;
     font-size: 14px;
-    line-height: 18px;
+    line-height: 24px;
     color: #626262;
     padding: 5px 0;
 }
