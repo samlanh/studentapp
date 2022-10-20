@@ -514,12 +514,12 @@ START SCHDEULE LIST VIEW
     margin-bottom: 10px;
 }
 .row.schedule-row .blg-schedule-left, .row.schedule-row  .blg-schedule-right {
-    min-height: 95px;
+    min-height: 120px;
 }
 .row.schedule-row .blg-schedule-left {
     text-align: center;
     position: relative;
-    padding: 15px;
+    padding: 25px;
     background: #2395a9;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
@@ -552,7 +552,6 @@ START SCHDEULE LIST VIEW
 
 span.schedule-info strong.mark-title {
     color: #0b7681;
-    display: block;
 }
 span.time-schedule {
     font-size: 18px;
@@ -581,9 +580,19 @@ h2.subject-title {
 span.schedule-info {
     display: block;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 22px;
     color: #626262;
     padding: 5px 0;
+}
+span.schedule-info.teacher-name {
+    line-height: 16px;
+}
+span.schedule-info.teacher-name:before {
+    content: '(';
+}
+
+span.schedule-info.teacher-name:after {
+    content: ')';
 }
 /*====================
 END SCHDEULE LIST VIEW
