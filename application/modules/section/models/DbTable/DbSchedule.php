@@ -16,8 +16,11 @@
 		$degree = "rms_items.title_en";
 		$branchName = "branch_nameen";
 		$subjectTitle = "subject_titleen";
-			
+		$teacherName = "teacher_name_en";
+		$timeTitle = "title_en";
 	   	if($lang==1){// khmer
+	   		$timeTitle = "title";
+	   		$teacherName = "teacher_name_kh";
 	   		$subjectTitle = "subject_titlekh";
 	   		$branchName = "branch_namekh";
 	   		$label = "name_kh";
@@ -30,11 +33,13 @@
 			(SELECT sj.subject_titlekh FROM `rms_subject` AS sj WHERE sj.id = schDetail.subject_id LIMIT 1) AS subjectTitleKh
 			,(SELECT sj.subject_titleen FROM `rms_subject` AS sj WHERE sj.id = schDetail.subject_id LIMIT 1) AS subjectTitleEng
 			,(SELECT sj.".$subjectTitle." FROM `rms_subject` AS sj WHERE sj.id = schDetail.subject_id LIMIT 1) AS subjectTitle
+			,(SELECT te.$teacherName FROM rms_teacher AS te WHERE te.id = schDetail.techer_id LIMIT 1 ) AS teaccherName
 			,(SELECT te.teacher_name_kh FROM rms_teacher AS te WHERE te.id = schDetail.techer_id LIMIT 1 ) AS teaccherNameKh
 			,(SELECT te.teacher_name_en FROM rms_teacher AS te WHERE te.id = schDetail.techer_id LIMIT 1 ) AS teaccherNameEng
+			,(SELECT $label FROM rms_view WHERE rms_view.key_code=schDetail.day_id AND rms_view.type=18 LIMIT 1)AS dayTitle
 			,(SELECT name_kh FROM rms_view WHERE rms_view.key_code=schDetail.day_id AND rms_view.type=18 LIMIT 1)AS daysKh
-			,(SELECT t.title FROM rms_timeseting AS t WHERE t.value =schDetail.from_hour LIMIT 1) AS fromHourTitle
-			,(SELECT t.title FROM rms_timeseting AS t WHERE t.value =schDetail.to_hour LIMIT 1) AS toHourTitle
+			,(SELECT t.$timeTitle FROM rms_timeseting AS t WHERE t.value =schDetail.from_hour LIMIT 1) AS fromHourTitle
+			,(SELECT t.$timeTitle FROM rms_timeseting AS t WHERE t.value =schDetail.to_hour LIMIT 1) AS toHourTitle
 			
 			,(SELECT b.".$branchName." FROM rms_branch as b WHERE b.br_id=g.branch_id LIMIT 1) AS branchName
 			,(SELECT br.branch_namekh FROM `rms_branch` AS br  WHERE br.br_id = g.branch_id LIMIT 1) AS branchNameKh
@@ -74,7 +79,6 @@
 		if(!empty($search['degree'])){
 			$sql.=" AND g.degree=".$search['degree'];
 		}
-		
 		$sql.=" ORDER BY schDetail.day_id ASC ,schDetail.from_hour ASC ";
 		return $db->fetchAll($sql);
 	}

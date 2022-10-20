@@ -14,7 +14,11 @@ class Section_ScheduleController extends Zend_Controller_Action
     {
     	
 		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$this->view->slide  =$dbGb->getMobileSliding();
+
+		
+		$dbSch = new Section_Model_DbTable_DbSchedule();
+		$arrFilter = array();
+		$this->view->row  =$dbSch->getStudentSchedule($arrFilter);
     }
 
    
