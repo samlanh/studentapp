@@ -54,15 +54,13 @@
 							</div>
 							<div class="col s8 blg-schedule-right">
 								<h2 class="subject-title"><?php echo $schedule['subjectTitle']; ?></h2>
+								<span class="schedule-info teacher-name"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $schedule['teaccherName']; ?></strong></span>
 								<div class="row mrg-0">
-									<div class="col s4">
+									<div class="col s6">
 										<span class="schedule-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $schedule['groupCode']; ?></strong></span>
 									</div>
-									<div class="col s4">
+									<div class="col s6">
 										<span class="schedule-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $schedule['roomName']; ?></strong></span>
-									</div>
-									<div class="col s4">
-										<span class="schedule-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $schedule['teaccherName']; ?></strong></span>
 									</div>
 								</div>
 							</div>
