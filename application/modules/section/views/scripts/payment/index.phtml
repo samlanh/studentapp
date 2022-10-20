@@ -1,0 +1,255 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("PAYMENT"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgBody-listview gradientYellow"></div>
+<div class="bgpayment-list-info "></div>
+<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-cash-multiple "></i>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("PAYMENT"); ?>
+					</h5>
+					<span class="sec-page-desc">
+						<?php echo $tr->translate("PAYMENT_PAGE_DESC"); ?>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="spacer-small"></div>
+<div class="spacer-medium"></div>
+<div id="listRecord" class="payment-list-info ">
+	<?php $stickyBlog=""; if(!empty($this->row)){ foreach($this->row AS $payment){?>
+	<?php if($stickyBlog!=date("mY",strtotime($payment['paymentDate']))){?>
+	<div class="stickyBlog">
+		<div class="stickyTitle">
+			<?php echo date("M-Y",strtotime($payment['paymentDate'])); ?>
+		</div>
+	</div>
+	<?php } $stickyBlog =date("mY",strtotime($payment['paymentDate'])); ?>
+	<div class="container">
+		<div class="ui-grids payment_list-row">
+			<div class="row mrg-0">
+				<div class="col s7 blg-payment-left">
+					<h3 class="title-payment"><?php echo $tr->translate("RECEIPT_NO"); ?> <strong class="mark-title"><?php echo $payment['receiptNo']; ?></strong> </h3>
+					<span class="payment-info"><?php echo $tr->translate("PMT_DATE"); ?> <strong class="mark-title"><?php echo date("d-M-Y",strtotime($payment['paymentDate'])); ?></strong></span>
+					<span class="payment-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $payment['groupCode']; ?></strong></span>
+					<span class="payment-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $payment['academicYear']; ?></strong></span>
+					<span class="payment-info"><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $payment['userName']; ?></strong></span>
+				</div>
+				<div class="col s5 blg-payment-right">
+					<h2 class="amount">$ <?php echo number_format($payment['paid_amount'],2); ?></h2>
+					<span class="payment-info"><?php echo $tr->translate("PMT_METHOD"); ?> <strong class="mark-title"><?php echo $payment['paymentMethod']; ?></strong></span>
+					<?php if($payment['payment_method']!=1){?>
+					<span class="payment-info"> <strong class="mark-title"><?php echo $payment['methodSerialNumber']; ?></strong></span>
+					<?php } ?>
+					<?php if($payment['is_void']==1){?>
+					<span class="payment-info"> <strong class="mark-title"><?php echo $payment['voidTitle']; ?></strong></span>
+					<?php } ?>
+					<div class="spacer-small"></div>
+					<div class="spacer-small"></div>
+					<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/payment/detail/id/".$payment['id'];?>">
+						<?php echo $tr->translate("MORE_DETAIL"); ?>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+	<?php }else{ ?>
+	<div class="ui-grids empty-data">
+		<div class="row mrg-0">
+			<div class="col s12 ">
+				<h3 class="title-empty"><?php echo $tr->translate("EMPTY_RECORD"); ?></h3>
+			</div>
+		</div>
+		
+	</div>
+	<?php } ?>	
+</div>
+
+<?php if(!empty($this->row)){?>
+<div class="ui-grids ">
+	<div class="row mrg-0">
+		<div class="col s12 center " >
+			<p id="totalRecord" class="total-record"><?php echo count($this->row)."/".$this->allRow; ?></p>
+			<h3 class="title-empty recordMessage"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
+		</div>
+	</div>
+	<div class="row mrg-0">
+		<div class="col s12 center valign-wrapper" style="height: 100px;">
+			<div id="preLoadRecord" class="preloader-wrapper small ">
+				<div class="spinner-layer spinner-blue">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-red">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-yellow">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-green">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+<?php } ?>	
+<div class="spacer-xlarge"></div>
+<!-- Modal Structure -->
+	<div id="modalFilter" class="modal top-sheet white dark-text">
+        <div class="modal-content">
+				<div class="container">
+					<div class="section ui-select">
+						<div class="row ">
+							<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
+								<div class="row">
+									<div class="input-field col s12">
+									  <select class="smallHeight">
+										<option value="" disabled ><?php echo $tr->translate("CHOOSE_ACACDEMIC_YEAR"); ?></option>
+										<option value="1" selected>Option 1</option>
+										<option value="2">Option 2</option>
+										<option value="3">Option 3</option>
+										<option value="4">Option 4</option>
+										<option value="5">Option 5</option>
+										<option value="6">Option 6</option>
+										<option value="7">Option 7</option>
+										
+									  </select>
+									  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+									  <select class="smallHeight">
+										<option value="" disabled ><?php echo $tr->translate("CHOOSE_DEGREE"); ?></option>
+										<option value="1" selected>Option 1</option>
+										<option value="2">Option 2</option>
+										<option value="3">Option 3</option>
+										<option value="4">Option 4</option>
+										<option value="5">Option 5</option>
+										<option value="6">Option 6</option>
+										<option value="7">Option 7</option>
+										
+									  </select>
+									  <label><?php echo $tr->translate("DEGREE"); ?></label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+
+	<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+   $("select").formSelect();  
+   <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+	<?php if(!empty($this->row)){?>
+		var allRecord ='<?php echo $this->allRow; ?>';
+		var stickyValue ='<?php echo $stickyBlog; ?>';
+		var trackPage = 1;
+		var check = 1;
+   
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+			   if(check==1){
+				   loadContents();
+				}
+		   }
+		});
+	
+		function loadContents(){
+			check=0;
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/payment/morerecord'?>';
+			$("#preLoadRecord").addClass("active");
+			$.ajax({
+				url:urlMoreRow,
+				type: "post",
+				data: {
+					'page':trackPage
+					,'stickyValue':stickyValue
+				},
+				dataType: "json",
+				success: function(data){
+					
+					trackPage = data.trackPage;
+					if(trackPage>allRecord){
+					   trackPage = allRecord;
+					   $('.recordMessage').html('');
+						
+					}else{
+						$('.recordMessage').html('<?php echo $tr->translate("SCROLL_FOR_MORE_DATA");?>');
+						setTimeout(function () {
+							check = 1;
+						}, 1000);
+					}
+					setTimeout(function () {
+						$('#totalRecord').html(trackPage+' /'+allRecord);
+						$("#listRecord").append(data.htmlRecord);
+						stickyValue = data.stickyValue;
+						$("#preLoadRecord").removeClass("active");
+					}, 500);
+					
+				  
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+		}
+	<?php } ?>
+</script>
+

@@ -1,0 +1,70 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("ABOUTS"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	$contact = $this->contact;
+	
+	$contact['latitude'] = empty($contact['latitude'])?"11.594111046749918":$contact['latitude'];
+	$contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact['latitude'];
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="container">
+    <div class="section">
+		<h5 class="pagetitle"><?php echo $tr->translate("ADDRESS");?></h5>
+		<p><?PHP  echo $contact['description']; ?></p>
+		<div class="divider"></div>
+    </div>
+</div>	
+<div class="container">
+    <div class="section">
+      <div class="map-wrap">
+			<iframe 
+			  width="300" 
+			  height="170" 
+			  frameborder="0" 
+			  scrolling="no" 
+			  marginheight="0" 
+			  marginwidth="0" 
+			  src="https://maps.google.com/maps?q=<?PHP  echo $contact['latitude']; ?>,<?PHP  echo $contact['longitude']; ?>&hl=kh&z=14&amp;output=embed"
+			 >
+			</iframe>
+		</div>
+		
+		<div class="divider"></div>
+		<div class="row contacting">
+			<div class="col s12 pad-0">
+				<h5 class="bot-20 sec-tit  "><?php echo $tr->translate("CONTACT");?></h5>    
+				<div>
+					<?php echo $tr->translate("PHONE");?>: <?PHP  echo $contact['phone']; ?>
+					<br/>                                  
+					<?php echo $tr->translate("EMAIL");?>: <?PHP  echo $contact['email']; ?>
+				</div>
+				<ul class="social-wrap">
+					<li class="social">
+					<?php if(!empty($contact['facebook'])){?>
+					  <a class="facebook" href="<?PHP  echo $contact['facebook']; ?>"><i class="mdi mdi-facebook"></i></a>
+					<?php } ?>
+					<?php if(!empty($contact['youtube'])){?>
+					  <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
+					<?php } ?>
+					<?php if(!empty($contact['instagram'])){?>
+					  <a class="instagram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-instagram"></i></a>
+					<?php } ?>
+					<?php if(!empty($contact['other_social'])){?>
+					  <a class="telegram" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-telegram"></i></a>
+					<?php } ?>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+    </div>
+</div>
+<div class="spacer-xlarge"></div>
+
+

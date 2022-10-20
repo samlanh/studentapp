@@ -1,0 +1,27 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("ABOUTS"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>	
+ <div class="container">
+	<div class="section">
+		<div class="row">
+			<div class="spacer"></div>
+			<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+			
+			<div class="text description"><?php echo $aboutUs['description']; ?></div>
+		</div>
+	</div>
+</div>
+<?php } }?>
+<div class="spacer-xlarge"></div>
+
+

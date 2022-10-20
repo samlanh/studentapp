@@ -1,0 +1,202 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("SCORE"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentlang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-listview gradientBlue"></div>
+<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-file-check "></i>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("SCORE"); ?>
+					</h5>
+					<span class="sec-page-desc">
+						<?php echo $tr->translate("SCORE_PAGE_DESC"); ?>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="spacer-small"></div>
+<div class="spacer-small"></div>
+<div  class="bl-score-list-row ">
+	<div class="container">
+		<div class="row mrg-0">
+			<div id="listRecord" class="col s12 pad-0">
+				<?php if(!empty($this->row)){ foreach($this->row AS $score){?>
+				
+				<?php 
+					$rank = $score['rank']; 
+					$forMonthTitle = $score['forMonthTitle']; 
+					if($currentlang==1){
+						$rank = $dbGb->getNumberInkhmer($rank);
+						$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+					}
+				?>
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s8 blg-score-left">
+							<h3 class="title-score"><?php echo $score['forTypeTitle']; ?> <strong class="mark-title"><?php echo $forMonthTitle; ?></strong> </h3>
+							<span class="score-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $score['groupCode']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $score['academicYearTitle']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $score['teacherName']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AMT_STUDENT"); ?> <strong class="mark-title"><?php echo sprintf('%02d',$score['amountStudent'])." ".$tr->translate("STU_UNIT"); ?></strong></span>
+							</div>
+						<div class="col s4 blg-score-right">
+							<h2 class="ranking"><?php echo $rank; ?></h2>
+							<span class="score-info"><?php echo $tr->translate("TOTAL_SCORE"); ?> <strong class="mark-title"><?php echo $score['totalScore']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $score['totalAvg']; ?></strong></span>
+							<div class="spacer-small"></div>
+							<div class="spacer-small"></div>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/score/detail/id/".$score['id'];?>">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
+				
+				
+				
+				
+			</div>
+		</div>
+	</div>
+</div>
+<?php if(count($this->row)<$this->allRow){ ?>
+<div class="ui-grids bl-score-list-row">
+	<div class="row mrg-0">
+		<div class="col s12 center " >
+			<p id="totalRecord" class="total-record"><?php echo count($this->row)."/".$this->allRow; ?></p>
+			<h3 class="title-empty recordMessage"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
+		</div>
+	</div>
+	<div class="row mrg-0">
+		<div class="col s12 center valign-wrapper" style="height: 100px;">
+			<div id="preLoadRecord" class="preloader-wrapper small ">
+				<div class="spinner-layer spinner-blue">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-red">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-yellow">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-green">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<?php } ?>
+<div class="spacer-xlarge"></div>
+<script type="text/javascript">
+	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
+		var allRecord ='<?php echo $this->allRow; ?>';
+		
+		var trackPage = 1;
+		var check = 1;
+   
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+			   if(check==1){
+				  loadContents();
+				}
+		   }
+		});
+
+		function loadContents(){
+			check=0;
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/score/morerecord'?>';
+			$("#preLoadRecord").addClass("active");
+			$.ajax({
+				url:urlMoreRow,
+				type: "post",
+				data: {
+					'page':trackPage
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					trackPage = data.trackPage;
+					if(trackPage>allRecord){
+					   trackPage = allRecord;
+					   $('.recordMessage').html('');
+						
+					}else{
+						$('.recordMessage').html('<?php echo $tr->translate("SCROLL_FOR_MORE_DATA");?>');
+						setTimeout(function () {
+							check = 1;
+						}, 1000);
+					}
+					setTimeout(function () {
+						$('#totalRecord').html(trackPage+' /'+allRecord);
+						$("#listRecord").append(data.htmlRecord);
+						$("#preLoadRecord").removeClass("active");
+					}, 500);
+					
+				  
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+		}
+	<?php } ?>
+	<?php } ?>
+</script>
+

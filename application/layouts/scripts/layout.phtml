@@ -1,0 +1,245 @@
+<?php 
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$action=$request->getActionName();
+	$controller=$request->getControllerName();
+	$module=$request->getModuleName();
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	
+	$key = new Application_Model_DbTable_DbKeycode();
+	$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+		
+	$clientTitle= $tr->translate("CUSTOMER_BRANCH");
+	if(!empty($dataInfo['schooolNameKh'])){
+		$clientTitle= $dataInfo['schooolNameKh'];
+	}
+	$clientTitleEn="";
+	if(!empty($dataInfo['schooolNameEng'])){
+		$clientTitleEn= $dataInfo['schooolNameEng'];
+	}
+	$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+	if(!empty($dataInfo['logo'])){
+		if (file_exists(PUBLIC_PATH."/images/logo/".$dataInfo['logo'])){
+			$defaultLogo = $this->baseUrl().'/images/logo/'.$dataInfo['logo'];
+		}
+	}
+	if($module!="default"){
+		$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+    	$stuID = $sessionStudent->stuID;
+		
+    	if (empty($stuID)){
+    		Application_Form_FrmMessage::redirectUrl("/");
+    	}
+	}
+ ?>
+
+<!DOCTYPE html>
+<html class=" ">
+    <head>
+		
+        <!-- 
+         * @Package: <?php echo $clientTitleEn; ?> mobile App
+         * @Author: <?php echo $clientTitle; ?>
+         * @Version: 1.0
+        -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+        <meta content="<?php echo $clientTitleEn; ?> Mobile App" name="description" />
+        <meta content="<?php echo $clientTitle; ?>" name="author" />
+		
+
+		<!-- App Icons -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="<?php echo $clientTitleEn; ?> Mobile App">
+	
+		<link rel="apple-touch-icon" sizes="57x57" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-57x57.png"; ?>?m=<?php //echo filemtime(PUBLIC_PATH."templates/assets/images/icons/apple-icon-57x57.png"); ?>">
+		<link rel="apple-touch-icon" sizes="60x60" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-60x60.png"; ?>">
+		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-72x72.png"; ?>">
+		<link rel="apple-touch-icon" sizes="76x76" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-76x76.png"; ?>">
+		<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-114x114.png "; ?>">
+		<link rel="apple-touch-icon" sizes="120x120" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-120x120.png "; ?>">
+		<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-144x144.png "; ?>">
+		<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-152x152.png "; ?>">
+		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $baseUrl."templates/assets/images/icons/apple-icon-180x180.png "; ?>">
+		
+		<link rel="icon" type="image/png" sizes="192x192" href="<?php echo $baseUrl."templates/"; ?>assets/images/icons/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $baseUrl."templates/"; ?>assets/images/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $baseUrl."templates/"; ?>assets/images/icons/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $baseUrl."templates/"; ?>assets/images/icons/favicon-16x16.png">
+		<link rel="manifest" href="<?php echo $baseUrl."templates/"; ?>assets/images/icons/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="<?php echo $baseUrl."templates/"; ?>assets/images/icons/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+        <!-- CORE CSS FRAMEWORK - START -->
+        <link href="<?php echo $baseUrl."templates/"; ?>assets/css/preloader.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+        <link href="<?php echo $baseUrl."templates/"; ?>assets/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="<?php echo $baseUrl."templates/"; ?>assets/fonts/mdi/materialdesignicons.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="<?php echo $baseUrl."templates/"; ?>assets/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+        <!-- CORE CSS FRAMEWORK - END -->
+
+        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+                <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+
+        <!-- CORE CSS TEMPLATE - START -->
+
+        
+        <link href="<?php echo $baseUrl."templates/"; ?>assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" id="main-style"/>
+        <!-- CORE CSS TEMPLATE - END -->
+		
+		 <!-- Makeup CSS TEMPLATE - START -->
+		<link href="<?php echo $baseUrl."templates/"; ?>assets/css/makeup-over.css" type="text/css" rel="stylesheet" media="screen,projection" id="main-style"/>
+        <!-- Makeup CSS TEMPLATE - END -->
+		
+		
+		<!-- CORE JS FRAMEWORK - START --> 
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/js/jquery-2.2.4.min.js"></script>
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/js/materialize.js"></script>
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script> 
+		<!-- CORE JS FRAMEWORK - END --> 
+
+    </head>
+    <!-- END HEAD -->
+	
+	
+    <!-- BEGIN BODY -->
+
+    
+    <body class=" bgBody  <?php if($module=="default"){ echo "ishome  isfullscreen  ";};?> html"  data-header="light" data-footer="dark"  data-header_align="center"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light" >
+			<div class="preloader-background">
+				<div class="preloader-wrapper">
+					<div id="preloader"></div>
+				</div>
+			</div>
+		<?php 
+			if($module!="default"){
+				echo $this->render('navigation.phtml');
+			}
+		?>
+	<?php 
+		echo $this->layout()->content;
+	 ?>		
+	<?php 
+			if($module!="default"){
+				
+	?>
+	<div class="footer-menu">
+		<ul>
+			
+			<li>
+				<a href="<?php echo $this->baseUrl()."/home/index"?>" >          
+					<i class="mdi mdi-newspaper"></i>
+					<span><?php echo $tr->translate("NEWS"); ?></span>
+				</a>        
+			</li>
+			<li>
+				<a href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
+					<i class="mdi mdi-home-outline"></i>
+					<span><?php echo $tr->translate("HOME"); ?></span>
+				</a>        
+			</li>
+			
+			<li>
+				<a data-target="slide-nav" href="#" class="sidenav-trigger">          
+					<i class="mdi mdi-menu"></i>
+					<span><?php echo $tr->translate("MORE"); ?></span>
+				</a>        
+			</li>
+      </ul>
+    </div>
+<?php 
+			}
+				
+	?>
+
+
+		<!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+		
+
+
+		
+		<script type="text/javascript">
+			var url_changelang = '<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'changelange'));?> ';
+			function changeLange(lang){
+				$('.preloader-background').delay(10).fadeOut('slow');
+				jQuery.ajax({
+					url: url_changelang,
+					type: "post",
+					data:{'lange':lang},
+					success: function(data){
+						location.reload();
+					},
+					error:function(err){
+						
+					}
+				});
+			}
+			<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
+			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+			$(document).ready(function(){
+
+			 <!-- $(".carousel-fullscreen.carousel-slider").carousel({--> 
+				<!--fullWidth: true,--> 
+				<!--indicators: true,--> 
+			  <!--}).css("height", $(window).height());--> 
+			  
+			  
+			  $(".carousel-fullscreen.carousel-slider").carousel({
+					fullWidth: true,
+					indicators: false,
+					
+				}).css("height", 200);
+		
+			
+			  setTimeout(autoplay, 3500);
+			  function autoplay() {
+				  $(".carousel-fullscreen.carousel-slider").carousel("next");
+				  setTimeout(autoplay, 3500);
+			  }
+
+			});   
+		  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+		  <?php } ?>
+		  <?php if($module=="home" AND $controller=="index" AND $action=="index"){ ?>
+			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+			 $(".slider3").slider({
+					height: 200,
+				});
+			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+		  <?php } ?>
+		 </script>
+	
+
+
+	<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+	<script type="text/javascript">
+         $(".modal").modal();
+    </script>
+	<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+		<!-- CORE TEMPLATE JS - START --> 
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/js/init.js"></script>
+
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/js/scripts.js"></script>
+
+		<!-- END CORE TEMPLATE JS - END --> 
+
+
+		<script type="text/javascript">
+		  document.addEventListener("DOMContentLoaded", function(){
+			$('.preloader-background').delay(10).fadeOut('slow');
+		  });
+		  
+		</script>
+	</body>
+</html>	 

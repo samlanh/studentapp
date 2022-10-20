@@ -1,0 +1,167 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("DASHBOARD"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentlang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
+?>
+<div class="bgBody"></div>	
+<div class="carousel carousel-content carousel-slider center home-carousel">
+	<?php if(!empty($this->slide)) foreach($this->slide AS $key => $slide ){?>
+		<?php 	if(!empty($slide['images'])){ 
+					$slideImg = $systemLink.'/images/slide/'.$slide['images'];
+					if ($dbGb->does_url_exists($slideImg)){ 
+					 
+					?>
+	<div class="carousel-item primary-bg white-text" style="background-image: url('<?php echo $slideImg; ?>')" href="#<?php echo $key; ?>!">
+		<div class="item-content">
+		</div>
+	</div>
+	<?php 			}
+				} 
+		} 
+	?>
+</div>
+
+<div class="boxDashboard">
+	<div class="container">
+		<div class="section">
+			<div class="row mrg-0">
+				<div class="col s12 pad-0">
+					<div class="row settings-row">
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/payment";?>">
+									<div class="icon-block ">
+										<div class="center "><i class="mdi mdi-cash-multiple "></i></div>
+										<h6 class="center "><?php echo $tr->translate("PAYMENT"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/schedule";?>">
+									<div class="icon-block ">
+										<div class="center "><i class="mdi mdi-calendar-clock "></i></div>
+										<h6 class="center "><?php echo $tr->translate("SCHEDULE"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/attendance";?>">
+									<div class="icon-block ">
+										<div class="center "><i class="mdi mdi-account-multiple-check "></i></div>
+										<h6 class="center "><?php echo $tr->translate("ATTENDENCE"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/score";?>">
+									<div class="icon-block ">
+										<div class="center "><i class="mdi mdi-file-check "></i></div>
+										<h6 class="center "><?php echo $tr->translate("SCORE"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="#!">
+								<div class="icon-block ">
+									<div class="center "><i class="mdi mdi-medal "></i></div>
+									<h6 class="center "><?php echo $tr->translate("ENVALUATION"); ?></h6>
+								</div>
+							  </a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect" href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
+								<div class="icon-block ">
+									<div class="center "><i class="mdi mdi-information-outline "></i></div>
+									<h6 class="center "><?php echo $tr->translate("ABOUTS"); ?></h6>
+								</div>
+							  </a>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php if(!empty($this->rowScore)){  ?>
+<div class="home-list score-list-info ">
+	<div class="container">
+		<div class="row mrg-0">
+			<div class="col s12 pad-0">
+				<h5 class="bot-20 sec-tit  "><?php echo $tr->translate("LATEST_SCORE"); ?>
+				<!--
+				<a class="waves-effect waves-light btn btn-rounded lighten-2 view-all" href="#!">
+					<?php //echo $tr->translate("VIEW_ALL"); ?>
+				</a>
+				-->
+			</h5>
+				<?php foreach($this->rowScore AS $score){?>
+				
+				<?php 
+					$rank = $score['rank']; 
+					$forMonthTitle = $score['forMonthTitle']; 
+					if($currentlang==1){
+						$rank = $dbGb->getNumberInkhmer($rank);
+						$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+					}
+				?>
+				
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s8 blg-score-left">
+							<h3 class="title-score"><?php echo $score['forTypeTitle']; ?> <strong class="mark-title"><?php echo $forMonthTitle; ?></strong> </h3>
+							<span class="score-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $score['groupCode']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $score['academicYearTitle']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $score['teacherName']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AMT_STUDENT"); ?> <strong class="mark-title"><?php echo sprintf('%02d',$score['amountStudent'])." ".$tr->translate("STU_UNIT"); ?></strong></span>
+							</div>
+						<div class="col s4 blg-score-right">
+							<h2 class="ranking"><?php echo $rank; ?></h2>
+							<span class="score-info"><?php echo $tr->translate("TOTAL_SCORE"); ?> <strong class="mark-title"><?php echo $score['totalScore']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $score['totalAvg']; ?></strong></span>
+							<div class="spacer-small"></div>
+							<div class="spacer-small"></div>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/score/detail/id/".$score['id'];?>">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
+				<div class="spacer-xlarge"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<script type="text/javascript">
+  $(document).ready(function(){
+     
+
+     $(".carousel-content.carousel-slider").carousel({
+        fullWidth: true,
+        indicators: true
+      }).css("height", 200);
+
+      
+
+
+  });   </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+

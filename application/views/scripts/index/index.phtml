@@ -1,0 +1,313 @@
+<?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage(1);
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	
+	$key = new Application_Model_DbTable_DbKeycode();
+	$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentLang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
+	$clientTitle= $tr->translate("CUSTOMER_BRANCH");
+	if(!empty($dataInfo['schooolNameKh'])){
+		$clientTitle= $dataInfo['schooolNameKh'];
+	}
+	$clientTitleEn="";
+	if(!empty($dataInfo['schooolNameEng'])){
+		$clientTitleEn= $dataInfo['schooolNameEng'];
+	}
+	$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+	if(!empty($dataInfo['logo'])){
+		$logo = $systemLink.'/images/logo/'.$dataInfo['logo'];
+		if ($dbGb->does_url_exists($logo)){ 
+			$defaultLogo = $systemLink.'/images/logo/'.$dataInfo['logo'];
+		}
+	}
+	
+	$this->headTitle($clientTitle." / ".$clientTitleEn); 
+	echo $this->headTitle();
+	
+	
+
+
+$contact = $this->contact;
+?>
+<div class="bgBodyhome"></div>	
+<!-- START navigation -->
+<nav class=" preLogin topbar navigation" role="navigation">
+    <div class=" nav-wrapper container">
+      <a id="logo-container" href="<?php echo $this->baseUrl()."/index"?>" class=" brand-logo " >
+		<img class="logo-app" src="<?php echo $defaultLogo;?>" alt=""  />
+	  </a>
+	 
+
+	  <!-- Modal Structure -->
+      <div id="modalLanguage" class="modal bottom-sheet white dark-text">
+        <div class="modal-content">
+          <h4 class="text-center"><?php echo $tr->translate("CHOOSE_LANGUAGE"); ?></h4>
+			<div class="row ">
+                <div class="col s1 pad-0">
+				</div>
+                <div class="col s10 pad-0">
+				  <div class="collection langList">
+				  <?php 
+						$imgLangeCurrent ="";
+						if(!empty($this->allLang)) foreach($this->allLang AS $lang){ 
+							if(!empty($dataInfo['logo'])){
+								if (file_exists(PUBLIC_PATH."/images/".$lang['iconImage'])){
+									$imgLange = $this->baseUrl().'/images/'.$lang['iconImage'];
+									$iconCurrent="";
+									$current="";
+									if($currentLang==$lang['id']){
+										$imgLangeCurrent = $imgLange;
+										$iconCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
+										$current="";
+									}
+					  ?>
+					  <a onClick="changeLange(<?php echo $lang['id'];?>)" class="collection-item <?php echo $current;?>">
+						<img class="languageImage" src="<?php echo $imgLange;?>" alt=""  />
+						<?php echo $lang['title']." ".$iconCurrent; ?>
+						</a>
+					<?php }
+				} ?>
+		  <?php } ?>
+					
+					
+				  </div>
+				</div>
+				<div class="col s1 pad-0">
+				</div>
+			</div>
+        </div>
+      </div>
+      <a href="#modalLanguage" class="languageSwitch waves-effect waves-circle navicon right modal-trigger show-on-large pulse">
+		<?php ?>
+		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
+	  </a>
+
+      
+	  
+    </div>
+</nav>
+ <div class="col s12 pad-0">
+	<div class="index-carousel">
+	   <div class="carousel carousel-fullscreen carousel-slider">
+			<?php if(!empty($this->slide)) foreach($this->slide AS $key => $slide ){?>
+			<?php if(!empty($slide['images'])){ 
+					$slideImg = $systemLink.'/images/slide/'.$slide['images'];
+					if ($dbGb->does_url_exists($slideImg)){ 
+					 
+					?>
+			<div class="carousel-item" href="#one<?php echo $key; ?>">
+				<div class="bg" style="background-image: url('<?php echo $slideImg; ?>')">
+				</div>
+				<div class="item-content center-align white-text">
+					  <div class="spacer-xlarge"></div>
+					   <!--
+					   <h3>ZAK is multi purpose Mobile App</h3>
+					  <h5 class="light white-text">The best mobile app template ever.</h5>
+					   -->
+				</div>
+			</div>
+			<?php }
+			} ?>
+			<?php } ?>
+			
+		</div>    
+	</div> 
+</div> 
+				
+<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>	
+ <div class="container">
+	<div class="section">
+		<div class="row">
+			<div class="spacer"></div>
+			<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+			
+			<div class="text description"><?php echo $aboutUs['description']; ?></div>
+		</div>
+	</div>
+</div>
+<?php } }?>
+<div class="container">
+	<div class="section">
+		<div class="row ">
+			<div class="col s12 pad-0">
+				<h5 class="bot-20 sec-tit center sectionTitle">ព័ត៌មានបន្ថែម</h5>                
+				<div class="row settings-row">
+					<div class="col s4 ">
+						<div class="setting-box preLogin primary-box center z-depth-1">
+							<a href="#!">
+							<h2 class="center"><i class="mdi mdi-newspaper "></i></h2>
+							<h6 class="center"><?php echo $tr->translate("NEWS_EVENT"); ?></h6>
+						  </a>
+					  </div>
+					</div>
+					<div class="col s4 ">
+						<div class="setting-box preLogin warnings-box center z-depth-1">
+							<a href="#!">
+							<h2 class="center "><i class="mdi mdi-clipboard-text "></i></h2>
+							<h6 class="center"><?php echo $tr->translate("PROGRAM_AND_FEE"); ?></h6>
+						  </a>
+					  </div>
+					</div>
+					<div class="col s4 ">
+						<div class="setting-box preLogin green-box center z-depth-1">
+							<a href="#!">
+								<h2 class="center "><i class="mdi mdi-map-marker-radius "></i></h2>
+								<h6 class="center"><?php echo $tr->translate("BRANCH"); ?></h6>
+						  </a>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="section">
+		<div class="row ">
+			<div class="col s12 pad-0">
+				<h5 class="bot-20 sec-tit center sectionTitle"><?php echo $tr->translate("INTERNATIONAL_COOPERATE"); ?></h5>
+			</div>
+		</div>
+		<div class="section">
+
+            <div class="row clients-row">
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-1.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-2.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-3.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-4.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-1.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-2.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-3.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+                <div class="col s6">
+                    <div class="client-box z-depth-1 center">
+                    <a href="#!">
+                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-4.png" alt="">
+                    </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+	
+	</div>
+</div>
+<div class="center index-start">
+	<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large bg-primary'>
+		<?php echo $tr->translate("Get Started"); ?>
+	</a>	
+</div>
+<footer class="page-footer">
+    <div class="container footer-content">
+      <div class="row">
+        <div class="">
+          <h5 class="logo"><?php echo $tr->translate("CONTACT_AND_ADDRESS"); ?></h5>
+        </div>
+        <div class="link-wrap">
+          <ul class="link-ul">
+            <li><a class="" href="#!"><i class="mdi mdi-phone"></i> <?PHP  echo $contact['phone']; ?></a></li>
+            <li><a class="" href="#!"><i class="mdi mdi-email"></i> <?PHP  echo $contact['email']; ?></a></li>
+            <li><a class="" href="#!"><i class="mdi mdi-map-marker"></i> <?PHP  echo strip_tags($contact['description']); ?></a></li>
+            </ul>
+            <ul class="social-wrap">
+            <li class="social">
+			<?php if(!empty($contact['facebook'])){?>
+              <a class="facebook" href="<?PHP  echo $contact['facebook']; ?>"><i class="mdi mdi-facebook"></i></a>
+			<?php } ?>
+			<?php if(!empty($contact['youtube'])){?>
+              <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
+			<?php } ?>
+			<?php if(!empty($contact['instagram'])){?>
+              <a class="instagram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-instagram"></i></a>
+			<?php } ?>
+			<?php if(!empty($contact['other_social'])){?>
+              <a class="telegram" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-telegram"></i></a>
+			<?php } ?>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      &copy; <?php echo $tr->translate("Developed By"); ?> <a class="" href="http://www.cam-app.com/"><?php echo $tr->translate("CAMAPP_TECHNOLOGY"); ?></a>
+      </div>
+    </div>
+</footer>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

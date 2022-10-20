@@ -1,0 +1,274 @@
+<?php 
+$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+
+$request=Zend_Controller_Front::getInstance()->getRequest();
+$action=$request->getActionName();
+$controller=$request->getControllerName();
+$module=$request->getModuleName();
+	
+$key = new Application_Model_DbTable_DbKeycode();
+$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+
+$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+if(!empty($dataInfo['logo'])){
+	if (file_exists(PUBLIC_PATH."/images/logo/".$dataInfo['logo'])){
+		$defaultLogo = $this->baseUrl().'/images/logo/'.$dataInfo['logo'];
+	}
+}
+
+$dbGb = new Application_Model_DbTable_DbGlobal();
+$allLang  =$dbGb->getAllLanguage();
+$currentLang = $dbGb->currentlang();
+$systemLink = $dbGb->systemLink();
+		
+$dbSt = new Application_Model_DbTable_DbStudentAuth();
+$student = $dbSt->getStudentInfo();
+$studenName = empty($student['stu_khname'])?"":$student['stu_khname'];
+if(empty($studenName)){
+	$studenName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
+}
+$studenLatinName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
+$stuCode = empty($student['stu_code'])?"":$student['stu_code'];
+
+$userProfile = $this->baseUrl().'/images/user.png';
+$thisImg = $systemLink.'/images/photo/'.$student['photo'];
+if(!empty($student['photo'])){
+	if ($dbGb->does_url_exists($thisImg)){
+		$userProfile = $thisImg;
+	}
+}
+?>
+
+  <!-- Modal Structure -->
+      <div id="modalLanguage" class="modal bottom-sheet white dark-text">
+        <div class="modal-content">
+          <h4 class="text-center"><?php echo $tr->translate("CHOOSE_LANGUAGE"); ?></h4>
+			<div class="row ">
+                <div class="col s1 pad-0">
+				</div>
+                <div class="col s10 pad-0">
+				  <div class="collection langList">
+				  <?php 
+						$imgLangeCurrent ="";
+						if(!empty($allLang)) foreach($allLang AS $lang){ 
+							if(!empty($dataInfo['logo'])){
+								if (file_exists(PUBLIC_PATH."/images/".$lang['iconImage'])){
+									$imgLange = $this->baseUrl().'/images/'.$lang['iconImage'];
+									$iconCurrent="";
+									$current="";
+									if($currentLang==$lang['id']){
+										$imgLangeCurrent = $imgLange;
+										$iconCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
+										$current="";
+									}
+					  ?>
+					  <a onClick="changeLange(<?php echo $lang['id'];?>)" class="collection-item <?php echo $current;?>">
+						<img class="languageImage" src="<?php echo $imgLange;?>" alt=""  />
+						<?php echo $lang['title']." ".$iconCurrent; ?>
+						</a>
+					<?php }
+				} ?>
+		  <?php } ?>
+					
+					
+				  </div>
+				</div>
+				<div class="col s1 pad-0">
+				</div>
+			</div>
+        </div>
+      </div>
+<?php 
+$homeNavClass="";
+$backButton='
+	<a href="#" data-target="" class="bgBtn waves-effect waves-circle navicon back-button htmlmode show-on-large "><i class="mdi mdi-chevron-left" data-page=""></i></a>
+		';
+$profileButton="";
+if($module=="home" AND $controller=="index" AND $action=="index"){
+	$homeNavClass="dashboard";
+	$backButton="";
+	
+	$profileButton='
+	<a href="#" data-target="slide-nav" class="bgBtn waves-effect waves-circle navicon sidenav-trigger show-on-large"><i class="mdi mdi-menu"></i></a>
+	';
+}
+?>	  
+<!-- START navigation -->
+<nav class="bgTransparent <?php echo $homeNavClass;?> topbar navigation" role="navigation">
+    <div class="nav-wrapper container">
+		<!--
+		<a id="logo-container" href="<?php echo $this->baseUrl()."/home"?>" class=" brand-logo " >
+			<img class="logo-app" src="<?php echo $defaultLogo;?>" alt=""  />
+		</a>
+		-->
+      
+       <?php echo $backButton;?> 
+		<?php echo $profileButton;?>
+
+    <?php if($module=="home" AND $controller=="index" AND $action=="index"){ ?>  
+      <a href="#modalLanguage" class="languageSwitch waves-effect waves-circle navicon right modal-trigger show-on-large pulse">
+		<?php ?>
+		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
+	  </a>
+	<?php } ?> 
+	<?php if($module=="section" ){ ?>  
+	<a href="#modalFilter" title="<?php echo $tr->translate("FILTER"); ?>" class="bgBtn waves-effect waves-circle navicon right modal-trigger show-on-large"><i class="mdi mdi-filter-outline"></i></a>
+	<?php } ?> 
+    </div>
+  </nav>
+	<ul id="slide-nav" class="sidenav sidemenu">
+		<li class="menu-close">
+			<i class="mdi mdi-close"></i>
+		</li>
+		<li class="user-wrap">
+			<div class="user-view row">
+				<div class="col s3 imgarea">
+					<a href="#user"><img class="circle" src="<?php echo $userProfile;?>"></a>
+				</div>
+				<div class="col s9 infoarea">
+					<a href="#name"><span class="name"><?php echo $studenName;?></span></a>
+					<a href="#email"><span class="email"><?php echo $stuCode;?></span></a>
+				</div>
+			</div>
+		</li>
+
+		<li class="menulinks">
+			<ul class="collapsible">
+			<!-- SIDEBAR - START -->
+
+				<!-- MAIN MENU - START -->
+				<li class="sh-wrap">
+					<div class="subheader">Navigation</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="<?php echo $this->baseUrl()."/home"?>">
+							<i class="mdi mdi-home-outline"></i>
+							<span class="title"><?php echo $tr->translate("WELCOME"); ?></span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-apps.html">
+							<i class="mdi mdi-open-in-app"></i>
+							<span class="title">APPS</span><span class="badge blue-grey lighten-3 badge-rounded">NEW</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-uielements.html">
+							<i class="mdi mdi-laptop"></i>
+							<span class="title">UI Elements</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-utilities-components.html">
+							<i class="mdi mdi-flask-outline"></i>
+							<span class="title">Components</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-forms.html">
+							<i class="mdi mdi-textbox"></i>
+							<span class="title">Forms</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-charts.html">
+							<i class="mdi mdi-chart-line"></i>
+							<span class="title">Charts</span><span class="badge blue-grey lighten-3 badge-rounded">HOT</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-pages.html">
+							<i class="mdi mdi-shape-outline"></i>
+							<span class="title">Pages</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="sub-access.html">
+							<i class="mdi mdi-access-point"></i>
+							<span class="title">Site Access</span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
+							<i class="mdi mdi-information-outline"></i>
+							<span class="title"><?php echo $tr->translate("ABOUTS"); ?></span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a href="<?php echo $this->baseUrl()."/utility/contactus";?>">
+							<i class="mdi mdi-contacts"></i>
+							<span class="title"><?php echo $tr->translate("CONTACT_US"); ?></span>
+						</a>
+					</div>
+				</li>
+				<li class="sep-wrap">
+					<div class="divider"></div>
+				</li>
+				<li class="sh-wrap">
+					<div class="subheader">Reach Us</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class="waves-effect ">
+                        <a href="tel:+1 234 567 890">
+                        <i class="mdi mdi-cellphone-basic"></i>
+                        <span class="title">Phone</span>  </a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class="waves-effect ">
+                        <a href="mailto:email@example.com">
+                        <i class="mdi mdi-email-outline"></i>
+                        <span class="title">Email</span>  </a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class="waves-effect ">
+                        <a href="sms:+1 234 567 890">
+                        <i class="mdi mdi-message-text-outline"></i>
+                        <span class="title">Message</span>  </a>
+					</div>
+				</li>
+				<li class="sep-wrap">
+					<div class="divider"></div>
+				</li>
+				<li class="lvl1 ">
+					<div class="waves-effect ">
+						<a href="<?php echo $this->baseUrl()."/index/logout?value=1"?>" >
+							<i class="mdi mdi-settings-outline"></i><span class="title"><?php echo $tr->translate("LOGOUT"); ?></span>  
+						</a>
+					</div>
+				</li>
+            
+    <!-- MAIN MENU - END -->
+
+
+
+<!--  SIDEBAR - END -->
+      
+    </li>
+    </ul></li>
+      <li class="copy-spacer"></li><li class="copy-wrap"><div class="copyright">&copy; Copyright @ themepassion</div>
+
+    
+
+</ul>
+<!-- END navigation -->
