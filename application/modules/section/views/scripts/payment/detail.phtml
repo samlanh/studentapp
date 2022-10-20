@@ -1,0 +1,140 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentlang = $dbGb->currentlang();
+	
+	$row = $this->row;
+	$rowDetail = $this->rowDetail;
+	
+	$this->headTitle($tr->translate("RECEIPT_NO")." ".$row['receiptNo']);
+	echo $this->headTitle();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgBody-listview blueGrey"></div>
+<div class="bgWhite-for-list "></div>
+<div class="container">
+	<div class="section">
+		<div class="card-panel bg-white invoice-to receipt-info">
+			<h5 class="title-payment top-0">
+				<?php echo $row['schoolName']; ?>​
+				<small><?php echo $row['branchName']; ?>​</small>
+			</h5>
+			<div class="row mrg-0">
+				<div class="col s9 ">
+					<span class="payment-info "><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $row['groupCode']; ?></strong></span>
+					<span class="payment-info "><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $row['academicYear']; ?></strong></span>
+					<span class="payment-info "><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $row['userName']; ?></strong></span>
+				</div>
+				<div class="col s3 center">
+					<h3 class="title-payment "><strong class="mark-title"><?php echo $row['receiptNo']; ?></strong> </h3>
+					<span class="payment-info "><strong class="mark-title"><?php echo date("d-M-Y",strtotime($row['paymentDate'])); ?></strong></span>
+				</div>
+			</div>
+			
+			</div>
+	</div>
+</div>
+<?php if(!empty($rowDetail)){?>
+<div class="spacer-small"></div>
+<div class="items-info">
+	<div class="container">
+		<div class="items-row">
+			<?php $i=0; foreach($rowDetail AS $pmtDetail){ $i++; ?>
+			<?php 
+				$num = $i; 
+				$qty = $pmtDetail['qty']; 
+				if($currentlang==1){
+					$num = $dbGb->getNumberInkhmer($i);
+					$qty = $dbGb->getNumberInkhmer($qty);
+				}
+			?>
+			<div class="row mrg-0">
+				<div class="col s9 blg-items-row-left">
+					<h3 class="items-title">
+					<?php echo $num; ?>.) <?php echo $pmtDetail['itemsName']; ?>
+					</h3>
+					<div class="items-info-detial"><?php echo $qty; ?> <?php echo $pmtDetail['paymentTerm']; ?></div>
+					<?php if($pmtDetail['is_onepayment']==0){?>
+					<div class="items-info-detial"><?php echo $tr->translate("Validation"); ?> <?php echo date("d-M-Y",strtotime($pmtDetail['start_date'])); ?> - <?php echo date("d-M-Y",strtotime($pmtDetail['validate'])); ?></div>
+					<?php } ?>
+				</div>
+				<div class="col s3 blg-items-row-right">
+					<h2 class="amount"><?php echo number_format($pmtDetail['paidamount'],2); ?> $</h2>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<div class="spacer-medium"></div>
+
+<div class="total-info">
+	<div class="container">
+		<div class="total-row">
+			<div class="row mrg-0">
+				<div class="col s9 right-align">
+					<h3 class="total-title">
+						<?php echo $tr->translate("TOTAL_PAYMENT"); ?>
+					</h3>
+				</div>
+				<div class="col s3 right-align">
+					<h2 class="amount"><?php echo number_format($row['grand_total'],2); ?> $</h2>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s9 right-align">
+					<div class="total-info-detial">
+						<?php echo $tr->translate("CREDIT_MEMO"); ?>
+					</div>
+				</div>
+				<div class="col s3 right-align">
+					<h2 class="sub-amount"><?php echo number_format($row['credit_memo'],2); ?> $</h2>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s9 right-align">
+					<h3 class="total-title">
+						<?php echo $tr->translate("PAID_AMOUNT"); ?>
+					</h3>
+				</div>
+				<div class="col s3 right-align">
+					<h2 class="amount"><?php echo number_format($row['paid_amount'],2); ?> $</h2>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s9 right-align">
+					<div class="total-info-detial">
+						<?php echo $tr->translate("BALANCE"); ?>
+					</div>
+				</div>
+				<div class="col s3 right-align">
+					<h2 class="sub-amount"><?php echo number_format($row['balance_due'],2); ?> $</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="payment-list-info ">
+	<?php $stickyBlog=""; if(!empty($this->row)){ ?>
+				
+				
+	<?php }else{ ?>
+	<div class="ui-grids empty-data">
+		<div class="row mrg-0">
+			<div class="col s12 ">
+				<h3 class="title-empty"><?php echo $tr->translate("EMPTY_RECORD"); ?></h3>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+	<div class="spacer-xlarge"></div>
+</div>
+
+
+

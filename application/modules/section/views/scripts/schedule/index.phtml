@@ -1,0 +1,121 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("SCHEDULE"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-listview gradientBlue"></div>
+<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-calendar-clock "></i>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("SCHEDULE"); ?>
+					</h5>
+					<span class="sec-page-desc">
+						ចំណាត់ថ្នាក់ប្រចាំខែ និងប្រចាំឆមាស, ព្រឹត្តិប័ត្តពិន្ទុ, និងលិខិតផ្សេៗ...
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="spacer-small"></div>
+<div class="spacer-small"></div>
+<div class="bl-schedule-list-row ">
+	<div class="container">
+		<div class="row mrg-0">
+			<div class="col s12 pad-0">
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s9 blg-score-left">
+							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
+							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
+							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
+						</div>
+						<div class="col s3 blg-score-right">
+							<h2 class="ranking">1</h2>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s9 blg-score-left">
+							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
+							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
+							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
+						</div>
+						<div class="col s3 blg-score-right">
+							<h2 class="ranking">1</h2>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s9 blg-score-left">
+							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
+							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
+							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
+						</div>
+						<div class="col s3 blg-score-right">
+							<h2 class="ranking">1</h2>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="ui-grids scoreList">
+					<div class="row ">
+						<div class="col s9 blg-score-left">
+							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
+							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
+							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
+						</div>
+						<div class="col s3 blg-score-right">
+							<h2 class="ranking">1</h2>
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
+								<?php echo $tr->translate("MORE_DETAIL"); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="spacer-xlarge"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<script type="text/javascript">
+  $(document).ready(function(){
+     
+
+     $(".carousel-content.carousel-slider").carousel({
+        fullWidth: true,
+        indicators: true
+      }).css("height", 200);
+
+      
+
+
+  });   </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+
