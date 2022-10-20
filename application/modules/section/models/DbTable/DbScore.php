@@ -48,6 +48,7 @@
 				,(SELECT t.teacher_name_kh FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teacherNameKh
 				,(SELECT t.teacher_name_en FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teaccherNameEng
 				,(SELECT t.signature FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teacherSigature
+				,(SELECT t.tel FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teacherTel
 				,(SELECT $label FROM `rms_view` WHERE TYPE=19 AND key_code =s.exam_type LIMIT 1) as forTypeTitle
 				,CASE
 					WHEN s.exam_type = 2 THEN s.for_semester
@@ -112,7 +113,6 @@
 		}else if(!empty($search['limitRecord'])){
 			$where.=" LIMIT ".$search['limitRecord'];
 		}
-		
 		return $db->fetchAll($sql.$where);
    }
    

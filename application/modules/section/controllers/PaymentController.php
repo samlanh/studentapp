@@ -32,7 +32,7 @@ class Section_PaymentController extends Zend_Controller_Action
 		$limitRecord = $_dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
-		$allRow = count($dbPmt->getAllPayment($search));
+		$allRow = $dbPmt->getCountAllPayment($search);
 		$this->view->allRow = $allRow;
 		
 		$search['limitRecord']=$limitRecord;
@@ -50,11 +50,11 @@ class Section_PaymentController extends Zend_Controller_Action
 				$_data['paymentMethod']	= empty($param['paymentMethod'])?'':$param['paymentMethod'];
 				$_data['startDate']		= empty($param['startDate'])?'':$param['startDate'];
 				$_data['endDate']		= empty($param['endDate'])?'':$param['endDate'];
-				
+			$record = $db->morePaymentRecord($_data);
+			print_r(Zend_Json::encode($record));exit();	
 			
     	}
-		$record = $db->morePaymentRecord($_data);
-    	print_r(Zend_Json::encode($record));exit();
+		
 	}
 	
 	function detailAction()

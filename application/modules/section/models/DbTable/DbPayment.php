@@ -5,7 +5,45 @@
     	$_dbgb = new Application_Model_DbTable_DbGlobal();
     	return $_dbgb->getUserId();
     }
-	
+	function getCountAllPayment($search=null){
+    	$_dbGb  = new Application_Model_DbTable_DbGlobal();
+    	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+    	$db=$this->getAdapter();
+		
+    	$sql=" SELECT 
+    				count(sp.id)
+ 			   FROM 
+    				rms_student AS s,
+					rms_student_payment AS sp
+				WHERE 
+					s.stu_id=sp.student_id 
+					";
+    	
+	    	$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".$search['startDate']." 00:00:00'";
+	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".$search['endDate']." 23:59:59'";
+	    	$where = " AND ".$from_date." AND ".$to_date;
+			$where.=" AND sp.status = 1 ";
+	    	if(!empty($search['searchBox'])){
+	    		$s_where=array();
+	    		$s_search=addslashes(trim($search['searchBox']));
+	    		$s_search = str_replace(' ', '', addslashes(trim($search['searchBox'])));
+	    		$s_where[]= " REPLACE(sp.receipt_number,' ','') LIKE '%{$s_search}%'";
+	    		$s_where[]= " REPLACE(sp.paid_amount,' ','') LIKE '%{$s_search}%'";
+	    		$s_where[]= " REPLACE(sp.balance_due,' ','') LIKE '%{$s_search}%'";
+	    		$s_where[]= " REPLACE(sp.number,' ','') LIKE '%{$s_search}%'";
+	    		
+	    		$where.=' AND ('.implode(' OR ', $s_where).')';
+	    	}
+	    	if(!empty($search['academicYear'])){
+	    		$where.=" AND sp.academic_year=".$search['academicYear'];
+	    	}
+			if(!empty($search['paymentMethod'])){
+	    		$where.=" AND sp.payment_method=".$search['paymentMethod'];
+	    	}
+			$where.=" AND sp.student_id = ".$this->getUserId();
+	    	$order=" ORDER BY sp.create_date DESC";
+			return $db->fetchOne($sql.$where.$order);
+    }
 	 function getAllPayment($search=null){
     	$_dbGb  = new Application_Model_DbTable_DbGlobal();
     	

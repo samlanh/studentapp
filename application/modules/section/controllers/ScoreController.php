@@ -53,10 +53,10 @@ class Section_ScoreController extends Zend_Controller_Action
 				$_data['startDate']		= empty($param['startDate'])?'':$param['startDate'];
 				$_data['endDate']		= empty($param['endDate'])?'':$param['endDate'];
 				
-			
+			$record = $db->moreScoreRecord($_data);
+			print_r(Zend_Json::encode($record));exit();
     	}
-		$record = $db->moreScoreRecord($_data);
-    	print_r(Zend_Json::encode($record));exit();
+		
 	}
 
    function detailAction(){

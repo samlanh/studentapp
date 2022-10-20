@@ -6,10 +6,10 @@
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$systemLink = $dbGb->systemLink();
-	
+	$currentlang = $dbGb->currentlang();
 ?>
 <div class="bgBodyhome"></div>	
-<div class="bgWhite-for-list "></div>
+
 <div class="bgBody-listview gradientGreen">
 	<div class="container">
 			<div class="section">
@@ -22,7 +22,7 @@
 							<?php echo $tr->translate("ATTENDENCE"); ?>
 						</h5>
 						<span class="sec-page-desc">
-							ចំណាត់ថ្នាក់ប្រចាំខែ និងប្រចាំឆមាស, ព្រឹត្តិប័ត្តពិន្ទុ, និងលិខិតផ្សេៗ...
+							<?php echo $tr->translate("ATTENDENCE_PAGE_DESC"); ?>
 						</span>
 					</div>
 				</div>
@@ -30,93 +30,196 @@
 		</div>
 	</div>
 </div>
-<div class="spacer-small"></div>
-<div class="spacer-medium"></div>
-<div class="bl-attedance-list-row ">
-	<div class="container">
-		<div class="row mrg-0">
-			<div class="col s12 pad-0">
-				<div class="ui-grids scoreList">
-					<div class="row ">
-						<div class="col s9 blg-score-left">
-							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
-							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
-							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
+<div class="main-page-list">
+	<div class="bl-attedance-list-row ">
+		<div class="spacer-medium"></div>
+		<div class="spacer-medium"></div>
+		<div class="container">
+			<div class="row mrg-0">
+				<div class="col s12 pad-0">
+					<div id="listRecord" class="ui-grids attedance">
+					<?php if(!empty($this->row)){ 
+						foreach($this->row AS $attedance){
+							
+							$yearAtt = date("Y",strtotime($attedance['date_attendence'])); 
+							$monthAtt = date("M",strtotime($attedance['date_attendence'])); 
+							$monthKey = date("m",strtotime($attedance['date_attendence'])); 
+							if($currentlang==1){
+								$yearAtt = $dbGb->getNumberInkhmer($yearAtt);
+								$monthAtt = $dbGb->getMonthInkhmer($monthKey);
+							}
+						?>
+						<div class="row attedance-row mrg-0">
+							<div class="col s3 blg-attedance-left">
+								<span class="attedance-monthly">
+								<?php echo $monthAtt; ?>
+								<span class="attedance-year"><?php echo $yearAtt; ?></span>
+								</span>
+								
+							</div>
+							<div class="col s9 blg-attedance-right">
+								<div class="row mrg-0 info-blg">
+									<div class="col s6">
+										<span class="attedance-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
+										<span class="attedance-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $attedance['academicYear']; ?></strong></span>
+										<span class="attedance-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
+										<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/attendance/detail/id/".$attedance['yearMonth'];?>">
+											<?php echo $tr->translate("MORE_DETAIL"); ?>
+										</a>
+									</div>
+									<div class="col s3">
+										<span class="attedance-info text-right"><?php echo $tr->translate("NO_PERMISSION_SHORT_CUT"); ?></span>
+										<span class="attedance-info text-right"><?php echo $tr->translate("PERMISSION_SHORT_CUT"); ?></span>
+										<span class="attedance-info text-right"><?php echo $tr->translate("LATE_SHORT_CUT"); ?></span>
+										<span class="attedance-info text-right"><?php echo $tr->translate("EARLY_LEAVE_SHORT_CUT"); ?></span>
+									</div>
+									<div class="col s3">
+										<span class="attedance-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countNoPermission'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="attedance-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countPermission'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="attedance-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countLate'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="attedance-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countEalyLeave'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+									
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="col s3 blg-score-right">
-							<h2 class="ranking">1</h2>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
-								<?php echo $tr->translate("MORE_DETAIL"); ?>
-							</a>
-						</div>
+						
+						
+					<?php } ?>
+				<?php } ?>
 					</div>
+					
+					
 				</div>
-				
-				<div class="ui-grids scoreList">
-					<div class="row ">
-						<div class="col s9 blg-score-left">
-							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
-							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
-							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
-						</div>
-						<div class="col s3 blg-score-right">
-							<h2 class="ranking">1</h2>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
-								<?php echo $tr->translate("MORE_DETAIL"); ?>
-							</a>
-						</div>
-					</div>
-				</div>
-				
-				<div class="ui-grids scoreList">
-					<div class="row ">
-						<div class="col s9 blg-score-left">
-							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
-							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
-							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
-						</div>
-						<div class="col s3 blg-score-right">
-							<h2 class="ranking">1</h2>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
-								<?php echo $tr->translate("MORE_DETAIL"); ?>
-							</a>
-						</div>
-					</div>
-				</div>
-				
-				<div class="ui-grids scoreList">
-					<div class="row ">
-						<div class="col s9 blg-score-left">
-							<h3 class="title-score">ការប្រលងប្រចាំខែ <strong class="mark-title">តុលា</strong> </h3>
-							<span class="score-info">ថ្នាក់ទី <strong class="mark-title">១ក</strong></span>
-							<span class="score-info">ឆ្នាំសិក្សា 2021-2022</span>
-						</div>
-						<div class="col s3 blg-score-right">
-							<h2 class="ranking">1</h2>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="#!">
-								<?php echo $tr->translate("MORE_DETAIL"); ?>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="spacer-xlarge"></div>
 			</div>
 		</div>
+		
+		<?php if(count($this->row)<$this->allRow){ ?>
+		<div class="ui-grids ">
+			<div class="row mrg-0">
+				<div class="col s12 center " >
+					<p id="totalRecord" class="total-record"><?php echo count($this->row)."/".$this->allRow; ?></p>
+					<h3 class="title-empty recordMessage"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s12 center valign-wrapper" style="height: 100px;">
+					<div id="preLoadRecord" class="preloader-wrapper small ">
+						<div class="spinner-layer spinner-blue">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-red">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-yellow">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-green">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php } ?>
+		<div class="spacer-xlarge"></div>
+		
 	</div>
+	
+		
 </div>
 
-<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
 <script type="text/javascript">
-  $(document).ready(function(){
-     
+	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
+		var allRecord ='<?php echo $this->allRow; ?>';
+		
+		var trackPage = 1;
+		var check = 1;
+   
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+			   if(check==1){
+				  loadContents();
+				}
+		   }
+		});
 
-     $(".carousel-content.carousel-slider").carousel({
-        fullWidth: true,
-        indicators: true
-      }).css("height", 200);
+		function loadContents(){
+			check=0;
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord'?>';
+			$("#preLoadRecord").addClass("active");
+			$.ajax({
+				url:urlMoreRow,
+				type: "post",
+				data: {
+					'page':trackPage
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					trackPage = data.trackPage;
+					if(trackPage>allRecord){
+					   trackPage = allRecord;
+					   $('.recordMessage').html('');
+						
+					}else{
+						$('.recordMessage').html('<?php echo $tr->translate("SCROLL_FOR_MORE_DATA");?>');
+						setTimeout(function () {
+							check = 1;
+						}, 1000);
+					}
+					setTimeout(function () {
+						$('#totalRecord').html(trackPage+' /'+allRecord);
+						$("#listRecord").append(data.htmlRecord);
+						$("#preLoadRecord").removeClass("active");
+					}, 500);
+					
+				  
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
 
-      
-
-
-  });   </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+		}
+	<?php } ?>
+	<?php } ?>
+</script>
 
