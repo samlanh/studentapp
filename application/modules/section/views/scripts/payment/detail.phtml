@@ -14,28 +14,32 @@
 	
 ?>
 <div class="bgBodyhome"></div>	
-<div class="bgBody-listview blueGrey"></div>
+
 <div class="bgWhite-for-list "></div>
-<div class="container">
-	<div class="section">
-		<div class="card-panel bg-white invoice-to receipt-info">
-			<h5 class="title-payment top-0">
-				<?php echo $row['schoolName']; ?>​
-				<small><?php echo $row['branchName']; ?>​</small>
-			</h5>
-			<div class="row mrg-0">
-				<div class="col s9 ">
-					<span class="payment-info "><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $row['groupCode']; ?></strong></span>
-					<span class="payment-info "><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $row['academicYear']; ?></strong></span>
-					<span class="payment-info "><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $row['userName']; ?></strong></span>
-				</div>
-				<div class="col s3 center">
-					<h3 class="title-payment "><strong class="mark-title"><?php echo $row['receiptNo']; ?></strong> </h3>
-					<span class="payment-info "><strong class="mark-title"><?php echo date("d-M-Y",strtotime($row['paymentDate'])); ?></strong></span>
+<div class="bgBody-listview blueGrey page-detail-head-blg">
+	
+</div>
+<div class="page-detail-title-blg">
+	<div class="container">
+		<div class="section">
+			<div class="card-panel bg-white invoice-to receipt-info">
+				<h5 class="title-payment top-0">
+					<?php echo $row['schoolName']; ?>​
+					<small><?php echo $row['branchName']; ?>​</small>
+				</h5>
+				<div class="row mrg-0">
+					<div class="col s9 ">
+						<span class="payment-info "><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $row['groupCode']; ?></strong></span>
+						<span class="payment-info "><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $row['academicYear']; ?></strong></span>
+						<span class="payment-info "><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $row['userName']; ?></strong></span>
+					</div>
+					<div class="col s3 center">
+						<h3 class="title-payment "><strong class="mark-title"><?php echo $row['receiptNo']; ?></strong> </h3>
+						<span class="payment-info "><strong class="mark-title"><?php echo date("d-M-Y",strtotime($row['paymentDate'])); ?></strong></span>
+					</div>
 				</div>
 			</div>
-			
-			</div>
+		</div>
 	</div>
 </div>
 <?php if(!empty($rowDetail)){?>
