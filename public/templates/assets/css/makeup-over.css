@@ -734,7 +734,14 @@ p.total-record,h3.title-empty.recordMessage {
 }
 
 
-
+.bgBody-listview.blueGrey.page-detail-head-blg {
+    height: 190px;
+}
+.page-detail-title-blg {
+    margin-top: -130px;
+    z-index: 2;
+    position: relative;
+}
 
 .invoice-to.receipt-info {
     position: relative;
