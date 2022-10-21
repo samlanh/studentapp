@@ -617,7 +617,7 @@ nav.ui-forms label i{
 }
 .datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done,
 .datepicker-table td.is-today{
-  color: #185183;
+  color: #9e9e9e;
 }
 .datepicker-table-wrapper table{
   -webkit-box-shadow: none;

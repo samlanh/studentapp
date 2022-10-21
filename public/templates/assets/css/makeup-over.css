@@ -1,3 +1,6 @@
+.fullsize {
+    width: 100% !important;
+}
 nav.bgTransparent.dashboard.topbar.navigation {
     position: absolute;
     top: 0;
