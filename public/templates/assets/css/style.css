@@ -216,6 +216,8 @@ body .bgBody-listview{
 	border-bottom-left-radius: 50px;
 	border-bottom-right-radius: 50px;
 	padding-top: 55px;
+	z-index: 1;
+	position: relative;
 }
 body .bgBody-listview.gradientBlue {
     background-image: linear-gradient(to right bottom, #056e76, #2b9fb6);
