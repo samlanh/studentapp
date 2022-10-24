@@ -23,7 +23,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $lang;
 	}
-	  function getMonthInkhmer($monthNum){
+	function getMonthInkhmer($monthNum){
 		$monthKH = array(
 			"01"=>"មករា",
 			"02"=>"កុម្ភៈ",
@@ -40,7 +40,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		);
 		$monthChar = empty($monthKH[$monthNum])?"":$monthKH[$monthNum];
 		return $monthChar;
-	  }
+	}
 	public function getDayInkhmerBystr($str){
     	
     	$rs=array(
@@ -134,9 +134,69 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
-	
-	
-	
+	function getAllViewByType($type=1){
+    	$db=$this->getAdapter();
+		$currentLang = $this->currentlang();
+		$colunmname='name_en';
+		if ($currentLang==1){
+			$colunmname='name_kh';
+		}
+    	$sql="
+			SELECT v.key_code AS id,
+			v.$colunmname AS name
+			FROM `rms_view` AS v WHERE v.status=1 ";
+        $sql.=" AND v.type= ".$type;
+        $oder=" ORDER BY v.key_code ASC ";
+    	return $db->fetchAll($sql.$oder);
+    }
+	function getAllMonth($condiction=array()){
+    	$db=$this->getAdapter();
+		$currentLang = $this->currentlang();
+		$colunmname='month_en';
+		if ($currentLang==1){
+			$colunmname='month_kh';
+		}
+    	$sql="
+			SELECT m.id,
+			m.$colunmname AS name
+			FROM `rms_month` AS m WHERE m.status=1 ";
+        $oder=" ORDER BY m.id ASC ";
+    	return $db->fetchAll($sql.$oder);
+    }
+	function getAcademicYear($condiction=array()){
+    	$db=$this->getAdapter();
+    	$sql="
+			SELECT ay.id,
+				CONCAT(ay.fromYear,'-',ay.toYear) AS name
+			FROM rms_academicyear AS ay WHERE ay.status=1 ";
+        $oder=" ORDER BY ay.fromYear DESC ";
+    	return $db->fetchAll($sql.$oder);
+    }
+	function getAllDegree(){
+  	$db = $this->getAdapter();
+  	
+  	$currentLang = $this->currentlang();
+  	$colunmname='title_en';
+  	if ($currentLang==1){
+  		$colunmname='title';
+  	}
+  	
+  	$this->_name = "rms_items";
+  	$sql="SELECT m.id, m.$colunmname AS name FROM $this->_name AS m WHERE m.status=1 ";
+  	$sql.=" AND m.type=1 ";
+  	/*
+	if (!empty($schooloption)){
+  		$schooloptionParam = explode(",", $schooloption);
+  		$s_whereee = array();
+  		foreach ($schooloptionParam as $schooloptionId){
+  			$s_whereee[] = $schooloptionId." IN (m.schoolOption)";
+  		}
+  		$sql .=' AND ( '.implode(' OR ',$s_whereee).')';
+  	}
+	*/
+  	$sql .=' ORDER BY m.schoolOption ASC,m.type DESC,m.ordering DESC, m.title ASC';	
+  	return $db->fetchAll($sql);
+  }
 	function does_url_exists($url) {
 	
 		$ch = curl_init($url);

@@ -7,6 +7,9 @@
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$systemLink = $dbGb->systemLink();
 	$currentlang = $dbGb->currentlang();
+	
+	$frm = $this->formFilter;
+	$querystring = $this->queryString;
 ?>
 <div class="bgBodyhome"></div>	
 
@@ -163,8 +166,37 @@
 	
 		
 </div>
-
+<!-- Modal Structure -->
+<div id="modalFilter" class="modal bottom-sheet white dark-text">
+	<div class="modal-content">
+		<div class="container">
+			<div class="section ui-select">
+				<form method="GET">
+					<div class="row ">
+						<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
+							<div class="row">
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('month');?>
+								  <label><?php echo $tr->translate("MONTH"); ?></label>
+								</div>
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('academicYear');?>
+								  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
+								</div>
+								<div class="input-field col s12">
+									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
+	$("select").formSelect(); 
 	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
 		var allRecord ='<?php echo $this->allRow; ?>';
 		
@@ -181,7 +213,7 @@
 
 		function loadContents(){
 			check=0;
-			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord'?>';
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord/'.$querystring; ?>';
 			$("#preLoadRecord").addClass("active");
 			$.ajax({
 				url:urlMoreRow,

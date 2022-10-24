@@ -7,10 +7,49 @@
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$systemLink = $dbGb->systemLink();
 	
+	$frm = $this->formFilter;
+	$querystring = $this->queryString;
+	
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgpayment-list-info "></div>
-
+<!-- Modal Structure -->
+<div id="modalFilter" class="modal bottom-sheet white dark-text">
+	<div class="modal-content">
+		<div class="container">
+			<div class="section ui-select">
+				<form method="GET">
+					<div class="row ">
+						<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
+							<div class="row">
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('startDate');?>
+								  <label><?php echo $tr->translate("FROM"); ?></label>
+								</div>
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('endDate');?>
+								  <label><?php echo $tr->translate("TO"); ?></label>
+								</div>
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('academicYear');?>
+								  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
+								</div>
+								<div class="input-field col s6">
+									<?php echo $frm->getElement('paymentMethod');?>
+								  <label><?php echo $tr->translate("PAYMENT_METHOD"); ?></label>
+								</div>
+								<div class="input-field col s12">
+									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="bgBody-listview gradientYellow">
 	<div class="container">
 		<div class="section">
@@ -141,62 +180,40 @@
 						<div class="circle"></div>
 					</div>
 				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <?php } ?>	
 <div class="spacer-xlarge"></div>
-<!-- Modal Structure -->
-	<div id="modalFilter" class="modal top-sheet white dark-text">
-        <div class="modal-content">
-				<div class="container">
-					<div class="section ui-select">
-						<div class="row ">
-							<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
-								<div class="row">
-									<div class="input-field col s12">
-									  <select class="smallHeight">
-										<option value="" disabled ><?php echo $tr->translate("CHOOSE_ACACDEMIC_YEAR"); ?></option>
-										<option value="1" selected>Option 1</option>
-										<option value="2">Option 2</option>
-										<option value="3">Option 3</option>
-										<option value="4">Option 4</option>
-										<option value="5">Option 5</option>
-										<option value="6">Option 6</option>
-										<option value="7">Option 7</option>
-										
-									  </select>
-									  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12">
-									  <select class="smallHeight">
-										<option value="" disabled ><?php echo $tr->translate("CHOOSE_DEGREE"); ?></option>
-										<option value="1" selected>Option 1</option>
-										<option value="2">Option 2</option>
-										<option value="3">Option 3</option>
-										<option value="4">Option 4</option>
-										<option value="5">Option 5</option>
-										<option value="6">Option 6</option>
-										<option value="7">Option 7</option>
-										
-									  </select>
-									  <label><?php echo $tr->translate("DEGREE"); ?></label>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		</div>
-	</div>
+
 
 <script type="text/javascript">
 
-	<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+	
    $("select").formSelect();  
-   <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+	
+	$("#startDate").datepicker(
+		
+		{
+		autoClose: true,
+		format: "dd-mm-yyyy",
+		}
+		<?php if(!empty($this->arrFilter['startDate'])){?>
+		,"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['startDate']));  ?>"
+		  <?php } ?>
+	  
+	 );
+	 
+	 $("#endDate").datepicker({
+		autoClose: true,
+		format: "dd-mm-yyyy",
+	 }
+	  <?php if(!empty($this->arrFilter['endDate'])){?>
+	 ,"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['endDate']));  ?>"
+	  <?php } ?>
+	 );
+	 
 	<?php if(!empty($this->row)){?>
 		var allRecord ='<?php echo $this->allRow; ?>';
 		var stickyValue ='<?php echo $stickyBlog; ?>';
@@ -213,7 +230,7 @@
 	
 		function loadContents(){
 			check=0;
-			var urlMoreRow = '<?php echo $this->baseUrl().'/section/payment/morerecord'?>';
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/payment/morerecord'.$querystring; ?>';
 			$("#preLoadRecord").addClass("active");
 			$.ajax({
 				url:urlMoreRow,

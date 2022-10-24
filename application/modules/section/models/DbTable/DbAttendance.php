@@ -74,9 +74,16 @@
 		$groupList = empty($groupList)?0:$groupList;
 		$sql.=" AND sat.group_id IN (".$groupList.")";
 		
+		if(!empty($search['month'])){
+			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%m') = ".$search['month'];
+		}
+		if(!empty($search['academicYear'])){
+			$sql.=" AND g.academic_year = ".$search['academicYear'];
+		}
 		$sql.=" GROUP BY sat.`group_id`
 			,DATE_FORMAT(sat.`date_attendence`,'%Y%m') ";
 		$sql.=" ORDER BY DATE_FORMAT(sat.`date_attendence`,'%Y%m') DESC ";
+		
 		
 		if(!empty($search['LimitStart'])){
 			$sql.=" LIMIT ".$search['LimitStart'].",".$search['limitRecord'];
@@ -96,7 +103,7 @@
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
 		$totalLimitStart= $limitRecord;
-		$filter = array();
+		$filter = $data;
 		$filter['limitRecord'] = $limitRecord;
 		if(!empty($data['page'])){
 			if($data['page']<$limitRecord){

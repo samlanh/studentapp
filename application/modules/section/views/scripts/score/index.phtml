@@ -7,7 +7,7 @@
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$currentlang = $dbGb->currentlang();
 	$systemLink = $dbGb->systemLink();
-	
+	$frm = $this->formFilter;
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgBody-listview gradientBlue">
@@ -143,8 +143,37 @@
 <?php } ?>
 <?php } ?>
 <div class="spacer-xlarge"></div>
+
+	
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modalFilter" class="modal top-sheet white dark-text">
+	<div class="modal-content">
+		<div class="container">
+			<div class="section ui-select">
+				<div class="row ">
+					<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
+						<div class="row">
+							<div class="input-field col s12">
+								<?php echo $frm->getElement('academicYear');?>
+							  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
+							</div>
+							<div class="input-field col s12">
+								<?php echo $frm->getElement('degree');?>
+							  <label><?php echo $tr->translate("DEGREE"); ?></label>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
+	$("select").formSelect(); 
 	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
 		var allRecord ='<?php echo $this->allRow; ?>';
 		

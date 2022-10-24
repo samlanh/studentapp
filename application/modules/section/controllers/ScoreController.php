@@ -40,6 +40,10 @@ class Section_ScoreController extends Zend_Controller_Action
 		$search['limitRecord']=$limitRecord;
 		$row = $dbScore->getScoreLists($search);
 		$this->view->row=$row;
+		
+		$formFilter = new Application_Form_FrmSearch();
+		$frmsearch = $formFilter->FrmSearch();
+		$this->view->formFilter = $frmsearch;
     }
 	
 	function morerecordAction(){

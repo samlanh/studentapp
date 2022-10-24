@@ -19,8 +19,9 @@
 					s.stu_id=sp.student_id 
 					";
     	
-	    	$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".$search['startDate']." 00:00:00'";
-	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".$search['endDate']." 23:59:59'";
+	    	
+			$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".date("Y-m-d",strtotime($search['startDate']))." 00:00:00'";
+	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".date("Y-m-d",strtotime($search['endDate']))." 23:59:59'";
 	    	$where = " AND ".$from_date." AND ".$to_date;
 			$where.=" AND sp.status = 1 ";
 	    	if(!empty($search['searchBox'])){
@@ -84,8 +85,8 @@
 					s.stu_id=sp.student_id 
 					";
     	
-	    	$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".$search['startDate']." 00:00:00'";
-	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".$search['endDate']." 23:59:59'";
+	    	$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".date("Y-m-d",strtotime($search['startDate']))." 00:00:00'";
+	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".date("Y-m-d",strtotime($search['endDate']))." 23:59:59'";
 	    	$where = " AND ".$from_date." AND ".$to_date;
 			$where.=" AND sp.status = 1 ";
 	    	if(!empty($search['searchBox'])){
@@ -112,7 +113,6 @@
 			}else if(!empty($search['limitRecord'])){
 	    		$order.=" LIMIT ".$search['limitRecord'];
 	    	}
-			
 			return $db->fetchAll($sql.$where.$order);
     }
 	

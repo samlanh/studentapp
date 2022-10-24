@@ -14,30 +14,39 @@ class Section_PaymentController extends Zend_Controller_Action
     {
     	
 		$dbPmt = new Section_Model_DbTable_DbPayment();
-		if($this->getRequest()->isPost()){
-			$search=$this->getRequest()->getPost();
+		$param = $this->getRequest()->getParams();
+		if(isset($param['search'])){
+			$arrFilter=$param;
 		}
 		else{
-			$search = array(
-				'searchBox' => '',
-				'academicYear' => '',
-				'paymentMethod' => '',
-				
-				'startDate'=> '',
-				'endDate'=>date('Y-m-d')
-			);
+			$arrFilter = array(
+					'searchBox' 	=> '',
+					'academicYear'	=> '',
+					'paymentMethod' => '',
+					'startDate'		=> '',
+					'endDate'		=>date("d-m-Y")
+				);
 		}
+		
+		
+		$this->view->queryString = empty($_SERVER['QUERY_STRING'])?"":"?".$_SERVER['QUERY_STRING'];
 		
 		$_dbGb  = new Application_Model_DbTable_DbGlobal();
 		$limitRecord = $_dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
-		$allRow = $dbPmt->getCountAllPayment($search);
+		$allRow = $dbPmt->getCountAllPayment($arrFilter);
 		$this->view->allRow = $allRow;
 		
-		$search['limitRecord']=$limitRecord;
-		$row = $dbPmt->getAllPayment($search);
+		
+		$arrFilter['limitRecord']=$limitRecord;
+		$row = $dbPmt->getAllPayment($arrFilter);
 		$this->view->row = $row;
+		
+		$this->view->arrFilter = $arrFilter;
+		$formFilter = new Application_Form_FrmSearch();
+		$frmsearch = $formFilter->FrmSearch();
+		$this->view->formFilter = $frmsearch;
     }
 
 	function morerecordAction(){
