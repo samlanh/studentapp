@@ -124,7 +124,7 @@
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
 		$totalLimitStart= $limitRecord;
-		$filter = array();
+		$filter = $data;
 		$filter['limitRecord'] = $limitRecord;
 		if(!empty($data['page'])){
 			if($data['page']<$limitRecord){

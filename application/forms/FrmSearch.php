@@ -35,10 +35,11 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$startDate->setDecorators(array(array('ViewHelper'),));//remove zend html tage
 		$_date = $request->getParam("startDate");
 
-		if(empty($_date)){
+		if(!empty($_date)){
 			//$_date = date('Y-m-01');
+			$startDate->setValue(date("d-m-Y",strtotime($_date)));
 		}
-		$startDate->setValue($_date);
+		
 		
 		$endDate = new Zend_Form_Element_Text('endDate');
 		$endDate->setAttribs(array(
@@ -52,9 +53,9 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		if(empty($_date)){
 			$_date = date("d-m-Y");
 		}
-		$endDate->setValue($_date);
+		$endDate->setValue(date("d-m-Y",strtotime($_date)));
 		
-		$_arrOptPaymentMethod = array(""=>$this->tr->translate("CHOOSE_PAYMENT_METHOD"),);
+		$_arrOptPaymentMethod = array(""=>"",);//$this->tr->translate("CHOOSE_PAYMENT_METHOD")
 		$rs = $_dbgb->getAllViewByType(8);
 		if(!empty($rs))foreach ($rs As $rows)$_arrOptPaymentMethod[$rows['id']]=$rows['name'];
 		$paymentMethod = new Zend_Form_Element_Select("paymentMethod");
@@ -82,7 +83,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$month->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
 		$month->setValue($request->getParam("month"));
 
-		$_arrOptAca = array(""=>$this->tr->translate("CHOOSE_ACADMIC_YEAR"),);
+		$_arrOptAca = array(""=>"",);//$this->tr->translate("CHOOSE_ACADMIC_YEAR")
 		$rs = $_dbgb->getAcademicYear();
 		if(!empty($rs))foreach ($rs As $rows)$_arrOptAca[$rows['id']]=$rows['name'];
 		$academicYear = new Zend_Form_Element_Select("academicYear");
@@ -96,7 +97,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$academicYear->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
 		$academicYear->setValue($request->getParam("academicYear"));
 		
-		$_arrOptDegree = array(""=>$this->tr->translate("CHOOSE_DEGREE"),);
+		$_arrOptDegree = array(""=>"",);//$this->tr->translate("CHOOSE_DEGREE")
 		$rs = $_dbgb->getAllDegree();
 		if(!empty($rs))foreach ($rs As $rows)$_arrOptDegree[$rows['id']]=$rows['name'];
 		$degree = new Zend_Form_Element_Select("degree");
@@ -111,26 +112,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$degree->setValue($request->getParam("degree"));
 		
 		if(!empty($_data)){
-			$_data['searchBox'] = empty($_data['searchBox'])?'':$_data['searchBox'];
-			$searchBox->setValue($_data['searchBox']);
 			
-			$_data['startDate'] = empty($_data['startDate'])?'':date("d-m-Y",strtotime($_data['startDate']));
-			$startDate->setValue($_data['searchBox']);
-			
-			$_data['endDate'] = empty($_data['endDate'])?'':date("d-m-Y",strtotime($_data['endDate']));
-			$endDate->setValue($_data['endDate']);
-			
-			$_data['month'] = empty($_data['month'])?'':$_data['month'];
-			$month->setValue($_data['month']);
-			
-			$_data['academicYear'] = empty($_data['academicYear'])?'':$_data['academicYear'];
-			$academicYear->setValue($_data['academicYear']); 
-			
-			$_data['paymentMethod'] = empty($_data['paymentMethod'])?'':$_data['paymentMethod'];
-			$paymentMethod->setValue($_data['paymentMethod']);
-			
-			$_data['degree'] = empty($_data['degree'])?'':$_data['degree'];
-			$degree->setValue($_data['degree']);
 		}
 		
 		

@@ -24,17 +24,17 @@
 							<div class="row">
 								<div class="input-field col s6">
 									<?php echo $frm->getElement('startDate');?>
-								  <label><?php echo $tr->translate("FROM"); ?></label>
+								  <label><?php echo $tr->translate("FROM_DATE"); ?></label>
 								</div>
 								<div class="input-field col s6">
 									<?php echo $frm->getElement('endDate');?>
-								  <label><?php echo $tr->translate("TO"); ?></label>
+								  <label><?php echo $tr->translate("TO_DATE"); ?></label>
 								</div>
-								<div class="input-field col s6">
+								<div class="input-field colLeft col s6">
 									<?php echo $frm->getElement('academicYear');?>
 								  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
 								</div>
-								<div class="input-field col s6">
+								<div class="input-field colRight col s6">
 									<?php echo $frm->getElement('paymentMethod');?>
 								  <label><?php echo $tr->translate("PAYMENT_METHOD"); ?></label>
 								</div>
@@ -193,27 +193,21 @@
 	
    $("select").formSelect();  
 	
+	$(".datepicker.datepicker7").datepicker({
+		autoClose: true,
+		format: "dd-mm-yyyy",
+		autoClose: true
+	 });
+	 <?php if(!empty($this->arrFilter['startDate'])){?>
 	$("#startDate").datepicker(
-		
-		{
-		autoClose: true,
-		format: "dd-mm-yyyy",
-		}
-		<?php if(!empty($this->arrFilter['startDate'])){?>
-		,"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['startDate']));  ?>"
-		  <?php } ?>
-	  
+		"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['startDate']));  ?>"
 	 );
-	 
-	 $("#endDate").datepicker({
-		autoClose: true,
-		format: "dd-mm-yyyy",
-	 }
-	  <?php if(!empty($this->arrFilter['endDate'])){?>
-	 ,"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['endDate']));  ?>"
-	  <?php } ?>
+   <?php } ?>
+     <?php if(!empty($this->arrFilter['endDate'])){?>
+	 $("#endDate").datepicker(
+		"setDate","<?php echo date("m-d-Y", strtotime($this->arrFilter['endDate']));  ?>"
 	 );
-	 
+	<?php } ?>
 	<?php if(!empty($this->row)){?>
 		var allRecord ='<?php echo $this->allRow; ?>';
 		var stickyValue ='<?php echo $stickyBlog; ?>';
@@ -230,7 +224,7 @@
 	
 		function loadContents(){
 			check=0;
-			var urlMoreRow = '<?php echo $this->baseUrl().'/section/payment/morerecord'.$querystring; ?>';
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/payment/morerecord/'.$querystring; ?>';
 			$("#preLoadRecord").addClass("active");
 			$.ajax({
 				url:urlMoreRow,
