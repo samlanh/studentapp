@@ -234,6 +234,10 @@ body .bgBody-listview.blueGrey {
     background: #087889;
     border-radius: 0;
 }
+body .bgBody-listview.bluePrimary {
+    background: #095988;
+    border-radius: 0;
+}
 
 body, body *,p{
   font-family: 'Khmer Os Battambang',Roboto;
