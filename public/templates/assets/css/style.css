@@ -230,6 +230,9 @@ body .bgBody-listview.gradientYellow {
 body .bgBody-listview.gradientGreen {
    background-image: linear-gradient(to right bottom, #036015, #6fc85d);
 }
+body .bgBody-listview.gradientBluePrimary {
+       background-image: linear-gradient(to right bottom, #034165, #0069a7);
+}
 body .bgBody-listview.blueGrey {
     background: #087889;
     border-radius: 0;

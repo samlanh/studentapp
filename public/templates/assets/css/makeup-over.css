@@ -607,13 +607,24 @@ START LIST VIEW WITH ICON
     white-space: nowrap;
     width: 100%;
 }
-
+.lists-view-icon span.title-flex span.title-flex-sub {
+    display: block;
+    color: #e0e0e0;
+}
 .lists-view-icon span.row-items-info {
     display: block;
     font-size: 12px;
     line-height: 18px;
     color: #292929;
     padding: 0;
+}
+.row.lists-view-icon-row a.btn {
+    font-size: 11px;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    line-height: 1px;
+    background: #38a0af;
 }
 /*====================
 END LIST VIEW WITH ICON
@@ -631,86 +642,23 @@ START ATTENDANCE LIST VIEW
     top: -40px;
     z-index: 0;
 }
-.ui-grids.attedance .row.attedance-row {
-    background: #fff;
-    box-shadow: 1px 1px 2px 0px #00000070;
-    padding: 0;
-    margin: 0;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.blg-attedance-left {
-    background: #047108;
-    text-align: center;
-    border-top-left-radius: inherit;
-    border-bottom-left-radius: inherit;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.blg-attedance-left:after {
+.lists-view-icon.attedance .blg-row-left:after {
     content: "\F8C4";
-    display: inline-block;
-    font: normal normal normal 24px/1 "Material Design Icons";
-    font-size: inherit;
-    text-rendering: auto;
-    line-height: inherit;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: absolute;
-    z-index: 0;
-    font-size: 70px;
-    opacity: 0.1;
-    color: #ffffff;
-    width: 100%;
+}
+.lists-view-icon.attedance .blg-row-left {
+    background: #034a74;
 }
 
-.blg-attedance-right {
-    padding: 10px 15px!important;
+.bl-attedance-list-row p.total-record, 
+.bl-attedance-list-row h3.title-empty.recordMessage,
+.lists-view-icon.attedance h2.main-title ,
+.lists-view-icon.attedance span.row-items-info strong.mark-title {
+    color: #034a74;
 }
-.row.info-blg .col {
-    padding: 0 2px;
-}
-.blg-attedance-left,
-.blg-attedance-right {
-    height: 110px;
-}
-span.attedance-info {
-    display: block;
-    font-size: 12px;
-    line-height: 20px;
-}
-span.attedance-info strong.mark-title {
-    color: #035809;
-}
-span.attedance-monthly, 
-span.attedance-year {
-    display: block;
-	    width: 100%;
-}
-span.attedance-monthly {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 26px;
-}
-span.attedance-year {
-    color: #ddd;
+.lists-view-icon.attedance .row.lists-view-icon-row a.btn {
+    background: #034a74;
 }
 
-.row.attedance-row a.btn {
-    font-size: 11px;
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    line-height: 1px;
-    background: #19701e;
-}
-
-.bl-attedance-list-row p.total-record, .bl-attedance-list-row h3.title-empty.recordMessage{
-    color:#1d7f1e
-}
 /*====================
 END ATTENDANCE LIST VIEW
 =======================*/
@@ -735,6 +683,29 @@ START ATTENDANCE DETAIL
 /*====================
 END ATTENDANCE DETAIL
 =======================*/
+
+/*====================
+START ENVLUATION LIST
+=======================*/
+.lists-view-icon.envaluation .row.lists-view-icon-row .blg-row-left {
+    background: #1c7826;
+}
+.bl-attedance-list-row p.total-record, 
+.bl-attedance-list-row h3.title-empty.recordMessage,
+.lists-view-icon.envaluation h2.main-title ,
+.lists-view-icon.envaluation span.row-items-info strong.mark-title {
+    color: #1c7826;
+}
+.lists-view-icon.envaluation .row.lists-view-icon-row a.btn {
+    background: #1c7826;
+}
+.lists-view-icon.envaluation .blg-row-left:after {
+    content: "\F986";
+}
+/*====================
+END ENVLUATION LIST
+=======================*/
+
 
 .ui-grids.empty-data {
     margin: 0 auto;
@@ -800,15 +771,7 @@ START HEADER PAGE PANEL THEME
 
 .panel-bluePrimary {
 	position: relative;
-    border-radius: 5px;
-    background-image: url(../images/access-8.jpg);
-    min-height: 100%;
-    min-width: 100%;
-    max-height: 100%;
-    max-width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+	border-radius: 5px;
 }
 .panel-bluePrimary:after,.panel-bluePrimary:before {
     content: '';
@@ -834,7 +797,7 @@ START HEADER PAGE PANEL THEME
 
 .panel-bluePrimary .flex-col {
     display: flex;
-    align-items: center;
+    align-items: start;
     min-height: 90px;
     text-align: center;
     margin: 0 auto;
@@ -846,6 +809,8 @@ START HEADER PAGE PANEL THEME
     color: #ea9c00;
     font-size: 36px;
     line-height: 46px;
+    margin: 0;
+    padding: 0;
 }
 .card-panel.bg-white span.main-detail-info {
     display: block;
