@@ -102,8 +102,8 @@
 		if(!empty($search['examType'])){
 			$where.=" AND s.exam_type=".$search['examType'];
 			if($search['examType']==1){
-				if(!empty($search['forMonth'])){
-					$where.=" AND s.for_month=".$search['forMonth'];
+				if(!empty($search['month'])){
+					$where.=" AND s.for_month=".$search['month'];
 				}	
 			}
 		}
@@ -125,7 +125,7 @@
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
 		$totalLimitStart= $limitRecord;
-		$filter = array();
+		$filter = $data;
 		$filter['limitRecord'] = $limitRecord;
 		if(!empty($data['page'])){
 			if($data['page']<$limitRecord){

@@ -15,19 +15,21 @@ class Section_ScoreController extends Zend_Controller_Action
     	
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		
-		if($this->getRequest()->isPost()){
-			$search=$this->getRequest()->getPost();
+		$param = $this->getRequest()->getParams();
+		if(isset($param['search'])){
+			$search=$param;
 		}
 		else{
 			$search = array(
-				'searchBox' => '',
-				'academicYear' => '',
-				'paymentMethod' => '',
-				
-				'startDate'=> '',
-				'endDate'=>date('Y-m-d')
-			);
+					'searchBox' => '',
+					'academicYear'=> '',
+					'startDate'=> '',
+					'month'=> '',
+					'endDate'=>date('Y-m-d')
+				);
 		}
+		
+		$this->view->queryString = empty($_SERVER['QUERY_STRING'])?"":"?".$_SERVER['QUERY_STRING'];
 		
 		$limitRecord = $dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
@@ -54,6 +56,7 @@ class Section_ScoreController extends Zend_Controller_Action
 				$_data['searchBox']		= empty($param['searchBox'])?'':$param['searchBox'];
 				$_data['academicYear']	= empty($param['academicYear'])?'':$param['academicYear'];
 				$_data['examType']		= empty($param['examType'])?'':$param['examType'];
+				$_data['month']	= empty($param['month'])?'':$param['month'];
 				$_data['startDate']		= empty($param['startDate'])?'':$param['startDate'];
 				$_data['endDate']		= empty($param['endDate'])?'':$param['endDate'];
 				

@@ -69,7 +69,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$paymentMethod->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
 		$paymentMethod->setValue($request->getParam("paymentMethod"));
 	
-		$_arrOptMonth = array(""=>$this->tr->translate("CHOOSE_MONTH"),);
+		$_arrOptMonth = array(""=>"",);
 		$rs = $_dbgb->getAllMonth();
 		if(!empty($rs))foreach ($rs As $rows)$_arrOptMonth[$rows['id']]=$rows['name'];
 		$month = new Zend_Form_Element_Select("month");
@@ -111,6 +111,22 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$degree->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
 		$degree->setValue($request->getParam("degree"));
 		
+		
+		$_arrOptExamType = array(""=>"",);//$this->tr->translate("CHOOSE_EXAM_TYPE")
+		$rs = $_dbgb->getAllViewByType(19);
+		if(!empty($rs))foreach ($rs As $rows)$_arrOptExamType[$rows['id']]=$rows['name'];
+		$examType = new Zend_Form_Element_Select("examType");
+		$examType->setMultiOptions($_arrOptExamType);
+		$examType->setAttribs(
+			array(
+				'class'=>'smallHeight ',
+				'placeholder'=>$this->tr->translate("CHOOSE_EXAM_TYPE"),
+				'onChange'=>'checkingExam();',
+				)
+			);
+		$examType->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
+		$examType->setValue($request->getParam("examType"));
+		
 		if(!empty($_data)){
 			
 		}
@@ -124,6 +140,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 				,$month 
 				,$academicYear 
 				,$paymentMethod 
+				,$examType
 				,$degree 
 				)
 			);

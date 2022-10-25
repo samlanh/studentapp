@@ -62,6 +62,22 @@ class Section_AttendanceController extends Zend_Controller_Action
     	}
 		
 	}
+	
+	function detailAction()
+	{
+		
+		
+		$param = $this->getRequest()->getParams();
+		if(empty($param)){
+			$this->_redirect("/section/attendance");
+		}
+		$dbAtt = new Section_Model_DbTable_DbAttendance();
+		$row = $dbAtt->getStudentTotalAttendanceInfo($param);
+		$this->view->row = $row;
+		
+		$rowDetail = $dbAtt->getStudentAttendanceDetail($param);
+		$this->view->rowDetail = $rowDetail;
+	}	
 
    
 

@@ -44,26 +44,25 @@
 		<div class="container">
 			<div class="row mrg-0">
 				<div class="col s12 pad-0">
-					<div class="ui-grids scheduleList">
-						<div class="row schedule-row mrg-0">
-							<div class="col s4 blg-schedule-left">
-								
-								<span class="time-schedule">
+					<div class="ui-grids lists-view-icon ">
+						<div class="row lists-view-icon-row  mrg-0">
+							<div class="col s4 blg-row-left">
+								<span class="title-flex">
 								<?php echo $schedule['fromHourTitle']; ?><br />
 								-<br />
 								<?php echo $schedule['toHourTitle']; ?>
 								</span>
 							</div>
-							<div class="col s8 blg-schedule-right">
+							<div class="col s8 blg-row-right">
 								<div class="row mrg-0 info-blg">
 									<div class="col s6">
-										<h2 class="subject-title"><?php echo $schedule['subjectTitle']; ?></h2>
-										<span class="schedule-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $schedule['groupCode']; ?></strong></span>
-										<span class="schedule-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $schedule['roomName']; ?></strong></span>
+										<h2 class="main-title"><?php echo $schedule['subjectTitle']; ?></h2>
+										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $schedule['groupCode']; ?></strong></span>
+										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $schedule['roomName']; ?></strong></span>
 									</div>
 									<div class="col s6">
-										<span class="schedule-info "><?php echo $tr->translate("TEACHER"); ?> 	<strong class="mark-title"><?php echo $schedule['teaccherName']; ?></strong></span>
-										<span class="schedule-info "><?php echo $tr->translate("PHONE"); ?> 	<strong class="mark-title"><?php echo $schedule['teacherTel']; ?></strong></span>
+										<span class="row-items-info "><?php echo $tr->translate("TEACHER"); ?> 	<strong class="mark-title"><?php echo $schedule['teaccherName']; ?></strong></span>
+										<span class="row-items-info "><?php echo $tr->translate("PHONE"); ?> 	<strong class="mark-title"><?php echo $schedule['teacherTel']; ?></strong></span>
 									</div>
 								</div>
 								
