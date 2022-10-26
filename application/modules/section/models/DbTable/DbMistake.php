@@ -1,4 +1,4 @@
-<?php class Section_Model_DbTable_DbAttendance extends Zend_Db_Table_Abstract{
+<?php class Section_Model_DbTable_DbMistake extends Zend_Db_Table_Abstract{
 
 	protected $_name = 'rms_score';
     public function getUserId(){
@@ -21,7 +21,7 @@
 		$sql.=" AND gds.stu_id=".$this->getUserId();
 		return $db->fetchOne($sql);
 	}
-    function getStudentTotalAttendance($search=array()){
+    function getStudentTotalMistake($search=array()){
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$currentlang= $dbGb->currentlang();
 		
@@ -51,10 +51,10 @@
 				,sat.`date_attendence`
 				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
 				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countNoPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countLate
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=5 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countEalyLeave
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=1 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countSmallMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countMediumMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countBigMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countOtherMistake
 
 		";
 		$sql.="
@@ -67,7 +67,7 @@
 		$sql.="
 			WHERE
 				
-				 sat.type=1
+				 sat.type=2
 				AND sat.`status`=1
 		";
 		$groupList = $this->getGroupOfStudent();
@@ -94,7 +94,7 @@
 		return $db->fetchAll($sql);
 	}
 	
-	function moreAttendanceRecord($data){//ajaxloadmore 
+	function moreMistakeRecord($data){//ajaxloadmore 
 		$db = $this->getAdapter();
 		
 		$_dbGb  = new Application_Model_DbTable_DbGlobal();
@@ -114,7 +114,7 @@
 			$totalLimitStart = $data['page'] + $limitRecord;
 		}
 		
-		$row = $this->getStudentTotalAttendance($filter);
+		$row = $this->getStudentTotalMistake($filter);
 		$string="";
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -144,7 +144,7 @@
 									<span class="row-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$attedance['academicYear'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ROOM").' <strong class="mark-title">'.$attedance['roomName'].'</strong></span>
-									<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="'.$baseurl.'/section/attendance/detail/id/'.$attedance['yearMonth'].'?group='.$attedance['group_id'].'">
+									<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="'.$baseurl.'/section/envaluation/detail/id/'.$attedance['yearMonth'].'?group='.$attedance['group_id'].'">
 										'.$tr->translate("MORE_DETAIL").'
 									</a>
 								</div>
@@ -179,7 +179,7 @@
 	}
 	
 	
-	function getStudentTotalAttendanceInfo($search){
+	function getStudentTotalMistakeInfo($search){
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$currentlang= $dbGb->currentlang();
 		
@@ -211,10 +211,10 @@
 				,sat.`date_attendence`
 				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
 				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countNoPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countLate
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=5 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countEalyLeave
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=1 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countSmallMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countMediumMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countBigMistake
+				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countOtherMistake
 
 		";
 		$sql.="
@@ -227,7 +227,7 @@
 		$sql.="
 			WHERE
 				
-				 sat.type=1
+				 sat.type=2
 				AND sat.`status`=1
 		";
 		$yearMonth = empty($search['id'])?'':$search['id'];
@@ -248,7 +248,7 @@
 		return $db->fetchRow($sql);
 	}
 	
-	function getStudentAttendanceDetail($search){
+	function getStudentEvaluationDetail($search){
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$currentlang= $dbGb->currentlang();
 		
@@ -270,10 +270,10 @@
 			,g.group_code AS groupCode
 			,satd.`attendence_status`
 			,CASE
-					WHEN satd.`attendence_status` = 2 THEN '".$tr->translate("NO_PERMISSION")."'
-					WHEN satd.`attendence_status` = 3 THEN '".$tr->translate("PERMISSION")."'
-					WHEN satd.`attendence_status` = 4 THEN '".$tr->translate("LATE")."'
-					WHEN satd.`attendence_status` = 5 THEN '".$tr->translate("EARLY_LEAVE")."'
+					WHEN satd.`attendence_status` = 1 THEN '".$tr->translate("SMALL_MISTACK")."'
+					WHEN satd.`attendence_status` = 2 THEN '".$tr->translate("MEDIUM_MISTACK")."'
+					WHEN satd.`attendence_status` = 3 THEN '".$tr->translate("BIG_MISTACK")."'
+					WHEN satd.`attendence_status` = 4 THEN '".$tr->translate("OTHER")."'
 				
 			END AS attendenceStatusTitle
 			,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
@@ -292,7 +292,7 @@
 		$sql.="
 			WHERE
 				
-				 sat.type=1
+				 sat.type=2
 				AND sat.`status`=1 
 		";
 		$yearMonth = empty($search['id'])?'':$search['id'];
