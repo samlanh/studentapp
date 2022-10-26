@@ -685,25 +685,25 @@ END ATTENDANCE DETAIL
 =======================*/
 
 /*====================
-START ENVLUATION LIST
+START EVLUATION LIST
 =======================*/
-.lists-view-icon.envaluation .row.lists-view-icon-row .blg-row-left {
+.lists-view-icon.evaluation .row.lists-view-icon-row .blg-row-left {
     background: #1c7826;
 }
 .bl-attedance-list-row p.total-record, 
 .bl-attedance-list-row h3.title-empty.recordMessage,
-.lists-view-icon.envaluation h2.main-title ,
-.lists-view-icon.envaluation span.row-items-info strong.mark-title {
+.lists-view-icon.evaluation h2.main-title ,
+.lists-view-icon.evaluation span.row-items-info strong.mark-title {
     color: #1c7826;
 }
-.lists-view-icon.envaluation .row.lists-view-icon-row a.btn {
+.lists-view-icon.evaluation .row.lists-view-icon-row a.btn {
     background: #1c7826;
 }
-.lists-view-icon.envaluation .blg-row-left:after {
+.lists-view-icon.evaluation .blg-row-left:after {
     content: "\F986";
 }
 /*====================
-END ENVLUATION LIST
+END EVLUATION LIST
 =======================*/
 
 
