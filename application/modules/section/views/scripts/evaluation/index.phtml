@@ -78,7 +78,7 @@
 									<div class="col s6">
 										<span class="row-items-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $attedance['teacherName']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("PHONE"); ?> <strong class="mark-title"><?php echo $attedance['teacherTel']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/evaluation/detail/id/".$attedance['id'];?>">
+										<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getEvaluationContent(<?php echo $attedance['id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -197,9 +197,75 @@
 		</div>
 	</div>
 </div>
+<!-- Modal Structure -->
+<div id="modal30" class="modal modal-fixed-footer modal-evaluation">
+	<div class="modal-content">
+		<ul class="collection with-header collection-evaluation">
+			<li class="collection-header">
+				<h5>ឆមាស ១ក</h5>
+				<span class="collection-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title">១ក</strong></span>
+				<span class="collection-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title">2021-2022</strong></span>
+			</li>
+			<li class="collection-item">
+				<div class="row mrg-0 ">
+					<div class="items-info-left col s9">
+						ការយកចិត្តទុកដាក់ស្តាប់គ្រូពន្យល់/ Listen Attentively
+					</div>
+					<div class="items-info-right col s3">
+						<span class="secondary-content">មធ្យម / Average</span>
+					</div>
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class="row mrg-0 ">
+					<div class="items-info-left col s9">
+						ការយកចិត្តទុកដាក់ស្តាប់គ្រូពន្យល់/ Listen Attentively
+					</div>
+					<div class="items-info-right col s3">
+						<span class="secondary-content">ល្អបង្គួរ / Above Average</span>
+					</div>
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class="row mrg-0 ">
+					<div class="items-info-left col s9">
+						ការយកចិត្តទុកដាក់ស្តាប់គ្រូពន្យល់/ Listen Attentively
+					</div>
+					<div class="items-info-right col s3">
+						<span class="secondary-content">មធ្យម / Average</span>
+					</div>
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class="row mrg-0 ">
+					<div class="items-info-left col s9">
+						ការយកចិត្តទុកដាក់ស្តាប់គ្រូពន្យល់/ Listen Attentively
+					</div>
+					<div class="items-info-right col s3">
+						<span class="secondary-content">មធ្យម / Average</span>
+					</div>
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class="row mrg-0 ">
+					<div class="items-info-left col s9">
+						ការយកចិត្តទុកដាក់ស្តាប់គ្រូពន្យល់/ Listen Attentively
+					</div>
+					<div class="items-info-right col s3">
+						<span class="secondary-content">ល្អបង្គួរ / Above Average</span>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+	  <a href="#!" class="modal-close waves-effect waves-red btn-flat"><?php echo $tr->translate("CLOSE"); ?></a>
+	</div>
+</div>
 <script type="text/javascript">
 	$("select").formSelect(); 
-	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
+	<?php if(!empty($this->row)){ 
+		if(count($this->row) < $this->allRow){?>
 		var allRecord ='<?php echo $this->allRow; ?>';
 		
 		var trackPage = 1;
@@ -215,7 +281,7 @@
 
 		function loadContents(){
 			check=0;
-			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord/'.$querystring; ?>';
+			var urlMoreRow = '<?php echo $this->baseUrl().'/section/evaluation/morerecord/'.$querystring; ?>';
 			$("#preLoadRecord").addClass("active");
 			$.ajax({
 				url:urlMoreRow,
@@ -253,7 +319,39 @@
 			});
 
 		}
+		
+		
+		
 	<?php } ?>
+	
+	
+		
+	
+		
 	<?php } ?>
+	function getEvaluationContent(keyValuess){
+		var urlEvaluationRow = '<?php echo $this->baseUrl().'/section/evaluation/evaluationcontent'; ?>';
+			$.ajax({
+				url:urlEvaluationRow,
+				type: "post",
+				data: {
+					'evaluationId':keyValuess
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					 $('.collection-evaluation').html(data.htmlRecord);
+					setTimeout(function () {
+							$('#modal30').modal('open');
+					}, 500);
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+	}
 </script>
 

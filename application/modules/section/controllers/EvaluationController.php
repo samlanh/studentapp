@@ -45,6 +45,7 @@ class Section_EvaluationController extends Zend_Controller_Action
 		$formFilter = new Application_Form_FrmSearch();
 		$frmsearch = $formFilter->FrmSearch();
 		$this->view->formFilter = $frmsearch;
+		
     }
 	
 	function morerecordAction(){
@@ -79,7 +80,15 @@ class Section_EvaluationController extends Zend_Controller_Action
 		$this->view->rowDetail = $rowDetail;
 	}	
 
-   
+   function evaluationcontentAction(){
+		$db = new Section_Model_DbTable_DbEvaluation();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$record = $db->evaluationContent($_data);
+			print_r(Zend_Json::encode($record));exit();
+    	}
+		
+	}
 
 }
 
