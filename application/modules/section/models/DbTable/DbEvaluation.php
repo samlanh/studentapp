@@ -143,7 +143,7 @@
 								<div class="col s6">
 									<span class="row-items-info">'.$tr->translate("TEACHER").' <strong class="mark-title">'.$attedance['teacherName'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("PHONE").' <strong class="mark-title">'.$attedance['teacherTel'].'</strong></span>
-									<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getEvaluationContent('.$attedance['id'].')">
+									<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getPopupContent('.$attedance['id'].')">
 										'.$tr->translate("MORE_DETAIL").'
 									</a>
 								</div>
@@ -232,7 +232,8 @@
 		$string="";
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
-		
+		$stringHead="";
+		$string.='<ul class="collection with-header collection-popup-info">';
 		if(!empty($row)){ 
 			
 			foreach($row AS $key =>  $commentItems){
@@ -273,12 +274,11 @@
 				}
 				
 				if($key==0){
-					$string.='
-						<li class="collection-header">
+					$stringHead='
+						<div class="modal-header ">
 							<h5>'.$commentItems['examTypeTitle'].' '.$forMonthTitle.'</h5>
-							<span class="collection-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$commentItems['groupCode'].'</strong></span>
-							<span class="collection-items-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$commentItems['academicYear'].'</strong></span>
-						</li>
+							<span class="modal-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$commentItems['groupCode'].'</strong> '.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$commentItems['academicYear'].'</strong></span>
+						</div>
 					';
 				}
 				
@@ -299,6 +299,9 @@
 			
 			}
 		}
+		$string.='</ul>';
+		
+		$string=$stringHead.$string;
 		$array = array(
 			'htmlRecord'=>$string,
 			

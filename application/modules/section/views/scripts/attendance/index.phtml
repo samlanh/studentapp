@@ -65,7 +65,7 @@
 										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $attedance['academicYear']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/attendance/detail/id/".$attedance['yearMonth']."?group=".$attedance['group_id'];?>">
+										<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $attedance['yearMonth']; ?>,<?php echo $attedance['group_id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -197,6 +197,13 @@
 		</div>
 	</div>
 </div>
+<!-- Modal Structure -->
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+	</div>
+	<div class="modal-footer">
+	</div>
+</div>
 <script type="text/javascript">
 	$("select").formSelect(); 
 	<?php if(!empty($this->row)){ if(count($this->row) < $this->allRow){?>
@@ -254,6 +261,34 @@
 
 		}
 	<?php } ?>
+	function getPopupContent(yearMonth,group){
+		
+		var urlEvaluationRow = '<?php echo $this->baseUrl().'/section/attendance/detailcontent'; ?>';
+			$.ajax({
+				url:urlEvaluationRow,
+				type: "post",
+				data: {
+					'id':yearMonth
+					,'group':group
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					$('.content-info').html(data.htmlRecord);
+					setTimeout(function () {
+							$('#modal-popup').modal('open');
+					}, 500);
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+	}
 	<?php } ?>
+	
+	
 </script>
 
