@@ -1017,3 +1017,7 @@ ul.collection.with-header.collection-popup-info {
     padding-left: 20px;
     color: #434141;
 }
+.sidenav .copy-wrap .copyright {
+    position: absolute;
+    bottom: 10%;
+}
