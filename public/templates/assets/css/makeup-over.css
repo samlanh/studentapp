@@ -219,7 +219,7 @@ a.languageSwitch img.languageSwitch:hover {
 strong.mark-title {
     font-size: inherit;
     line-height: inherit;
-    color: #034a74;
+    color: #000000;
 }
 
 /*====================
@@ -554,7 +554,7 @@ START LIST VIEW WITH ICON
     margin-bottom: 10px;
 }
 .row.lists-view-icon-row .blg-row-left, .row.lists-view-icon-row  .blg-row-right {
-    min-height: 100px;
+    min-height: 120px;
 }
 .row.lists-view-icon-row .blg-row-left {
     text-align: center;
@@ -633,6 +633,7 @@ END LIST VIEW WITH ICON
 /*====================
 START ATTENDANCE LIST VIEW
 =======================*/
+.bl-evaluation-list-row,
 .bl-attedance-list-row {
     background: #fff;
     opacity: 0.9;
@@ -690,8 +691,8 @@ START EVLUATION LIST
 .lists-view-icon.evaluation .row.lists-view-icon-row .blg-row-left {
     background: #1c7826;
 }
-.bl-attedance-list-row p.total-record, 
-.bl-attedance-list-row h3.title-empty.recordMessage,
+.bl-evaluation-list-row p.total-record, 
+.bl-evaluation-list-row h3.title-empty.recordMessage,
 .lists-view-icon.evaluation h2.main-title ,
 .lists-view-icon.evaluation span.row-items-info strong.mark-title {
     color: #1c7826;
@@ -920,90 +921,99 @@ END HEADER PAGE PANEL THEME
 }
 
 
-div.modal-evaluation {
+.modal.bottom-sheet.modal-popup-info {
     background: #ffffff;
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
-span.collection-items-info {
+.modal.bottom-sheet.modal-popup-info .modal-content {
+    max-height: 350px;
+    border: none;
+}
+.modal-popup-info .modal-header {
+    border-bottom: dashed 2px #263238;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+span.modal-info {
     display: block;
     font-size: 12px;
     line-height: 18px;
+    color: #000;
 }
-
-span.collection-items-info strong.mark-title {}
-
-.collection-evaluation .collection-header h5 {
-    color: #034a74;
+.modal-popup-info h5 {
+    color: #000000;
     margin: 0;
     padding: 0;
-    line-height: 22px;
-    font-size: 18px;
+    line-height: 26px;
+    font-size: 16px;
+}
+.modal-popup-info .modal-footer {
+    background: #fff;
+}
+.content-footer.content-total {
+    border-top: solid 2px #095988;
+    background: #7bbdcc61;
+    padding: 5px 0;
 }
 
-ul.collection.with-header.collection-evaluation:before {
-    content: "\F986";
-    font: normal normal normal 24px/1 "Material Design Icons";
+.modal-popup-info .empty-content h3 {
+    font-size: 24px;
+    line-height: 40px;
+    padding: 20px 0;
+    color: #b0bec5;
+}
+
+.modal-popup-info .empty-content h3 i {
     font-size: inherit;
-    text-rendering: auto;
     line-height: inherit;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: absolute;
-    z-index: -1;
-    font-size: 150px;
-    opacity: 0.2;
-    color: #005197;
-    width: 100%;
-    display: flex;
-    align-items: baseline;
-    height: 100%;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    text-align: center;
-    align-content: space-around;
-    flex-wrap: wrap;
-    flex-direction: column-reverse;
-    justify-content: space-around;
+    padding: 0 5px;
 }
 
-.collection.with-header.collection-evaluation .collection-header {
-    text-align: center;
-    padding-bottom: 10px !important;
-    margin-bottom: 10px;
-    border-bottom: dashed 2px #034a74;
+.collection-popup-info .collection-item {
+    background: none;
+    padding: 0 !important;
 }
-ul.collection.with-header.collection-evaluation {
+
+ul.collection.with-header.collection-popup-info {
     box-shadow: none;
     border: none;
     background: none;
     position: relative;
     margin: 0;
+    max-height: 220px;
+    overflow: auto;
+    display: block;
+    padding: 20px 0;
 }
-.collection.with-header.collection-evaluation .collection-header, 
-.collection-evaluation .collection-item {
-    background: none;
-    padding: 0 !important;
-}
-.collection-evaluation .collection-item {
+
+.collection-popup-info .collection-item {
     margin: 0;
     padding: 5px 0 !important;
     border-bottom: 1px dotted #eee;
 }
-.items-info-left.col.s9 {}
-.collection-evaluation .items-info-left,
-.collection-evaluation .items-info-right {
+.collection-popup-info .items-info-left,
+.collection-popup-info .items-info-right {
     padding: 0;
     margin: 0;
     font-size: 12px;
     line-height: 18px;
-    color: #034a74;
+    color: #000000;
 }
-.collection-evaluation .secondary-content {
-    color: #048910;
+.collection-popup-info .secondary-content {
+    color: inherit;
     font-size: 12px;
     line-height: 16px;
     text-align: right;
     font-weight: 600;
+}
+.collection-popup-info 
+ small.description-items {
+    font-size: 11px;
+    display: block;
+    line-height: 16px;
+    padding-left: 20px;
+    color: #434141;
 }
