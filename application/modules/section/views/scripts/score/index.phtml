@@ -45,9 +45,18 @@
 				<?php 
 					$rank = $score['rank']; 
 					$forMonthTitle = $score['forMonthTitle']; 
+					$academicYearTitle = $score['academicYearTitle']; 
+					$totalScore = $score['totalScore'];
+					$totalAvg = $score['totalAvg'];
+					$amountStudent = sprintf('%02d',$score['amountStudent']);
 					if($currentlang==1){
 						$rank = $dbGb->getNumberInkhmer($rank);
 						$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+						$academicYearTitle = $dbGb->getNumberInkhmer($academicYearTitle);
+						
+						$totalScore = $dbGb->getNumberInkhmer($totalScore);
+						$totalAvg = $dbGb->getNumberInkhmer($totalAvg);
+						$amountStudent = $dbGb->getNumberInkhmer($amountStudent);
 					}
 				?>
 				<div class="ui-grids scoreList">
@@ -55,14 +64,14 @@
 						<div class="col s8 blg-score-left">
 							<h3 class="title-score"><?php echo $score['forTypeTitle']; ?> <strong class="mark-title"><?php echo $forMonthTitle; ?></strong> </h3>
 							<span class="score-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $score['groupCode']; ?></strong></span>
-							<span class="score-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $score['academicYearTitle']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $academicYearTitle; ?></strong></span>
 							<span class="score-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $score['teacherName']; ?></strong></span>
-							<span class="score-info"><?php echo $tr->translate("AMT_STUDENT"); ?> <strong class="mark-title"><?php echo sprintf('%02d',$score['amountStudent'])." ".$tr->translate("STU_UNIT"); ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AMT_STUDENT"); ?> <strong class="mark-title"><?php echo $amountStudent." ".$tr->translate("STU_UNIT"); ?></strong></span>
 							</div>
 						<div class="col s4 blg-score-right">
 							<h2 class="ranking"><?php echo $rank; ?></h2>
-							<span class="score-info"><?php echo $tr->translate("TOTAL_SCORE"); ?> <strong class="mark-title"><?php echo $score['totalScore']; ?></strong></span>
-							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $score['totalAvg']; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("TOTAL_SCORE"); ?> <strong class="mark-title"><?php echo $totalScore; ?></strong></span>
+							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $totalAvg; ?></strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
 							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/score/detail/id/".$score['id'];?>">

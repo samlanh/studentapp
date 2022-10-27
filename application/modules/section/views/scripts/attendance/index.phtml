@@ -44,12 +44,27 @@
 					<?php if(!empty($this->row)){ 
 						foreach($this->row AS $attedance){
 							
+							$academicYear = $attedance['academicYear']; 
+							
 							$yearAtt = date("Y",strtotime($attedance['date_attendence'])); 
 							$monthAtt = date("M",strtotime($attedance['date_attendence'])); 
 							$monthKey = date("m",strtotime($attedance['date_attendence'])); 
+							
+							$countAbsent 		= sprintf('%02d',$attedance['countNoPermission']);
+							$countPermission 	= sprintf('%02d',$attedance['countPermission']);
+							$countLate 			= sprintf('%02d',$attedance['countLate']);
+							$countEalyLeave 	= sprintf('%02d',$attedance['countEalyLeave']);
+			
 							if($currentlang==1){
+								$academicYear = $dbGb->getNumberInkhmer($academicYear);
+								
 								$yearAtt = $dbGb->getNumberInkhmer($yearAtt);
 								$monthAtt = $dbGb->getMonthInkhmer($monthKey);
+								
+								$countAbsent 	= $dbGb->getNumberInkhmer($countAbsent);
+								$countPermission = $dbGb->getNumberInkhmer($countPermission);
+								$countLate 		= $dbGb->getNumberInkhmer($countLate);
+								$countEalyLeave = $dbGb->getNumberInkhmer($countEalyLeave);
 							}
 						?>
 						<div class="row lists-view-icon-row  mrg-0">
@@ -63,7 +78,7 @@
 								<div class="row mrg-0 info-blg">
 									<div class="col s6">
 										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
-										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $attedance['academicYear']; ?></strong></span>
+										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $academicYear; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
 										<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $attedance['yearMonth']; ?>,<?php echo $attedance['group_id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
@@ -76,10 +91,10 @@
 										<span class="row-items-info text-right"><?php echo $tr->translate("EARLY_LEAVE_SHORT_CUT"); ?></span>
 									</div>
 									<div class="col s3">
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countNoPermission'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countPermission'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countLate'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countEalyLeave'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countAbsent." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countPermission." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countLate." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countEalyLeave." ".$tr->translate("TIME_UNIT"); ?></strong></span>
 									
 									</div>
 								</div>

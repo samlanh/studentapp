@@ -145,9 +145,20 @@
 			foreach($row AS $score){
 				$rank = $score['rank']; 
 				$forMonthTitle = $score['forMonthTitle']; 
+				
+				$academicYearTitle = $score['academicYearTitle']; 
+				$totalScore = $score['totalScore'];
+				$totalAvg = $score['totalAvg'];
+				$amountStudent = sprintf('%02d',$score['amountStudent']);
+					
 				if($currentlang==1){
 					$rank = $_dbGb->getNumberInkhmer($rank);
 					$forMonthTitle = $_dbGb->getNumberInkhmer($forMonthTitle);
+					$academicYearTitle = $_dbGb->getNumberInkhmer($academicYearTitle);
+						
+					$totalScore = $_dbGb->getNumberInkhmer($totalScore);
+					$totalAvg = $_dbGb->getNumberInkhmer($totalAvg);
+					$amountStudent = $_dbGb->getNumberInkhmer($amountStudent);
 				}
 				$string.='
 				<div class="ui-grids scoreList">
@@ -155,14 +166,14 @@
 						<div class="col s8 blg-score-left">
 							<h3 class="title-score">'.$score['forTypeTitle'].' <strong class="mark-title">'.$forMonthTitle.'</strong> </h3>
 							<span class="score-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$score['groupCode'].'</strong></span>
-							<span class="score-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$score['academicYearTitle'].'</strong></span>
+							<span class="score-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYearTitle.'</strong></span>
 							<span class="score-info">'.$tr->translate("TEACHER").' <strong class="mark-title">'.$score['teacherName'].'</strong></span>
-							<span class="score-info">'.$tr->translate("AMT_STUDENT").'	<strong class="mark-title">'.sprintf('%02d',$score['amountStudent'])." ".$tr->translate("STU_UNIT").'</strong></span>
+							<span class="score-info">'.$tr->translate("AMT_STUDENT").'	<strong class="mark-title">'.$amountStudent." ".$tr->translate("STU_UNIT").'</strong></span>
 							</div>
 						<div class="col s4 blg-score-right">
 							<h2 class="ranking">'.$rank.'</h2>
-							<span class="score-info">'.$tr->translate("TOTAL_SCORE").' <strong class="mark-title">'.$score['totalScore'].'</strong></span>
-							<span class="score-info">'.$tr->translate("AVERAGE").' <strong class="mark-title">'.$score['totalAvg'].'</strong></span>
+							<span class="score-info">'.$tr->translate("TOTAL_SCORE").' <strong class="mark-title">'.$totalScore.'</strong></span>
+							<span class="score-info">'.$tr->translate("AVERAGE").' <strong class="mark-title">'.$totalAvg.'</strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
 							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="'.$baseurl.'/section/score/detail/id/'.$score['id'].'">

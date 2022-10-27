@@ -47,6 +47,7 @@ class Section_PaymentController extends Zend_Controller_Action
 		$formFilter = new Application_Form_FrmSearch();
 		$frmsearch = $formFilter->FrmSearch();
 		$this->view->formFilter = $frmsearch;
+		
     }
 
 	function morerecordAction(){
@@ -77,7 +78,17 @@ class Section_PaymentController extends Zend_Controller_Action
 		
 		$rowDetail = $dbPmt->getPaymentDetail($id);
 		$this->view->rowDetail = $rowDetail;
-	}	
+	}
+	
+	function detailcontentAction()
+	{
+		$db = new Section_Model_DbTable_DbPayment();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$record = $db->detailContent($_data);
+			print_r(Zend_Json::encode($record));exit();
+    	}
+	}
 
 }
 

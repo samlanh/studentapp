@@ -6,6 +6,7 @@
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$systemLink = $dbGb->systemLink();
+	$currentlang = $dbGb->currentlang();
 	
 	$frm = $this->formFilter;
 	$querystring = $this->queryString;
@@ -73,7 +74,22 @@
 <div class="spacer-small"></div>
 <div class="spacer-medium"></div>
 <div id="listRecord" class="payment-list-info ">
-	<?php $stickyBlog=""; if(!empty($this->row)){ foreach($this->row AS $payment){?>
+	<?php $stickyBlog=""; if(!empty($this->row)){ foreach($this->row AS $payment){ 
+	
+			$yearPMT = date("Y",strtotime($payment['paymentDate'])); 
+			$dayPMT = date("d",strtotime($payment['paymentDate'])); 
+			$monthPMT = date("M",strtotime($payment['paymentDate'])); 
+			$monthKey = date("m",strtotime($payment['paymentDate'])); 
+			
+
+			if($currentlang==1){
+				$yearPMT = $dbGb->getNumberInkhmer($yearPMT);
+				$dayPMT = $dbGb->getNumberInkhmer($dayPMT);
+				$monthPMT = $dbGb->getMonthInkhmer($monthKey);
+				
+			}
+	
+	?>
 	<?php if($stickyBlog!=date("mY",strtotime($payment['paymentDate']))){?>
 	<div class="stickyBlog">
 		<div class="stickyTitle">
@@ -85,8 +101,8 @@
 		<div class="ui-grids payment_list-row">
 			<div class="row mrg-0">
 				<div class="col s7 blg-payment-left">
-					<h3 class="title-payment"><?php echo $tr->translate("RECEIPT_NO"); ?> <strong class="mark-title"><?php echo $payment['receiptNo']; ?></strong> </h3>
-					<span class="payment-info"><?php echo $tr->translate("PMT_DATE"); ?> <strong class="mark-title"><?php echo date("d-M-Y",strtotime($payment['paymentDate'])); ?></strong></span>
+					<h3 class="title-payment"><?php echo $payment['receiptNo']; ?> </h3>
+					<span class="payment-info"><i class="mdi mdi-calendar-clock "></i> <strong class="mark-title"><?php echo $dayPMT."-".$monthPMT."-".$yearPMT; ?></strong></span>
 					<span class="payment-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $payment['groupCode']; ?></strong></span>
 					<span class="payment-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $payment['academicYear']; ?></strong></span>
 					<span class="payment-info"><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $payment['userName']; ?></strong></span>
@@ -102,7 +118,7 @@
 					<?php } ?>
 					<div class="spacer-small"></div>
 					<div class="spacer-small"></div>
-					<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/payment/detail/id/".$payment['id'];?>">
+					<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $payment['id']; ?>)" >
 						<?php echo $tr->translate("MORE_DETAIL"); ?>
 					</a>
 				</div>
@@ -186,7 +202,13 @@
 </div>
 <?php } ?>	
 <div class="spacer-xlarge"></div>
-
+<!-- Modal Structure -->
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+	</div>
+	<div class="modal-footer">
+	</div>
+</div>
 
 <script type="text/javascript">
 
@@ -263,6 +285,32 @@
 			});
 
 		}
+		
+		function getPopupContent(payment){
+			var urlRowContent = '<?php echo $this->baseUrl().'/section/payment/detailcontent'; ?>';
+				$.ajax({
+					url:urlRowContent,
+					type: "post",
+					data: {
+						'id':payment
+						
+					},
+					dataType: "json",
+					success: function(data){
+						
+						$('.content-info').html(data.htmlRecord);
+						setTimeout(function () {
+								$('#modal-popup').modal('open');
+						}, 500);
+						
+					},
+					error: function(err) {
+						alert(err);
+					}
+				});
+
+		}
+	
 	<?php } ?>
 </script>
 
