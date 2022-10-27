@@ -212,5 +212,44 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		curl_close($ch);
 		return $status;
 	}
+	
+	public function getDiscipline(){
+    	$db = $this->getAdapter();
+    	try{
+    		$currentLang = $this->currentlang();
+			$sql=" SELECT 
+						ad.title,
+						ad.description
+					FROM `mobile_disciplinenote` AS a,
+						`mobile_disciplinenote_detail` AS ad
+					WHERE a.id=ad.displicipline_id
+						AND ad.lang= $currentLang 
+						AND a.status=1 ";
+			$sql.=" ORDER BY a.ordering ASC ";
+    		$row = $db->fetchAll($sql);
+    		return $row;
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
+	public function getGradingSystem(){
+    	$db = $this->getAdapter();
+    	try{
+    		$currentLang = $this->currentlang();
+			$sql=" SELECT 
+						ad.title,
+						ad.description
+					FROM `mobile_grading_system` AS a,
+						`mobile_grading_system_detail` AS ad
+					WHERE a.id=ad.grading_id
+						AND ad.lang= $currentLang 
+						AND a.status=1 ";
+			$sql.=" ORDER BY a.id ASC ";
+    		$row = $db->fetchAll($sql);
+    		return $row;
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
 }
 ?>
