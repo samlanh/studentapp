@@ -115,8 +115,10 @@
 				
 				$issueYear = date("Y",strtotime($attedance['issueDate'])); 
 				$forMonthTitle = $attedance['forMonthTitle']; 
+				$academicYear = $attedance['academicYear']; 
 				if($currentlang==1){
 					$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+					$academicYear = $dbGb->getNumberInkhmer($academicYear);
 					
 					$issueDay = $dbGb->getNumberInkhmer($issueDay);
 					$issueMonth = $dbGb->getMonthInkhmer($issueMonthKey);
@@ -135,8 +137,8 @@
 						<div class="col s9 blg-row-right">
 							<div class="row mrg-0 info-blg">
 								<div class="col s6">
+									<span class="row-items-info"><strong class="mark-title">'.$academicYear.'</strong></span>
 									<span class="row-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong></span>
-									<span class="row-items-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$attedance['academicYear'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ROOM").' <strong class="mark-title">'.$attedance['roomName'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ISSUE_DATE").' <strong class="mark-title">'.$issueDay."-".$issueMonth."-".$issueYear.'</strong></span>
 								</div>
@@ -263,8 +265,11 @@
 				$commentTitle = $commentEng;
 				$ratingTitle = $ratingEng;
 				$numRow = $key+1;
+				$academicYear = $commentItems['academicYear'];
 				if($currentlang==1){
 					$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+					$academicYear = $dbGb->getNumberInkhmer($academicYear);
+					
 					$issueDay = $dbGb->getNumberInkhmer($issueDay);
 					$issueMonth = $dbGb->getMonthInkhmer($issueMonthKey);
 					$issueYear = $dbGb->getNumberInkhmer($issueYear);
@@ -277,7 +282,7 @@
 					$stringHead='
 						<div class="modal-header ">
 							<h5>'.$commentItems['examTypeTitle'].' '.$forMonthTitle.'</h5>
-							<span class="modal-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$commentItems['groupCode'].'</strong> '.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$commentItems['academicYear'].'</strong></span>
+							<span class="modal-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$commentItems['groupCode'].'</strong> '.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYear.'</strong></span>
 						</div>
 					';
 				}

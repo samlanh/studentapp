@@ -159,7 +159,7 @@
 				if($stickyBlog!=date("mY",strtotime($payment['paymentDate']))){
 					$string.='<div class="stickyBlog">
 								<div class="stickyTitle">
-									'.date("M-Y",strtotime($payment['paymentDate'])).'
+									'.$monthPMT."-".$yearPMT.'
 								</div>
 							</div>';
 				}
@@ -170,9 +170,9 @@
 						<div class="row mrg-0">
 							<div class="col s7 blg-payment-left">
 								<h3 class="title-payment">'.$payment['receiptNo'].'</h3>
-								<span class="payment-info">	'.$tr->translate("PMT_DATE").' <strong class="mark-title">'.$dayPMT."-".$monthPMT."-".$yearPMT.'</strong></span>
+								<span class="payment-info"><strong class="mark-title">'.$dayPMT."-".$monthPMT."-".$yearPMT.'</strong></span>
+								<span class="payment-info"><strong class="mark-title">'.$payment['academicYear'].'</strong></span>
 								<span class="payment-info">	'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$payment['groupCode'].'</strong></span>
-								<span class="payment-info">	'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$payment['academicYear'].'</strong></span>
 								<span class="payment-info">	'.$tr->translate("CASHIER").' <strong class="mark-title">'.$payment['userName'].'</strong></span>
 							</div>
 							<div class="col s5 blg-payment-right">

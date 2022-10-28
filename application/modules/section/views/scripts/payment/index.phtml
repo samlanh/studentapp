@@ -93,7 +93,7 @@
 	<?php if($stickyBlog!=date("mY",strtotime($payment['paymentDate']))){?>
 	<div class="stickyBlog">
 		<div class="stickyTitle">
-			<?php echo date("M-Y",strtotime($payment['paymentDate'])); ?>
+			<?php echo $monthPMT."-".$yearPMT; ?>
 		</div>
 	</div>
 	<?php } $stickyBlog =date("mY",strtotime($payment['paymentDate'])); ?>
@@ -102,9 +102,9 @@
 			<div class="row mrg-0">
 				<div class="col s7 blg-payment-left">
 					<h3 class="title-payment"><?php echo $payment['receiptNo']; ?> </h3>
-					<span class="payment-info"><i class="mdi mdi-calendar-clock "></i> <strong class="mark-title"><?php echo $dayPMT."-".$monthPMT."-".$yearPMT; ?></strong></span>
+					<span class="payment-info"><strong class="mark-title"><?php echo $dayPMT."-".$monthPMT."-".$yearPMT; ?></strong></span>
+					<span class="payment-info"><strong class="mark-title"><?php echo $payment['academicYear']; ?></strong></span>
 					<span class="payment-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $payment['groupCode']; ?></strong></span>
-					<span class="payment-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $payment['academicYear']; ?></strong></span>
 					<span class="payment-info"><?php echo $tr->translate("CASHIER"); ?> <strong class="mark-title"><?php echo $payment['userName']; ?></strong></span>
 				</div>
 				<div class="col s5 blg-payment-right">

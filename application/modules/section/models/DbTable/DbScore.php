@@ -163,14 +163,14 @@
 				$string.='
 				<div class="ui-grids scoreList">
 					<div class="row ">
-						<div class="col s8 blg-score-left">
+						<div class="col s7 blg-score-left">
 							<h3 class="title-score">'.$score['forTypeTitle'].' <strong class="mark-title">'.$forMonthTitle.'</strong> </h3>
+							<span class="score-info"><strong class="mark-title">'.$academicYearTitle.'</strong></span>
 							<span class="score-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$score['groupCode'].'</strong></span>
-							<span class="score-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYearTitle.'</strong></span>
 							<span class="score-info">'.$tr->translate("TEACHER").' <strong class="mark-title">'.$score['teacherName'].'</strong></span>
 							<span class="score-info">'.$tr->translate("AMT_STUDENT").'	<strong class="mark-title">'.$amountStudent." ".$tr->translate("STU_UNIT").'</strong></span>
 							</div>
-						<div class="col s4 blg-score-right">
+						<div class="col s5 blg-score-right">
 							<h2 class="ranking">'.$rank.'</h2>
 							<span class="score-info">'.$tr->translate("TOTAL_SCORE").' <strong class="mark-title">'.$totalScore.'</strong></span>
 							<span class="score-info">'.$tr->translate("AVERAGE").' <strong class="mark-title">'.$totalAvg.'</strong></span>

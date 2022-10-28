@@ -156,8 +156,8 @@
 						<div class="col s9 blg-row-right">
 							<div class="row mrg-0 info-blg">
 								<div class="col s6">
+									<span class="row-items-info"><strong class="mark-title">'.$academicYear.'</strong></span>
 									<span class="row-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong></span>
-									<span class="row-items-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYear.'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ROOM").' <strong class="mark-title">'.$attedance['roomName'].'</strong></span>
 									<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent('. $attedance['yearMonth'].','.$attedance['group_id'].')" >
 										'.$tr->translate("MORE_DETAIL").'

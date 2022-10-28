@@ -50,8 +50,10 @@
 							
 							$issueYear = date("Y",strtotime($attedance['issueDate'])); 
 							$forMonthTitle = $attedance['forMonthTitle']; 
+							$academicYear = $attedance['academicYear'];
 							if($currentlang==1){
 								$forMonthTitle = $dbGb->getNumberInkhmer($forMonthTitle);
+								$academicYear = $dbGb->getNumberInkhmer($academicYear);
 								
 								$issueDay = $dbGb->getNumberInkhmer($issueDay);
 								$issueMonth = $dbGb->getMonthInkhmer($issueMonthKey);
@@ -69,8 +71,8 @@
 							<div class="col s9 blg-row-right">
 								<div class="row mrg-0 info-blg">
 									<div class="col s6">
+										<span class="row-items-info"><strong class="mark-title"><?php echo $academicYear; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
-										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $attedance['academicYear']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ISSUE_DATE"); ?> <strong class="mark-title"><?php echo $issueDay."-".$issueMonth."-".$issueYear; ?></strong></span>
 									</div>
