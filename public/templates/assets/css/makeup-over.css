@@ -485,9 +485,9 @@ START PAYMENT LIST VIEW
     padding: 0;
     font-size: 24px;
     line-height: 28px;
-    color: #ffa900;
-    text-shadow: 1px 1px #727272;
-    font-weight: normal;
+    color: #0f5374;
+    text-shadow: 1px 0px #727272;
+    font-weight: 600;
 }
 .blg-payment-left {border-right: dashed 2px #263238;}
 
@@ -495,9 +495,15 @@ START PAYMENT LIST VIEW
 h3.title-payment {
     margin: 0;
     font-size: 16px;
-    font-weight: normal;
     line-height: 24px;
-    color: #000000;
+    font-weight: 600;
+    color: #0f5374;
+    text-shadow: 1px 0px #727272;
+}
+h3.title-payment sup {
+    font-size: 60%;
+    top: -0.8em;
+    text-shadow: none;
 }
 span.payment-info {
     display: block;
