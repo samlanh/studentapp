@@ -1,0 +1,82 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("NEWS"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	$currentlang = $dbGb->currentlang();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-listview gradientBluePrimary">
+	<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-library-books "></i>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("NEWS"); ?>
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+    <div class="section">
+		<div class="row ui-mediabox blogs    ">
+			<?php if(!empty($this->rs)){ foreach($this->rs AS $row){
+				 
+				$strDescription = substr(strip_tags($row['description']), 0, 150);
+				 
+				$yearAtt = date("Y",strtotime($row['publish_date'])); 
+				$monthAtt = date("M",strtotime($row['publish_date'])); 
+				$days = date("d",strtotime($row['publish_date'])); 
+				$monthKey = date("m",strtotime($row['publish_date'])); 
+				
+				$images = $this->baseUrl()."/images/no-photo.png";
+				$imageFeature = $systemLink.'/images/newsevent/'.$row['image_feature'];
+				if ($dbGb->does_url_exists($imageFeature)){
+					$images = $systemLink.'/images/newsevent/'.$row['image_feature'];
+				}
+				if($currentlang==1){
+					
+					$yearAtt = $dbGb->getNumberInkhmer($yearAtt);
+					$monthAtt = $dbGb->getMonthInkhmer($monthKey);
+					$days = $dbGb->getNumberInkhmer($days);
+					
+					$strDescription = substr(strip_tags($row['description']), 0, 250);
+				}
+							
+				?>	
+			<div class="col s12">
+				<div class="blog-img-wrap">
+					<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="Build a design from scratch with creativity">
+					<img class="z-depth-1" style="width: 100%;" src="<?php echo $images; ?>">
+					</a>
+				</div>
+				<div class="blog-info">
+					<a href="<?php echo $this->baseUrl()."/utility/news/detail/id/".$row['id']; ?>" >                    
+						<h5 class="title"><?php echo $row['title']; ?></h5>
+					</a>
+					<span class="small date"><i class="mdi mdi-calendar-clock "></i> <?php echo $days." ".$monthAtt." ".$yearAtt?></span>
+					                              
+					<p class="bot-0 text"><?php echo $strDescription;   ?>...</p>
+					<div class="spacer"></div>
+					<div class="divider"></div>
+					<div class="spacer"></div>
+				</div>
+			</div>
+			<?php } }?>
+		</div>
+	</div>
+</div>
+
+<div class="spacer-xlarge"></div>
+
+

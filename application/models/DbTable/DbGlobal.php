@@ -251,5 +251,25 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
+	public function getNewsEvents(){
+    	$db = $this->getAdapter();
+    	try{
+    		$currentLang = $this->currentlang();
+			$sql=" SELECT 
+						a.*,
+						ad.title,
+						ad.description
+					FROM `mobile_news_event` AS a,
+						`mobile_news_event_detail` AS ad
+					WHERE a.id=ad.news_id
+						AND ad.lang= $currentLang 
+						AND a.status=1 ";
+			$sql.=" ORDER BY a.publish_date DESC,a.id DESC ";
+    		$row = $db->fetchAll($sql);
+    		return $row;
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
 }
 ?>
