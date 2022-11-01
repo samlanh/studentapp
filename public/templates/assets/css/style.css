@@ -169,6 +169,82 @@ TABLE OF CONTENTS:
 	font-family:'Khmer Os Battambang';
 	src:url("../fonts/emFont/KhmerOSbattambang.ttf");
 }
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:400;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-Regular.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:400;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-Regular.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:italic;
+	font-weight:400;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-Italic.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:300;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-Light.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:italic;font-weight:300;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-LightItalic.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:600;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-SemiBold.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:italic;
+	font-weight:600;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-SemiBoldItalic.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:700;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-Bold.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:italic;
+	font-weight:700;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-BoldItalic.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:normal;
+	font-weight:800;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-ExtraBold.woff") format('woff')
+}
+@font-face{
+	font-family:open sans;
+	font-style:italic;
+	font-weight:800;
+	src:local('Open Sans'),url("../fonts/emFont/OpenSans-ExtraBoldItalic.woff") format('woff')
+}
+@font-face{
+	font-family:open sans light;
+	font-style:normal;
+	font-weight:300;
+	src:local('Open Sans Light'),url("../fonts/emFont/OpenSans-Light-webfont.woff") format('woff')
+}
+@font-face{
+	font-family:open sans condensed;
+	font-style:normal;font-weight:700;
+	src:local('Open Sans Condensed'),url("../fonts/emFont/OpenSans-CondBold.woff") format('woff')
+}
 /*----------------------------------------
   General Layout
 ------------------------------------------*/
@@ -243,7 +319,7 @@ body .bgBody-listview.bluePrimary {
 }
 
 body, body *,p{
-  font-family: 'Khmer Os Battambang',Roboto;
+  font-family: 'Open Sans', sans-serif,'Khmer Os Battambang';
   font-size: 16px;
   line-height: 26px
 }
