@@ -56,7 +56,7 @@
 				?>	
 			<div class="col s12">
 				<div class="blog-img-wrap">
-					<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="Build a design from scratch with creativity">
+					<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="<?php echo $row['title']; ?>">
 					<img class="z-depth-1" style="width: 100%;" src="<?php echo $images; ?>">
 					</a>
 				</div>
@@ -79,4 +79,23 @@
 
 <div class="spacer-xlarge"></div>
 
+ <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<link href="<?php echo $this->baseUrl()."/templates/"; ?>assets/plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" type="text/css" media="screen"/>        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
 
+<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<script src="<?php echo $this->baseUrl()."/templates/"; ?>assets/plugins/fancybox/jquery.fancybox.min.js" type="text/javascript"></script>
+<script type="text/javaScript">
+  $("[data-fancybox=images]").fancybox({
+  buttons : [ 
+    "slideShow",
+    "share",
+    "zoom",
+    "fullScreen",
+    "close",
+    "thumbs"
+  ],
+  thumbs : {
+    autoStart : false
+  }
+});
+</script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
