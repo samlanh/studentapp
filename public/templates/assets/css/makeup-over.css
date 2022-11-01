@@ -135,8 +135,6 @@ a.languageSwitch img.languageSwitch:hover {
     font-size: 28px;
     background-color: #e9eff9;
 }
-
-
 .setting-box.preLogin{
     min-height: 120px;
 }
@@ -190,7 +188,10 @@ a.languageSwitch img.languageSwitch:hover {
     font-size: 16px;
     color: #263238;
 }
-
+.text.description iframe {
+    width: 100% !important;
+    height: 400px;
+}
 .text.description p,
 .text.description span,
 .text.description h1,
