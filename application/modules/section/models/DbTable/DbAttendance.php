@@ -119,8 +119,18 @@
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
 		
+		$tAbsent 	=empty($data['tAbsent'])?0:$data['tAbsent'];
+		$tPermission=empty($data['tPermission'])?0:$data['tPermission'];
+		$tLate 		=empty($data['tLate'])?0:$data['tLate'];
+		$tEalyLeave =empty($data['tEalyLeave'])?0:$data['tEalyLeave'];
+	
 		if(!empty($row)){ 
 			foreach($row AS $attedance){
+				
+				$tAbsent 	=$tAbsent+$attedance['countNoPermission'];
+				$tPermission=$tPermission+$attedance['countPermission'];
+				$tLate 		=$tLate+$attedance['countLate'];
+				$tEalyLeave =$tEalyLeave+$attedance['countEalyLeave'];
 				
 				$academicYear = $attedance['academicYear']; 
 				
@@ -184,10 +194,45 @@
 			
 			}
 		}
+		
+		$tAbsentLB 		= sprintf('%02d',$tAbsent);
+		$tPermissionLB 	= sprintf('%02d',$tPermission);
+		$tLateLB 			= sprintf('%02d',$tLate);
+		$tEalyLeaveLB 	= sprintf('%02d',$tEalyLeave);
+		if($currentlang==1){
+			$tAbsentLB 	= $_dbGb->getNumberInkhmer($tAbsentLB);
+			$tPermissionLB = $_dbGb->getNumberInkhmer($tPermissionLB);
+			$tLateLB 		= $_dbGb->getNumberInkhmer($tLateLB);
+			$tEalyLeaveLB = $_dbGb->getNumberInkhmer($tEalyLeaveLB);
+		}
+		$totalPageHtml='
+			<div class="container">
+				<div class="row mrg-0 ">
+					<div class="col s3 text-center">
+						<span class="page-footer-info">'.$tr->translate("NO_PERMISSION_SHORT_CUT").'</span>
+						<span class="page-footer-info"><strong>'.$tAbsentLB.'</strong></span>
+					</div>
+					<div class="col s3 text-center">
+						<span class="page-footer-info">'.$tr->translate("PERMISSION_SHORT_CUT").'</span>
+						<span class="page-footer-info"><strong>'.$tPermissionLB.'</strong></span>
+					</div>
+					<div class="col s3 text-center">
+						<span class="page-footer-info">'.$tr->translate("LATE_SHORT_CUT").'</span>
+						<span class="page-footer-info"><strong>'.$tLateLB.'</strong></span>
+					</div>
+					<div class="col s3 text-center">
+						<span class="page-footer-info">'.$tr->translate("EARLY_LEAVE_SHORT_CUT").'</span>
+						<span class="page-footer-info"><strong>'.$tEalyLeaveLB.'</strong></span>
+					</div>
+				</div>
+			</div>
+		';
+
 		$array = array(
 			'countitem'=>count($row),
 			'htmlRecord'=>$string,
 			'trackPage'=>$totalLimitStart,
+			'totalPageHtml'=>$totalPageHtml,
 			
 			);
 		return $array;

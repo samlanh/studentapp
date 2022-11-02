@@ -10,6 +10,11 @@
 	
 	$frm = $this->formFilter;
 	$querystring = $this->queryString;
+	
+	$tAbsent 	=0;
+	$tPermission=0;
+	$tLate 		=0;
+	$tEalyLeave =0;
 ?>
 <div class="bgBodyhome"></div>	
 
@@ -41,7 +46,10 @@
 			<div class="row mrg-0">
 				<div class="col s12 pad-0">
 					<div id="listRecord" class="ui-grids lists-view-icon attedance">
-					<?php if(!empty($this->row)){ 
+					<?php 
+					
+					
+					if(!empty($this->row)){ 
 						foreach($this->row AS $attedance){
 							
 							$academicYear = $attedance['academicYear']; 
@@ -54,7 +62,12 @@
 							$countPermission 	= sprintf('%02d',$attedance['countPermission']);
 							$countLate 			= sprintf('%02d',$attedance['countLate']);
 							$countEalyLeave 	= sprintf('%02d',$attedance['countEalyLeave']);
-			
+							
+							$tAbsent 	=$tAbsent+$attedance['countNoPermission'];
+							$tPermission=$tPermission+$attedance['countPermission'];
+							$tLate 		=$tLate+$attedance['countLate'];
+							$tEalyLeave =$tEalyLeave+$attedance['countEalyLeave'];
+					
 							if($currentlang==1){
 								$academicYear = $dbGb->getNumberInkhmer($academicYear);
 								
@@ -180,8 +193,42 @@
 		<div class="spacer-xlarge"></div>
 		
 	</div>
-	
-		
+</div>
+<?php 
+$tAbsentLB 		= sprintf('%02d',$tAbsent);
+$tPermissionLB 	= sprintf('%02d',$tPermission);
+$tLateLB 			= sprintf('%02d',$tLate);
+$tEalyLeaveLB 	= sprintf('%02d',$tEalyLeave);
+
+
+if($currentlang==1){
+	$tAbsentLB 	= $dbGb->getNumberInkhmer($tAbsentLB);
+	$tPermissionLB = $dbGb->getNumberInkhmer($tPermissionLB);
+	$tLateLB 		= $dbGb->getNumberInkhmer($tLateLB);
+	$tEalyLeaveLB = $dbGb->getNumberInkhmer($tEalyLeaveLB);
+}
+?>
+<div class="total-page-footer total-total">
+	<div class="container">
+		<div class="row mrg-0 ">
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("NO_PERMISSION_SHORT_CUT"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tAbsentLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("PERMISSION_SHORT_CUT"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tPermissionLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("LATE_SHORT_CUT"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tLateLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("EARLY_LEAVE_SHORT_CUT"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tEalyLeaveLB;?></strong></span>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- Modal Structure -->
 <div id="modalFilter" class="modal bottom-sheet white dark-text">
@@ -244,6 +291,10 @@
 				type: "post",
 				data: {
 					'page':trackPage
+					,'tAbsent':'<?php echo $tAbsent;?>'
+					,'tPermission':'<?php echo $tPermission;?>'
+					,'tLate':'<?php echo $tLate;?>'
+					,'tEalyLeave':'<?php echo $tEalyLeave;?>'
 					
 				},
 				dataType: "json",
@@ -263,6 +314,7 @@
 					setTimeout(function () {
 						$('#totalRecord').html(trackPage+' /'+allRecord);
 						$("#listRecord").append(data.htmlRecord);
+						$(".total-page-footer").html(data.totalPageHtml);
 						$("#preLoadRecord").removeClass("active");
 					}, 500);
 					

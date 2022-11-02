@@ -74,7 +74,7 @@
 							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $totalAvg; ?></strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/score/detail/id/".$score['id'];?>">
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $score['id'];?>);" >
 								<?php echo $tr->translate("MORE_DETAIL"); ?>
 							</a>
 						</div>
@@ -158,7 +158,12 @@
 	
 </div>
 
-
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+		
+	</div>
+	
+</div>
 <!-- Modal Structure -->
 <div id="modalFilter" class="modal bottom-sheet white dark-text">
 	<div class="modal-content">
@@ -262,6 +267,31 @@
 
 		}
 	<?php } ?>
+	
+	function getPopupContent(scoreKey){
+		
+		var urlDetailContent = '<?php echo $this->baseUrl().'/section/score/detailcontent'; ?>';
+			$.ajax({
+				url:urlDetailContent,
+				type: "post",
+				data: {
+					'id':scoreKey
+				},
+				dataType: "json",
+				success: function(data){
+					
+					$('.content-info').html(data.htmlRecord);
+					setTimeout(function () {
+							$('#modal-popup').modal('open');
+					}, 500);
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+	}
 	<?php } ?>
 </script>
 
