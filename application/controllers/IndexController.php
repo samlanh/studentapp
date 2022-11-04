@@ -56,8 +56,12 @@ class IndexController extends Zend_Controller_Action
         } 
     }
 	function loginAction(){
-		$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-    	$stuID = $sessionStudent->stuID;
+		
+		$zendRequest = new Zend_Controller_Request_Http();
+		$stuID = $zendRequest->getCookie(SYSTEM_SES.'stuID');
+		
+		//$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+    	//$stuID = $sessionStudent->stuID;
     	if (!empty($stuID)){
     		$this->_redirect("/home");
     	}
