@@ -1,0 +1,118 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("OUR_BRANCH"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	$currentlang = $dbGb->currentlang();
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-listview gradientBluePrimary">
+	<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-map-marker-multiple "></i>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("OUR_BRANCH"); ?>
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+    <div class="section">
+		<div class="row ui-mediabox blogs   small-left aligned branchList ">
+			<?php if(!empty($this->rs)){ foreach($this->rs AS $row){
+				 
+				 
+				
+				$images = $this->baseUrl()."/images/no-photo.png";
+				$imageFeature = $systemLink.'/images/Logo/'.$row['photo'];
+				if ($dbGb->does_url_exists($imageFeature)){
+					$images = $systemLink.'/images/Logo/'.$row['photo'];
+				}
+				$branchAddress = str_replace("Address","",$row['br_address']);
+				$branchAddress = str_replace("address","",$branchAddress);
+				$branchAddress = str_replace(":","",$branchAddress);
+				
+				$branchTel = str_replace("Tel","",$row['branch_tel']);
+				$branchTel = str_replace("tel","",$branchTel);
+				$branchTel = str_replace("Phone","",$branchTel);
+				$branchTel = str_replace("phone","",$branchTel);
+				$branchTel = str_replace(":","",$branchTel);
+				
+				$branchEmail = str_replace("Email","",$row['email']);
+				$branchEmail = str_replace("email","",$branchEmail);
+				$branchEmail = str_replace(":","",$branchEmail);
+				
+				$branchWebsite = str_replace("Website","",$row['website']);
+				$branchWebsite = str_replace("website","",$branchWebsite);
+				$branchWebsite = str_replace(":","",$branchWebsite);
+				if($currentlang==1){
+					
+					
+				}
+							
+				?>	
+			<div class="row-branch ">
+				<div class="col s12">
+					<div class="blog-img-wrap">
+						<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="<?php echo $row['schoolName']; ?>">
+						<img class="z-depth-1" style="width: 100%;" src="<?php echo $images; ?>">
+						</a>
+					</div>
+					<div class="blog-info">
+						<h5 class="title"><?php echo $row['schoolName']; ?></h5>
+						<h5 class="title"><?php echo $row['branchName']; ?></h5>
+						
+					</div>
+				</div>
+				<div class="col s12">
+					<div class="blog-info-branch">
+						<p class="bot-0 text"><i class="mdi mdi-map-marker-radius"></i> <?php echo $branchAddress;   ?></p>
+						<p class="bot-0 text"><i class="mdi mdi-phone-classic"></i> <?php echo $branchTel;   ?></p>
+						<p class="bot-0 text"><i class="mdi mdi-email-outline"></i> <?php echo $branchEmail;   ?></p>
+						<p class="bot-0 text"><i class="mdi mdi-web"></i> <?php echo $branchWebsite;   ?></p>
+						
+					</div>
+					
+					<div class="spacer"></div>
+					<div class="divider"></div>
+					<div class="spacer"></div>
+				</div>
+			</div>
+			<?php } }?>
+		</div>
+	</div>
+</div>
+
+<div class="spacer-xlarge"></div>
+
+ <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<link href="<?php echo $this->baseUrl()."/templates/"; ?>assets/plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" type="text/css" media="screen"/>        <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+
+<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+<script src="<?php echo $this->baseUrl()."/templates/"; ?>assets/plugins/fancybox/jquery.fancybox.min.js" type="text/javascript"></script>
+<script type="text/javaScript">
+  $("[data-fancybox=images]").fancybox({
+  buttons : [ 
+    "slideShow",
+    "share",
+    "zoom",
+    "fullScreen",
+    "close",
+    "thumbs"
+  ],
+  thumbs : {
+    autoStart : false
+  }
+});
+</script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 

@@ -294,5 +294,30 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
+	
+	public function getSchoolBranch(){
+    	$db = $this->getAdapter();
+    	try{
+    		$currentLang = $this->currentlang();
+			$schoolName='school_nameen';
+			$branchName='branch_nameen';
+			if ($currentLang==1){
+				$schoolName='school_namekh';
+				$branchName='branch_namekh';
+			}
+			
+			$sql=" 
+				SELECT b.*
+						,b.$schoolName AS schoolName
+						,b.$branchName AS branchName
+				FROM `rms_branch` AS b 
+				WHERE b.status=1 ";
+			$sql.=" ORDER BY b.br_id ASC ";
+    		$row = $db->fetchAll($sql);
+    		return $row;
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
 }
 ?>
