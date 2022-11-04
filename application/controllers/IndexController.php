@@ -78,9 +78,9 @@ class IndexController extends Zend_Controller_Action
 				$sessionStudent->password	= $password;
 				$sessionStudent->lock();
 				
-				setcookie(SYSTEM_SES.'stuID', $studentRS['stu_id'], time() + 3600, '/');
-				setcookie(SYSTEM_SES.'stuCode', $studentRS['stu_code'], time() + 3600, '/');
-				setcookie(SYSTEM_SES.'password', $password, time() + 3600, '/');
+				setcookie(SYSTEM_SES.'stuID', $studentRS['stu_id'], time() + (86400 * 30), '/');// 86400 = 1 day
+				setcookie(SYSTEM_SES.'stuCode', $studentRS['stu_code'], time() + (86400 * 30), '/');
+				setcookie(SYSTEM_SES.'password', $password, time() + (86400 * 30), '/');
 				
 				Application_Form_FrmMessage::redirectUrl("/home");	
 			}
