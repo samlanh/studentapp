@@ -11,8 +11,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$this->tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	}
 	public function getUserId(){
-		$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-		$userId = empty($sessionStudent->stuID)?0:$sessionStudent->stuID;
+		$zendRequest = new Zend_Controller_Request_Http();
+		$userId = $zendRequest->getCookie(SYSTEM_SES.'stuID');
+		$userId = empty($userId)?0:$userId;
+		//$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+		//$userId = empty($sessionStudent->stuID)?0:$sessionStudent->stuID;
 		return $userId;
    }
 	function currentlang(){

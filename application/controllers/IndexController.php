@@ -13,8 +13,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-    	$stuID = $sessionStudent->stuID;
+		
+		$zendRequest = new Zend_Controller_Request_Http();
+		$stuID = $zendRequest->getCookie(SYSTEM_SES.'stuID');
+		
+    	//$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+    	//$stuID = $sessionStudent->stuID;
+
     	if (!empty($stuID)){
     		$this->_redirect("/home");
     	}
@@ -39,7 +44,12 @@ class IndexController extends Zend_Controller_Action
         	if(!empty($sessionStudent->stuID)){
 	        	//$log=new Application_Model_DbTable_DbUserLog();
 				//$log->insertLogout($sessionStudent->stuID);
-	        	$sessionStudent->unsetAll();       	
+	        	$sessionStudent->unsetAll();
+
+				setcookie(SYSTEM_SES.'stuID', null, -1, '/'); 
+				setcookie(SYSTEM_SES.'stuCode', null, -1, '/'); 
+				setcookie(SYSTEM_SES.'password', null, -1, '/'); 
+				
 	        	Application_Form_FrmMessage::redirectUrl("/");
 	        	exit();
         	}
@@ -57,11 +67,16 @@ class IndexController extends Zend_Controller_Action
     		$studentRS = $dbSt->getStudentAuth($data);
 			$password = empty($data['password'])?"":$data['password'];
 			if(!empty($studentRS)){
+				
 				$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
 				$sessionStudent->stuID 		= $studentRS['stu_id'];
 				$sessionStudent->stuCode	= $studentRS['stu_code'];
 				$sessionStudent->password	= $password;
 				$sessionStudent->lock();
+				
+				setcookie(SYSTEM_SES.'stuID', $studentRS['stu_id'], time() + 3600, '/');
+				setcookie(SYSTEM_SES.'stuCode', $studentRS['stu_code'], time() + 3600, '/');
+				setcookie(SYSTEM_SES.'password', $password, time() + 3600, '/');
 				
 				Application_Form_FrmMessage::redirectUrl("/home");	
 			}

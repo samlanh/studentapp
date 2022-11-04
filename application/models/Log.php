@@ -13,14 +13,18 @@ class Application_Model_Log
 		$controller=$request->getControllerName();
 		$module=$request->getModuleName();
 						
-		$session = new Zend_Session_Namespace(SYSTEM_SES);
-		$user_name = $session->user_name;
+		//$session = new Zend_Session_Namespace(SYSTEM_SES);
+		//$user_name = $session->user_name;
+		
+		$zendRequest = new Zend_Controller_Request_Http();
+		$stuID = $zendRequest->getCookie(SYSTEM_SES.'stuID');
+		$stuCode = $zendRequest->getCookie(SYSTEM_SES.'stuCode');
 		
 		$file = "../logs/user.log";
 		if (!file_exists($file)) touch($file);
 		//Mode a append at the end of file
 		$Handle = fopen($file, 'a');
-		$stringData = "[".date("Y-m-d H:i:s")."]"." [user]:".$user_name." [module]:".$module." [controller]:".$controller. " [action]:".$action." [id]:".$id. "\n";
+		$stringData = "[".date("Y-m-d H:i:s")."]"." [user]:".$stuCode." [module]:".$module." [controller]:".$controller. " [action]:".$action." [id]:".$id. "\n";
         fwrite($Handle, $stringData);
         fclose($Handle);	
 	}

@@ -77,6 +77,9 @@
 		if(!empty($search['month'])){
 			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%m') = ".$search['month'];
 		}
+		if(!empty($search['forSemester'])){
+			$sql.=" AND sat.for_semester = ".$search['forSemester'];
+		}
 		if(!empty($search['academicYear'])){
 			$sql.=" AND g.academic_year = ".$search['academicYear'];
 		}

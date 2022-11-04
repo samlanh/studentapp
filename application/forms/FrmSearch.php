@@ -127,6 +127,23 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$examType->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
 		$examType->setValue($request->getParam("examType"));
 		
+		$_arrOptExamType = array(
+				""=>""
+				,1=>$this->tr->translate("SEMESTER1")
+				,2=>$this->tr->translate("SEMESTER2")
+		);//$this->tr->translate("CHOOSE_SEMESTER")
+		
+		$forSemester = new Zend_Form_Element_Select("forSemester");
+		$forSemester->setMultiOptions($_arrOptExamType);
+		$forSemester->setAttribs(
+			array(
+				'class'=>'smallHeight ',
+				'placeholder'=>$this->tr->translate("CHOOSE_SEMESTER"),
+				)
+			);
+		$forSemester->setDecorators(array(array('ViewHelper'),));//remove zend html tage		
+		$forSemester->setValue($request->getParam("forSemester"));
+		
 		if(!empty($_data)){
 			
 		}
@@ -142,6 +159,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 				,$paymentMethod 
 				,$examType
 				,$degree 
+				,$forSemester 
 				)
 			);
 		return $this;
