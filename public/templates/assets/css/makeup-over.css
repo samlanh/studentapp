@@ -1090,7 +1090,7 @@ span.page-footer-info,span.page-footer-info strong {
 .row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p{
     margin: 0;
     font-size: 14px;
-    color: #333131;
+    color: #181818;
 }
 
 .row.ui-mediabox.blogs.aligned .row-branch .col {
@@ -1101,10 +1101,21 @@ span.page-footer-info,span.page-footer-info strong {
 .row.ui-mediabox.blogs.small-left.aligned.branchList .img-wrap img {
     vertical-align: top;
     border-radius: 50%;
-    width: 120px!important;
-    height: 120px;
+    width: 110px!important;
+    height: 110px;
     padding: 5px;
+	background: #00395a;
 }
 .row.ui-mediabox.blogs.small-left.aligned.branchList .img-wrap:after{
 	background:none;
+}
+.row.ui-mediabox.blogs.small-left.aligned.branchList h5.title {
+    color: #003452;
+}
+
+.row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p i.mdi {
+    color: #003452;
+}
+.row-branch a.btn-large.btn-rounded {
+    width: 100%;
 }
