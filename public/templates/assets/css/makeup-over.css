@@ -1085,3 +1085,26 @@ span.page-footer-info,span.page-footer-info strong {
     display: block;
     line-height: 19px;
 }
+
+.row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info p,
+.row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p{
+    margin: 0;
+    font-size: 14px;
+    color: #333131;
+}
+
+.row.ui-mediabox.blogs.aligned .row-branch .col {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+}
+.row.ui-mediabox.blogs.small-left.aligned.branchList .img-wrap img {
+    vertical-align: top;
+    border-radius: 50%;
+    width: 120px!important;
+    height: 120px;
+    padding: 5px;
+}
+.row.ui-mediabox.blogs.small-left.aligned.branchList .img-wrap:after{
+	background:none;
+}
