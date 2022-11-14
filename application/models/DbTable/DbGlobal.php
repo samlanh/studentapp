@@ -254,7 +254,24 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
-	public function getNewsEvents(){
+	public function getCountAllNews(){
+    	$db = $this->getAdapter();
+    	try{
+    		$currentLang = $this->currentlang();
+			$sql=" SELECT 
+						COUNT(a.id)
+					FROM `mobile_news_event` AS a,
+						`mobile_news_event_detail` AS ad
+					WHERE a.id=ad.news_id
+						AND ad.lang= $currentLang 
+						AND a.status=1 ";
+    		$row = $db->fetchOne($sql);
+    		return $row;
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
+	public function getNewsEvents($arrFilter = array()){
     	$db = $this->getAdapter();
     	try{
     		$currentLang = $this->currentlang();
@@ -268,6 +285,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 						AND ad.lang= $currentLang 
 						AND a.status=1 ";
 			$sql.=" ORDER BY a.publish_date DESC,a.id DESC ";
+			
+			if(!empty($arrFilter['LimitStart'])){
+				$sql.=" LIMIT ".$arrFilter['LimitStart'].",".$arrFilter['limitRecord'];
+			}else if(!empty($arrFilter['limitRecord'])){
+	    		$sql.=" LIMIT ".$arrFilter['limitRecord'];
+	    	}
     		$row = $db->fetchAll($sql);
     		return $row;
     	}catch(Exception $e){
@@ -294,7 +317,87 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
-	
+	function moreNewsEvents($data){
+		$db = $this->getAdapter();
+		
+		$systemLink = $this->systemLink();
+		$currentlang = $this->currentlang();
+		$limitRecord = $this->limitListView();
+		$limitRecord = empty($limitRecord)?1:$limitRecord;
+		
+		$totalLimitStart= $limitRecord;
+		$filter = $data;
+		$filter['limitRecord'] = $limitRecord;
+		if(!empty($data['page'])){
+			if($data['page']<$limitRecord){
+				$data['page'] = $limitRecord;
+			}
+			$filter['LimitStart'] = $data['page'];
+			$filter['limitRecord'] = $limitRecord;
+			$totalLimitStart = $data['page'] + $limitRecord;
+		}
+		
+		$rs = $this->getNewsEvents($filter);
+		$string="";
+		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
+		
+		if(!empty($rs)){ 
+			foreach($rs AS $row){
+				
+				$strDescription = mb_substr(strip_tags($row['description']), 0, 150, "UTF-8");
+				 
+				$yearAtt = date("Y",strtotime($row['publish_date'])); 
+				$monthAtt = date("M",strtotime($row['publish_date'])); 
+				$days = date("d",strtotime($row['publish_date'])); 
+				$monthKey = date("m",strtotime($row['publish_date'])); 
+				
+				$images = $baseurl."/images/no-photo.png";
+				$imageFeature = $systemLink.'/images/newsevent/'.$row['image_feature'];
+				if ($this->does_url_exists($imageFeature)){
+					$images = $systemLink.'/images/newsevent/'.$row['image_feature'];
+				}
+				if($currentlang==1){
+					
+					$yearAtt = $this->getNumberInkhmer($yearAtt);
+					$monthAtt = $this->getMonthInkhmer($monthKey);
+					$days = $this->getNumberInkhmer($days);
+					
+					//$strDescription = mb_substr(strip_tags($row['description']), 0, 200, "UTF-8");
+				}
+				
+				$string.='
+					<div class="col s12">
+						<div class="blog-img-wrap">
+							<a class="img-wrap" href="'.$images.'" data-fancybox="images" data-caption="'.$row['title'].'">
+							<img class="z-depth-1" style="width: 100%;" src="'.$images.'">
+							</a>
+						</div>
+						<div class="blog-info">
+							<a href="'.$baseurl.'/utility/news/detail/id/'.$row['id'].'" >                    
+								<h5 class="title">'.$row['title'].'</h5>
+							</a>
+							<span class="small date"><i class="mdi mdi-calendar-clock "></i> '.$days." ".$monthAtt." ".$yearAtt.'</span>
+														  
+							<p class="bot-0 text">'.$strDescription.'...</p>
+							<div class="spacer"></div>
+							<div class="divider"></div>
+							<div class="spacer"></div>
+						</div>
+					</div>
+				
+				';
+			}
+		}
+		
+		$array = array(
+			'htmlRecord'=>$string,
+			'trackPage'=>$totalLimitStart,
+			
+			);
+			
+		return $array;
+	}
 	public function getSchoolBranch(){
     	$db = $this->getAdapter();
     	try{

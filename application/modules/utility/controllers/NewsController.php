@@ -14,8 +14,19 @@ class Utility_NewsController extends Zend_Controller_Action
     {
 		
 		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$rs = $dbGb->getNewsEvents();
+		$arrFilter = array();
+		$limitRecord = $dbGb->limitListView();
+		$limitRecord = empty($limitRecord)?1:$limitRecord;
+		
+		$allRow = $dbGb->getCountAllNews();
+		$this->view->allRow = $allRow;
+		
+		
+		$arrFilter['limitRecord']=$limitRecord;
+		$rs = $dbGb->getNewsEvents($arrFilter);
 		$this->view->rs  =$rs;    
+		
+		
     }
 	
 	public function detailAction()
@@ -29,7 +40,17 @@ class Utility_NewsController extends Zend_Controller_Action
 		$this->view->row  =$rs;    
     }
    
-
+	function morerecordAction(){
+		$db = new Application_Model_DbTable_DbGlobal();
+		if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+			
+			$record = $db->moreNewsEvents($_data);
+			print_r(Zend_Json::encode($record));exit();	
+			
+    	}
+		
+	}
 }
 
 

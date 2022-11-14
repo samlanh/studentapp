@@ -8,6 +8,7 @@
 	$systemLink = $dbGb->systemLink();
 	$currentlang = $dbGb->currentlang();
 	
+	$countNews = count($this->rs);
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgWhite-for-list "></div>
@@ -29,10 +30,10 @@
 </div>
 <div class="container">
     <div class="section">
-		<div class="row ui-mediabox blogs    ">
+		<div id="listRecord" class="row ui-mediabox blogs    ">
 			<?php if(!empty($this->rs)){ foreach($this->rs AS $row){
 				 
-				$strDescription = substr(strip_tags($row['description']), 0, 150);
+				$strDescription = mb_substr(strip_tags($row['description']), 0, 150, "UTF-8");
 				 
 				$yearAtt = date("Y",strtotime($row['publish_date'])); 
 				$monthAtt = date("M",strtotime($row['publish_date'])); 
@@ -50,7 +51,7 @@
 					$monthAtt = $dbGb->getMonthInkhmer($monthKey);
 					$days = $dbGb->getNumberInkhmer($days);
 					
-					$strDescription = substr(strip_tags($row['description']), 0, 250);
+					//$strDescription = mb_substr(strip_tags($row['description']), 0, 200, "UTF-8");
 				}
 							
 				?>	
@@ -74,6 +75,69 @@
 			</div>
 			<?php } }?>
 		</div>
+		
+<?php if(count($this->rs)<$this->allRow){ ?>
+			<div class="row mrg-0">
+				<div class="col s12 center " >
+					<p id="totalRecord" class="total-record dark-text"><?php echo $countNews."/".$this->allRow; ?></p>
+					<h3 class="title-empty recordMessage dark-text"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s12 center valign-wrapper" style="height: 100px;">
+					<div id="preLoadRecord" class="preloader-wrapper small ">
+						<div class="spinner-layer spinner-blue">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-red">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-yellow">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-green">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		<?php } ?>
 	</div>
 </div>
 
@@ -98,4 +162,62 @@
     autoStart : false
   }
 });
+
+<?php if(!empty($this->rs)){ if(count($countNews) < $this->allRow){?>
+		var allRecord ='<?php echo $this->allRow; ?>';
+		
+		var trackPage = 1;
+		var check = 1;
+   
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+			   if(check==1){
+				  loadContents();
+				}
+		   }
+		});
+
+		function loadContents(){
+			check=0;
+			var urlMoreRow = '<?php echo $this->baseUrl().'/utility/news/morerecord'; ?>';
+			$("#preLoadRecord").addClass("active");
+			
+			$.ajax({
+				url:urlMoreRow,
+				type: "post",
+				data: {
+					'page':trackPage
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					trackPage = data.trackPage;
+					if(trackPage>allRecord){
+					   trackPage = allRecord;
+					   $('.recordMessage').html('');
+						
+					}else{
+						$('.recordMessage').html('<?php echo $tr->translate("SCROLL_FOR_MORE_DATA");?>');
+						setTimeout(function () {
+							check = 1;
+						}, 1000);
+					}
+					setTimeout(function () {
+						$('#totalRecord').html(trackPage+' /'+allRecord);
+						$("#listRecord").append(data.htmlRecord);
+						$("#preLoadRecord").removeClass("active");
+					}, 500);
+					
+				  
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+		}
+	<?php } ?>
+	<?php } ?>
 </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
