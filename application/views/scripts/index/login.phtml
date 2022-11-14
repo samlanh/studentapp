@@ -94,6 +94,7 @@
 			return false;
 		});
 		function displayActionToast(key){
+			M.Toast.dismissAll();
 			if(key==1){
 				var message="<?php echo $tr->translate("Please Enter Student Code");?>";
 			}else if(key==2){

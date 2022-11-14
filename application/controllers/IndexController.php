@@ -32,6 +32,18 @@ class IndexController extends Zend_Controller_Action
 		$this->view->contact  =$rs['contacting'];    
 		$this->view->slide  =$dbGb->getMobileSliding();
 		$this->view->allLang  =$dbGb->getAllLanguage();
+		
+		$this->view->course  =$dbGb->getSchoolCourse();
+		
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$rs = $dbAPi->getDataByAPI("introductionhome");
+		$rs = json_decode($rs, true);
+		
+		if($rs['code']=="SUCCESS"){
+			$this->view->introductionHome  =$rs['result'];
+			//print_r($rs['result']);exit();
+		}
+		
     }
     
     public function logoutAction()
@@ -41,17 +53,18 @@ class IndexController extends Zend_Controller_Action
         	$aut=Zend_Auth::getInstance();
         	$aut->clearIdentity();        	
         	$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+			$sessionStudent->unsetAll();
+
+			setcookie(SYSTEM_SES.'stuID', null, -1, '/'); 
+			setcookie(SYSTEM_SES.'stuCode', null, -1, '/'); 
+			setcookie(SYSTEM_SES.'password', null, -1, '/'); 
+			
+			Application_Form_FrmMessage::redirectUrl("/");
+			exit();
         	if(!empty($sessionStudent->stuID)){
 	        	//$log=new Application_Model_DbTable_DbUserLog();
 				//$log->insertLogout($sessionStudent->stuID);
-	        	$sessionStudent->unsetAll();
-
-				setcookie(SYSTEM_SES.'stuID', null, -1, '/'); 
-				setcookie(SYSTEM_SES.'stuCode', null, -1, '/'); 
-				setcookie(SYSTEM_SES.'password', null, -1, '/'); 
-				
-	        	Application_Form_FrmMessage::redirectUrl("/");
-	        	exit();
+	        	
         	}
         } 
     }

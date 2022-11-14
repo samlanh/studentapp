@@ -33,6 +33,8 @@
 
 
 $contact = $this->contact;
+$contact['latitude'] = empty($contact['latitude'])?"11.594111046749918":$contact['latitude'];
+$contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact['latitude'];
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgWhite-for-list "></div>
@@ -119,142 +121,101 @@ $contact = $this->contact;
 		</div>    
 	</div> 
 </div> 
-				
-<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>	
- <div class="container">
-	<div class="section">
+	
+<div class="row ">
+	<div class="col s12 pad-0">     
 		<div class="row">
-			<div class="spacer"></div>
-			<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+			<div class="col s12">
+				<ul class="tabs z-depth-1 tabs-icons tab-home">
+					<li class="tab col s3">
+						<a href="#maintab1-8">
+							<i class="mdi mdi-lightbulb-on-outline"></i>
+							<span class="tab-title"><?php echo $tr->translate("INDRODUCTION"); ?></span>
+						</a>
+					</li>
+					<li class="tab col s3">
+						<a href="#maintab2-8">
+							<i class="mdi mdi-clipboard-text"></i>
+							<span class="tab-title"><?php echo $tr->translate("PROGRAM"); ?></span>
+						</a>
+					</li>
+					<li class="tab col s3">
+						<a href="#maintab3-8">
+							<i class="mdi mdi-information-outline"></i>
+							<span class="tab-title"><?php echo $tr->translate("ABOUTS"); ?></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="maintab1-8" class="col s12 ">
+			  <div class="tab-content tab-content-home ">
+				<div class="section">
+					<div class="row">
+						<div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction']['title']; ?></div>
+						<a href="#">
+							<?php $introductionImage= $this->introductionHome['introduction_image']['title'];
+								$introductionImage = $systemLink.'/images/newsevent/introduction_image/'.$introductionImage;
+								if ($dbGb->does_url_exists($introductionImage)){ 
+							?>
+							<img class="intro-image" src="<?php echo $introductionImage;?>" alt=""  />
+							<?php } ?>
+						</a>
+						 <div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction_i']['title']; ?></div>
+					</div>
+				</div>	
+			  </div>
+			</div>
+			<div id="maintab2-8" class="col s12">
 			
-			<div class="text description"><?php echo $aboutUs['description']; ?></div>
-		</div>
-	</div>
-</div>
-<?php } }?>
-<div class="container">
-	<div class="section">
-		<div class="row ">
-			<div class="col s12 pad-0">
-				<h5 class="bot-20 sec-tit center sectionTitle">ព័ត៌មានបន្ថែម</h5>                
-				<div class="row settings-row">
-					<div class="col s4 ">
-						<div class="setting-box preLogin primary-box center z-depth-1">
-							<a href="#!">
-							<h2 class="center"><i class="mdi mdi-newspaper "></i></h2>
-							<h6 class="center"><?php echo $tr->translate("NEWS_EVENT"); ?></h6>
-						  </a>
-					  </div>
+				<?php if(!empty($this->course)){?>
+					<div class="row">
+						<div class="col s12">
+							<ul class="tabs blue-bg colored tab-course ">
+								<?php foreach($this->course AS $key => $course){?>
+								<li class="tab col s6">
+									<a href="#program<?php echo $key; ?>-8"  >
+										<?php echo $course['title']; ?>
+									</a>
+								</li>
+								<?php } ?>
+								
+							</ul>
+						</div>
+						<?php foreach($this->course AS $key => $course){?>
+							<div id="program<?php echo $key; ?>-8" class="col s12 <?php if($key==0){ echo 'active';}?>">
+								<div class="tab-content tab-content-home ">
+									<div class="text description primary-text tab-detail"><?php echo $course['description']; ?></div>
+								</div>
+							</div>
+							<?php } ?>
 					</div>
-					<div class="col s4 ">
-						<div class="setting-box preLogin warnings-box center z-depth-1">
-							<a href="#!">
-							<h2 class="center "><i class="mdi mdi-clipboard-text "></i></h2>
-							<h6 class="center"><?php echo $tr->translate("PROGRAM_AND_FEE"); ?></h6>
-						  </a>
-					  </div>
-					</div>
-					<div class="col s4 ">
-						<div class="setting-box preLogin green-box center z-depth-1">
-							<a href="#!">
-								<h2 class="center "><i class="mdi mdi-map-marker-radius "></i></h2>
-								<h6 class="center"><?php echo $tr->translate("BRANCH"); ?></h6>
-						  </a>
-					  </div>
-					</div>
+					<?php } ?>
+				
+			</div>
+			<div id="maintab3-8" class="col s12 ">
+				<div class="tab-content tab-content-home">
+					<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>
+						<div class="section">
+							<div class="container">
+								<div class="row">
+									<div class="spacer"></div>
+									<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+									
+									<div class="text description"><?php echo $aboutUs['description']; ?></div>
+								</div>
+							</div>
+						</div>
+					<?php } }?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="container">
-	<div class="section">
-		<div class="row ">
-			<div class="col s12 pad-0">
-				<h5 class="bot-20 sec-tit center sectionTitle"><?php echo $tr->translate("INTERNATIONAL_COOPERATE"); ?></h5>
-			</div>
-		</div>
-		<div class="section">
 
-            <div class="row clients-row">
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-1.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-2.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-3.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-4.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-1.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-2.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-3.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-                <div class="col s6">
-                    <div class="client-box z-depth-1 center">
-                    <a href="#!">
-                        <img src="<?php echo $baseUrl."templates/assets/images/"; ?>client-4.png" alt="">
-                    </a>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-        </div>
-	
-	</div>
-</div>
 <div class="center index-start">
 	<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large bg-primary'>
-		<?php echo $tr->translate("Get Started"); ?>
+		<i class="mdi mdi-account-circle "></i> <?php echo $tr->translate("Get Started"); ?>
 	</a>	
 </div>
 <footer class="page-footer">
@@ -263,12 +224,25 @@ $contact = $this->contact;
         <div class="">
           <h5 class="logo"><?php echo $tr->translate("CONTACT_AND_ADDRESS"); ?></h5>
         </div>
+		<div class="map-wrap">
+			<iframe 
+			  width="300" 
+			  height="170" 
+			  frameborder="0" 
+			  scrolling="no" 
+			  marginheight="0" 
+			  marginwidth="0" 
+			  src="https://maps.google.com/maps?q=<?PHP  echo $contact['latitude']; ?>,<?PHP  echo $contact['longitude']; ?>&hl=kh&z=14&amp;output=embed"
+			 >
+			</iframe>
+		</div>
         <div class="link-wrap">
           <ul class="link-ul">
-            <li><a class="" href="#!"><i class="mdi mdi-phone"></i> <?PHP  echo $contact['phone']; ?></a></li>
-            <li><a class="" href="#!"><i class="mdi mdi-email"></i> <?PHP  echo $contact['email']; ?></a></li>
-            <li><a class="" href="#!"><i class="mdi mdi-map-marker"></i> <?PHP  echo strip_tags($contact['description']); ?></a></li>
-            </ul>
+			<li><a class="" href="#!"><i class="mdi mdi-map-marker"></i> <?PHP  echo strip_tags($contact['description']); ?></a></li>
+            <li><a class="" href="tel:<?PHP  echo $contact['phone']; ?>"><i class="mdi mdi-phone"></i> <?PHP  echo $contact['phone']; ?></a></li>
+            <li><a class="" href="mailto:<?PHP  echo $contact['email']; ?>"><i class="mdi mdi-email"></i> <?PHP  echo $contact['email']; ?></a></li>
+            <li><a class="" target="_blank" href="<?PHP  echo $contact['website']; ?>"><i class="mdi mdi-web"></i> <?PHP  echo $contact['website']; ?></a></li>
+           </ul>
             <ul class="social-wrap">
             <li class="social">
 			<?php if(!empty($contact['facebook'])){?>
@@ -277,11 +251,12 @@ $contact = $this->contact;
 			<?php if(!empty($contact['youtube'])){?>
               <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
 			<?php } ?>
+			
 			<?php if(!empty($contact['instagram'])){?>
-              <a class="instagram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-instagram"></i></a>
+              <a class="telegram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-telegram"></i></a>
 			<?php } ?>
 			<?php if(!empty($contact['other_social'])){?>
-              <a class="telegram" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-telegram"></i></a>
+              <a class="messenger" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-facebook-messenger"></i></a>
 			<?php } ?>
             </li>
           </ul>
@@ -294,6 +269,9 @@ $contact = $this->contact;
       </div>
     </div>
 </footer>
+<script>
+$(".tabs").tabs();
+</script>
 
 	
 
