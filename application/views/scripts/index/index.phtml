@@ -121,91 +121,103 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 		</div>    
 	</div> 
 </div> 
-	
-<div class="row ">
-	<div class="col s12 pad-0">     
-		<div class="row">
-			<div class="col s12">
-				<ul class="tabs z-depth-1 tabs-icons tab-home">
-					<li class="tab col s3">
-						<a href="#maintab1-8">
-							<i class="mdi mdi-lightbulb-on-outline"></i>
-							<span class="tab-title"><?php echo $tr->translate("INDRODUCTION"); ?></span>
-						</a>
-					</li>
-					<li class="tab col s3">
-						<a href="#maintab2-8">
-							<i class="mdi mdi-clipboard-text"></i>
-							<span class="tab-title"><?php echo $tr->translate("PROGRAM"); ?></span>
-						</a>
-					</li>
-					<li class="tab col s3">
-						<a href="#maintab3-8">
-							<i class="mdi mdi-information-outline"></i>
-							<span class="tab-title"><?php echo $tr->translate("ABOUTS"); ?></span>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div id="maintab1-8" class="col s12 ">
-			  <div class="tab-content tab-content-home ">
-				<div class="section">
-					<div class="row">
-						<div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction']['title']; ?></div>
-						<a href="#">
-							<?php $introductionImage= $this->introductionHome['introduction_image']['title'];
-								$introductionImage = $systemLink.'/images/newsevent/introduction_image/'.$introductionImage;
-								if ($dbGb->does_url_exists($introductionImage)){ 
-							?>
-							<img class="intro-image" src="<?php echo $introductionImage;?>" alt=""  />
-							<?php } ?>
-						</a>
-						 <div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction_i']['title']; ?></div>
-					</div>
-				</div>	
-			  </div>
-			</div>
-			<div id="maintab2-8" class="col s12">
-			
-				<?php if(!empty($this->course)){?>
-					<div class="row">
-						<div class="col s12">
-							<ul class="tabs blue-bg colored tab-course ">
-								<?php foreach($this->course AS $key => $course){?>
-								<li class="tab col s6">
-									<a href="#program<?php echo $key; ?>-8"  >
-										<?php echo $course['title']; ?>
-									</a>
-								</li>
+<div class="container blog-tab-home">
+	<div class="row ">
+		<div class="col s12 pad-0">     
+			<div class="row">
+				<div class="col s12">
+					<ul class="tabs z-depth-1 tabs-icons tab-home">
+						<li class="tab col s3">
+							<a href="#maintab1-8">
+								<i class="mdi mdi-lightbulb-on-outline"></i>
+								<span class="tab-title"><?php echo $tr->translate("INDRODUCTION"); ?></span>
+							</a>
+						</li>
+						<li class="tab col s3">
+							<a href="#maintab2-8">
+								<i class="mdi mdi-clipboard-text"></i>
+								<span class="tab-title"><?php echo $tr->translate("PROGRAM"); ?></span>
+							</a>
+						</li>
+						<li class="tab col s3">
+							<a href="#maintab3-8">
+								<i class="mdi mdi-information-outline"></i>
+								<span class="tab-title"><?php echo $tr->translate("ABOUTS"); ?></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="maintab1-8" class="col s12 ">
+				  <div class="tab-content tab-content-home ">
+					<div class="section">
+						<div class="row">
+							<div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction']['title']; ?></div>
+							<div class="intro-blog">
+								<?php $introductionImage= $this->introductionHome['introduction_image']['title'];
+									$introductionImage = $systemLink.'/images/newsevent/introduction_image/'.$introductionImage;
+									if ($dbGb->does_url_exists($introductionImage)){ 
+								?>
+								<img class="intro-image" src="<?php echo $introductionImage;?>" alt=""  />
 								<?php } ?>
-								
-							</ul>
-						</div>
-						<?php foreach($this->course AS $key => $course){?>
-							<div id="program<?php echo $key; ?>-8" class="col s12 <?php if($key==0){ echo 'active';}?>">
-								<div class="tab-content tab-content-home ">
-									<div class="text description primary-text tab-detail"><?php echo $course['description']; ?></div>
-								</div>
+								<a href="#modalHowtoUser" class='modal-trigger waves-light btn-large btn-rounded bg-darkyellow ploat-btn'>
+									<i class="mdi mdi-play-circle-outline "></i> <?php echo $tr->translate("CLICK_HOW_TO_USE"); ?>
+								</a>	
 							</div>
-							<?php } ?>
-					</div>
-					<?php } ?>
+							 <div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction_i']['title']; ?></div>
+							<div class="center starting-btn">
+								<strong><?php echo $tr->translate("CLICK_FOR_STARTING_USE"); ?></strong>
+								<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large btn-rounded bg-darkyellow'>
+									<i class="mdi mdi-account-circle "></i> <?php echo $tr->translate("Get Started"); ?>
+								</a>	
+							</div>
+							
+						</div>
+					</div>	
+				  </div>
+				</div>
+				<div id="maintab2-8" class="col s12">
 				
-			</div>
-			<div id="maintab3-8" class="col s12 ">
-				<div class="tab-content tab-content-home">
-					<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>
-						<div class="section">
-							<div class="container">
-								<div class="row">
-									<div class="spacer"></div>
-									<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+					<?php if(!empty($this->course)){?>
+						<div class="row">
+							<div class="col s12">
+								<ul class="tabs blue-bg colored tab-course ">
+									<?php foreach($this->course AS $key => $course){?>
+									<li class="tab col s6">
+										<a href="#program<?php echo $key; ?>-8"  >
+											<?php echo $course['title']; ?>
+										</a>
+									</li>
+									<?php } ?>
 									
-									<div class="text description"><?php echo $aboutUs['description']; ?></div>
+								</ul>
+							</div>
+							<?php foreach($this->course AS $key => $course){?>
+								<div id="program<?php echo $key; ?>-8" class="col s12 <?php if($key==0){ echo 'active';}?>">
+									<div class="tab-content tab-content-home ">
+										<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $course['title']; ?></h5>
+										<div class="text description primary-text tab-detail"><?php echo $course['description']; ?></div>
+									</div>
+								</div>
+								<?php } ?>
+						</div>
+						<?php } ?>
+					
+				</div>
+				<div id="maintab3-8" class="col s12 ">
+					<div class="tab-content tab-content-home">
+						<?php if(!empty($this->aboutUs)){ foreach($this->aboutUs AS $aboutUs){?>
+							<div class="section">
+								<div class="container">
+									<div class="row">
+										<div class="spacer"></div>
+										<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $aboutUs['title']; ?></h5>
+										
+										<div class="text description"><?php echo $aboutUs['description']; ?></div>
+									</div>
 								</div>
 							</div>
-						</div>
-					<?php } }?>
+						<?php } }?>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -269,6 +281,23 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
       </div>
     </div>
 </footer>
+
+ <!-- Modal Structure -->
+  <div id="modalHowtoUser" class="modal white dark-text">
+	<div class="modal-content">
+	  <h5 class="center bot-20 sec-tit sectionTitle"><?php echo $tr->translate("HOW_TO_USE"); ?></h5>
+		<div class="row ">
+			<?php $video_id = $this->introductionHome['lbl_howtouse']['title']; ?>
+			<div class="col s12 pad-0">
+				<div class="youTubeBlog" >
+					<iframe src="http://www.youtube.com/embed/<?php echo $video_id;?>?rel=0&amp;autoplay=1&mute=1&loop=1" frameborder="0" style="position:absolute;width:100%;height:100%;left:0"  allowfullscreen></iframe>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+  </div>
+	  
 <script>
 $(".tabs").tabs();
 </script>
