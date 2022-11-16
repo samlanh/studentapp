@@ -16,7 +16,7 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 		$currentLang = $dbGb->currentlang();
 		$systemLink = $dbGb->systemLink();
 		
-	$actionName=empty($actionName)?'introductionhome':$actionName;
+	$actionName=empty($actionName)?'introductionhome':$actionName."&currentLang=".$currentLang;
 	$url=$systemLink."/api/index?url=".$actionName;//test
       
       
