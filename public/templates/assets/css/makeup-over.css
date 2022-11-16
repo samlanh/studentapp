@@ -26,7 +26,7 @@ nav.preLogin .brand-logo {
     /* position: initial; */
     /* text-align: left; */
     /* margin-left: 15%; */
-    left: 25%;
+    left: 15%;
 }
 
 .preLogin.nav-wrapper a.brand-logo {
@@ -182,7 +182,7 @@ a.languageSwitch img.languageSwitch:hover {
 .sectionTitle {
     font-family: 'Khmer OS Muol Light',Roboto;
     font-weight: 500;
-    color: #102275;
+    color: #0a4374;
 }
 .text.description {
     font-size: 16px;
@@ -203,8 +203,32 @@ a.languageSwitch img.languageSwitch:hover {
 .text.description i {
     font-size: inherit !important;
     color: inherit !important;
+    margin: 0;
+    padding: 0;
+    font-family: inherit !important;
+}
+.text.description.tab-detail {
+    font-size: 14px;
 }
 
+.text.description.tab-detail table {
+    width: 100% !important;
+    font-size: 12px !important;
+}
+.text.description.tab-detail table thead, 
+.text.description.tab-detail table tbody, 
+.text.description.tab-detail table tr td, 
+.text.description.tab-detail table tr th{
+    font-size: 12px;
+    line-height: 18px;
+}
+.text.description.tab-detail table tr th,.text.description.tab-detail table tr td {
+    background: #fff !important;
+    padding: 10px 5px !important;
+}
+.text.description.tab-detail table tr th {
+    text-align: center;
+}
 .text-right {
     text-align: right !important;
 }
@@ -223,6 +247,44 @@ strong.mark-title {
     font-size: inherit;
     line-height: inherit;
     color: #000000;
+}
+
+
+
+ul.tabs.tab-home  {
+    height: 80px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    margin-top: -20px;
+    position:relative;
+    z-index:2000;
+}
+ul.tabs.tab-home li  {
+    height: initial;
+    line-height: 32px;
+}
+ul.tabs.tab-home span.tab-title {
+	display: block;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+ul.tabs.tab-home a {
+    line-height: 26px;
+}
+
+img.intro-image {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+}
+ul.tabs.tab-course a {
+    color: #e0e0e0;
+}
+
+ul.tabs.tab-course a:hover,ul.tabs.tab-course a.active {
+    color: #fff;
 }
 
 /*====================
