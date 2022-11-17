@@ -24,26 +24,56 @@ class IndexController extends Zend_Controller_Action
     		$this->_redirect("/home");
     	}
 		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$arrFilter = array(
-					'isForHome'=>1
-					);
-		$rs = $dbGb->getContactAndAbout($arrFilter);
-		$this->view->aboutUs  =$rs['aboutUS'];    
-		$this->view->contact  =$rs['contacting'];    
-		$this->view->slide  =$dbGb->getMobileSliding();
 		$this->view->allLang  =$dbGb->getAllLanguage();
 		
-		$this->view->course  =$dbGb->getSchoolCourse();
+		//$arrFilter = array(
+					//'isForHome'=>1
+					//);
+		//$rs = $dbGb->getContactAndAbout($arrFilter);
+		//$this->view->aboutUs  =$rs['aboutUS'];    
+		//$this->view->contact  =$rs['contacting']; 
+		
+		//$this->view->slide  =$dbGb->getMobileSliding();
+		
+		
+		//$this->view->course  =$dbGb->getSchoolCourse();
 		
 		$dbAPi = new Application_Model_DbTable_DbGetAPI();
-		$rs = $dbAPi->getDataByAPI("introductionhome");
-		$rs = json_decode($rs, true);
 		
+		$arrFilter = array(
+					'actionName'=>"introductionhome"
+					);
+					
+		$rs = $dbAPi->getDataByAPI($arrFilter);
+		$rs = json_decode($rs, true);
 		if($rs['code']=="SUCCESS"){
 			$this->view->introductionHome  =$rs['result'];
 			//print_r($rs['result']);exit();
 		}
 		
+		$arrFilter['actionName']="slieshow";
+		$rsSlide = $dbAPi->getDataByAPI($arrFilter);
+		$rsSlide = json_decode($rsSlide, true);
+		if($rsSlide['code']=="SUCCESS"){
+			$this->view->slide  =$rsSlide['result'];
+		}
+		
+		$arrFilter['actionName']="course";
+		$rsCourse = $dbAPi->getDataByAPI($arrFilter);
+		$rsCourse = json_decode($rsCourse, true);
+		if($rsCourse['code']=="SUCCESS"){
+			$this->view->course  =$rsCourse['result'];
+		}
+		
+		$arrFilter['actionName']="contactus";
+		$arrFilter['isForHome']=1;
+		$rsContactus = $dbAPi->getDataByAPI($arrFilter);
+		$rsContactus = json_decode($rsContactus, true);
+		if($rsContactus['code']=="SUCCESS"){
+			
+			$this->view->aboutUs  =$rsContactus['result']['about'];    
+			$this->view->contact  =$rsContactus['result']['contact'];  
+		}
     }
     
     public function logoutAction()
@@ -80,6 +110,32 @@ class IndexController extends Zend_Controller_Action
     	}
 		if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+			
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$data['actionName']="authWeb";
+			$data['methodPost']="POST";
+						
+			$rs = $dbAPi->getDataByAPI($data);
+			$rs = json_decode($rs, true);
+			
+			if($rs['code']=="SUCCESS"){
+				$studentRS = $rs['result'];
+				if(!empty($studentRS)){
+					$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
+					$sessionStudent->stuID 		= $studentRS['id'];
+					$sessionStudent->stuCode	= $studentRS['stuCode'];
+					$sessionStudent->password	= $password;
+					$sessionStudent->lock();
+					
+					setcookie(SYSTEM_SES.'stuID', $studentRS['id'], time() + (86400 * 30), '/');// 86400 = 1 day
+					setcookie(SYSTEM_SES.'stuCode', $studentRS['stuCode'], time() + (86400 * 30), '/');
+					setcookie(SYSTEM_SES.'password', $password, time() + (86400 * 30), '/');
+					
+					Application_Form_FrmMessage::redirectUrl("/home");	
+				}
+			}
+		
+			/**
 			$dbSt = new Application_Model_DbTable_DbStudentAuth();
     		$studentRS = $dbSt->getStudentAuth($data);
 			$password = empty($data['password'])?"":$data['password'];
@@ -97,12 +153,29 @@ class IndexController extends Zend_Controller_Action
 				
 				Application_Form_FrmMessage::redirectUrl("/home");	
 			}
+			
+			*/
     	}
 	}
 	
 	function validateAction(){
 		if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+			
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$data['actionName']="authWeb";
+			$data['methodPost']="POST";
+						
+			$rs = $dbAPi->getDataByAPI($data);
+			$rs = json_decode($rs, true);
+			
+			if($rs['code']=="SUCCESS"){
+				echo 1;
+				exit();
+			}
+    		echo 0;
+    		exit();
+			/***
 			$dbSt = new Application_Model_DbTable_DbStudentAuth();
     		$studentRS = $dbSt->getStudentAuth($data);
 			if(!empty($studentRS)){
@@ -111,6 +184,7 @@ class IndexController extends Zend_Controller_Action
 			}
     		echo 0;
     		exit();
+			***/
     	}
 	}
 

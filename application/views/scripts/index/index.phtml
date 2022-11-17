@@ -260,6 +260,9 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 			<?php if(!empty($contact['facebook'])){?>
               <a class="facebook" href="<?PHP  echo $contact['facebook']; ?>"><i class="mdi mdi-facebook"></i></a>
 			<?php } ?>
+			<?php if(!empty($contact['other_social'])){?>
+              <a class="messenger" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-facebook-messenger"></i></a>
+			<?php } ?>
 			<?php if(!empty($contact['youtube'])){?>
               <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
 			<?php } ?>
@@ -267,9 +270,7 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 			<?php if(!empty($contact['instagram'])){?>
               <a class="telegram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-telegram"></i></a>
 			<?php } ?>
-			<?php if(!empty($contact['other_social'])){?>
-              <a class="messenger" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-facebook-messenger"></i></a>
-			<?php } ?>
+			
             </li>
           </ul>
         </div>

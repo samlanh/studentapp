@@ -12,11 +12,22 @@ class Utility_AboutusController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		
-		$dbGb = new Application_Model_DbTable_DbGlobal();
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
 		$arrFilter = array();
-		$rs = $dbGb->getContactAndAbout($arrFilter);
-		$this->view->aboutUs  =$rs['aboutUS'];    
+		$arrFilter['actionName']="contactus";
+		$rsContactus = $dbAPi->getDataByAPI($arrFilter);
+		$rsContactus = json_decode($rsContactus, true);
+		if($rsContactus['code']=="SUCCESS"){
+			$this->view->aboutUs  =$rsContactus['result']['about'];    
+			//$this->view->contact  =$rsContactus['result']['contact'];  
+		}
+		
+		//$dbGb = new Application_Model_DbTable_DbGlobal();
+		//$arrFilter = array();
+		//$rs = $dbGb->getContactAndAbout($arrFilter);
+		//$this->view->aboutUs  =$rs['aboutUS'];    
+		
+		
     }
 
    

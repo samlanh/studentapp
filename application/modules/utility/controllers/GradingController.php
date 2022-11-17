@@ -13,9 +13,18 @@ class Utility_GradingController extends Zend_Controller_Action
     public function indexAction()
     {
 		
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$rs = $dbGb->getGradingSystem();
-		$this->view->rs  =$rs;    
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="gradingSystem";
+		$rs = $dbAPi->getDataByAPI($arrFilter);
+		$rs = json_decode($rs, true);
+		if($rs['code']=="SUCCESS"){
+			$this->view->rs  =$rs['result'];  
+		}
+		
+		//$dbGb = new Application_Model_DbTable_DbGlobal();
+		//$rs = $dbGb->getGradingSystem();
+		//$this->view->rs  =$rs;    
     }
 
    

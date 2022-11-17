@@ -12,10 +12,18 @@ class Utility_DisciplineController extends Zend_Controller_Action
 
     public function indexAction()
     {
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="disciplinePolicy";
+		$rs = $dbAPi->getDataByAPI($arrFilter);
+		$rs = json_decode($rs, true);
+		if($rs['code']=="SUCCESS"){
+			$this->view->rs  =$rs['result'];  
+		}
 		
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$rs = $dbGb->getDiscipline();
-		$this->view->rs  =$rs;    
+		//$dbGb = new Application_Model_DbTable_DbGlobal();
+		//$rs = $dbGb->getDiscipline();
+		//$this->view->rs  =$rs;    
     }
 
    

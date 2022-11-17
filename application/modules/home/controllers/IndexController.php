@@ -12,9 +12,17 @@ class Home_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	
+    	$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="slieshow";
+		$rsSlide = $dbAPi->getDataByAPI($arrFilter);
+		$rsSlide = json_decode($rsSlide, true);
+		if($rsSlide['code']=="SUCCESS"){
+			$this->view->slide  =$rsSlide['result'];
+		}
+		
 		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$this->view->slide  =$dbGb->getMobileSliding();
+		//$this->view->slide  =$dbGb->getMobileSliding();
 		
 		$limitRecord = $dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;

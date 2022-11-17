@@ -56,6 +56,8 @@
 				$branchWebsite = str_replace("Website","",$row['website']);
 				$branchWebsite = str_replace("website","",$branchWebsite);
 				$branchWebsite = str_replace(":","",$branchWebsite);
+				$branchWebsite = str_replace("https://","",$branchWebsite);
+				$branchWebsite = str_replace("http://","",$branchWebsite);
 				if($currentlang==1){
 					
 					
@@ -79,11 +81,11 @@
 					<div class="blog-info-branch">
 						<p class="bot-0 text"><i class="mdi mdi-map-marker-radius"></i> <?php echo $branchAddress;   ?></p>
 						<p class="bot-0 text"><i class="mdi mdi-phone-classic"></i> <?php echo $branchTel;   ?></p>
-						<p class="bot-0 text"><i class="mdi mdi-email-outline"></i> <?php echo $branchEmail;   ?></p>
-						<p class="bot-0 text"><i class="mdi mdi-web"></i> <?php echo $branchWebsite;   ?></p>
+						<p class="bot-0 text"><i class="mdi mdi-email-outline"></i> <a class="" href="mailto:<?PHP  echo $branchEmail; ?>"><?php echo $branchEmail;   ?></a></p>
+						<p class="bot-0 text"><i class="mdi mdi-web"></i> <a class="" target="_blank" href="//<?PHP  echo $branchWebsite; ?>"><?php echo $branchWebsite;   ?></a></p>
 						
 					</div>
-					<a target="_blank" href="https://goo.gl/maps/hVCkfnNq72WYxwU27" class="waves-effect waves-light btn-large btn-rounded blue"><?php echo $tr->translate("LOCATION"); ?> <i class="mdi mdi-map-search-outline "></i></a>
+					<a target="_blank" href="https://goo.gl/maps/hVCkfnNq72WYxwU27" class="waves-effect waves-light btn-large btn-rounded bg-primary"><?php echo $tr->translate("LOCATION"); ?> <i class="mdi mdi-map-search-outline "></i></a>
 					<div class="spacer"></div>
 					<div class="divider"></div>
 					<div class="spacer"></div>

@@ -56,24 +56,27 @@
 			<div class="col s12 pad-0">
 				<h5 class="bot-20 sec-tit  "><?php echo $tr->translate("CONTACT");?></h5>    
 				<div>
-					<?php echo $tr->translate("PHONE");?>: <?PHP  echo $contact['phone']; ?>
+					<i class="mdi mdi-phone"></i> <a class="" href="tel:<?PHP  echo $contact['phone']; ?>"><?PHP  echo $contact['phone']; ?></a>
 					<br/>                                  
-					<?php echo $tr->translate("EMAIL");?>: <?PHP  echo $contact['email']; ?>
+					<i class="mdi mdi-email"></i> <a class="" href="mailto:<?PHP  echo $contact['email']; ?>"><?PHP  echo $contact['email']; ?></a>
+					<br/>                                  
+					<i class="mdi mdi-web"></i> <a class="" target="_blank" href="<?PHP  echo $contact['website']; ?>"><?PHP  echo $contact['website']; ?></a>
 				</div>
 				<ul class="social-wrap">
 					<li class="social">
 					<?php if(!empty($contact['facebook'])){?>
 					  <a class="facebook" href="<?PHP  echo $contact['facebook']; ?>"><i class="mdi mdi-facebook"></i></a>
 					<?php } ?>
+					<?php if(!empty($contact['other_social'])){?>
+					  <a class="messenger" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-facebook-messenger"></i></a>
+					<?php } ?>
 					<?php if(!empty($contact['youtube'])){?>
 					  <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
 					<?php } ?>
 					<?php if(!empty($contact['instagram'])){?>
-					  <a class="instagram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-instagram"></i></a>
+					  <a class="telegram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-telegram"></i></a>
 					<?php } ?>
-					<?php if(!empty($contact['other_social'])){?>
-					  <a class="telegram" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-telegram"></i></a>
-					<?php } ?>
+					
 					</li>
 				</ul>
 			</div>
