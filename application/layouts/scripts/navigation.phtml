@@ -30,6 +30,8 @@ $rsStu = $dbAPi->getDataByAPI($arrFilter);
 $rsStu = json_decode($rsStu, true);
 
 $userProfile = $this->baseUrl().'/images/user.png';
+$studenName="";
+$stuCode="";
 if($rsStu['code']=="SUCCESS"){
 	$student  =$rsStu['result'][0];
 	//$student  =$rsStu['result'];
@@ -39,16 +41,17 @@ if($rsStu['code']=="SUCCESS"){
 			$userProfile = $thisImg;
 		}
 	}
+	$studenName = empty($student['stu_khname'])?"":$student['stu_khname'];
+	if(empty($studenName)){
+		$studenName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
+	}
+	$studenLatinName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
+	$stuCode = empty($student['stu_code'])?"":$student['stu_code'];
 }
 		
 //$dbSt = new Application_Model_DbTable_DbStudentAuth();
 //$student = $dbSt->getStudentInfo();
-$studenName = empty($student['stu_khname'])?"":$student['stu_khname'];
-if(empty($studenName)){
-	$studenName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
-}
-$studenLatinName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
-$stuCode = empty($student['stu_code'])?"":$student['stu_code'];
+
 
 
 

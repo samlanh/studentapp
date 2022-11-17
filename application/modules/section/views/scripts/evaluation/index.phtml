@@ -179,12 +179,20 @@
 						<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
 							<div class="row">
 								<div class="input-field colLeft col s6">
-									<?php echo $frm->getElement('month');?>
-								  <label><?php echo $tr->translate("MONTH"); ?></label>
+									<?php echo $frm->getElement('academicYear');?>
+									<label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
 								</div>
 								<div class="input-field colRight col s6">
-									<?php echo $frm->getElement('academicYear');?>
-								  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
+									<?php echo $frm->getElement('examType');?>
+								  <label><?php echo $tr->translate("TYPY"); ?></label>
+								</div>
+								<div class="input-field colLeft col s6">
+									<?php echo $frm->getElement('forSemester');?>
+									<label><?php echo $tr->translate("SEMESTER"); ?></label>
+								</div>
+								<div class="input-field colRight col s6">
+									<?php echo $frm->getElement('month');?>
+									<label><?php echo $tr->translate("MONTH"); ?></label>
 								</div>
 								<div class="input-field  col s12">
 									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
@@ -207,6 +215,18 @@
 </div>
 <script type="text/javascript">
 	$("select").formSelect(); 
+	$(document).ready(function(){
+		checkingExam();
+	});
+	function checkingExam(){
+		var examType = $('#examType').find(":selected").val();
+		
+		$('#month').prop('disabled', false);
+		if(examType==2){
+			 $('#month').prop('disabled', 'disabled');
+		}
+		$("#month").formSelect();
+	}
 	<?php if(!empty($this->row)){ 
 		if(count($this->row) < $this->allRow){?>
 		var allRecord ='<?php echo $this->allRow; ?>';

@@ -5,96 +5,22 @@
     	$_dbgb = new Application_Model_DbTable_DbGlobal();
     	return $_dbgb->getUserId();
     }
-	function getGroupOfStudent(){
-		$db = $this->getAdapter();
-		$sql="SELECT 
-				GROUP_CONCAT(gds.group_id) 
-			FROM `rms_group_detail_student` AS gds 
-				
-				
-			";
-		$sql.="
-			WHERE 
-				 gds.is_maingrade=1
-				AND gds.is_current=1
-		";
-		$sql.=" AND gds.stu_id=".$this->getUserId();
-		return $db->fetchOne($sql);
-	}
+
     function getStudentTotalAttendance($search=array()){
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$currentlang= $dbGb->currentlang();
 		
-		$db = $this->getAdapter();
-		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-	   	if($currentlang==1){// khmer
-	   		
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-				sat.`group_id`
-				,(SELECT b.".$branchName." FROM rms_branch as b WHERE b.br_id=		sat.branch_id LIMIT 1) AS branchName
-				,(SELECT br.branch_namekh FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameKh
-				,(SELECT br.branch_nameen FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameEn
-				,g.group_code AS groupCode
-				,satd.`attendence_status`
-				,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-				,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			
-				,COUNT(satd.`attendence_status`) AS total
-				,sat.`date_attendence`
-				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
-				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat.`group_id` = sat2.`group_id` AND sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countNoPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat.`group_id` = sat2.`group_id` AND sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat.`group_id` = sat2.`group_id` AND sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countLate
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat.`group_id` = sat2.`group_id` AND sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=5 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countEalyLeave
-
-		";
-		$sql.="
-			FROM
-				`rms_student_attendence` AS sat 
-				 JOIN `rms_group` AS g ON g.id=sat.group_id
-				LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=1
-				AND sat.`status`=1
-		";
-		$groupList = $this->getGroupOfStudent();
-		$groupList = empty($groupList)?0:$groupList;
-		$sql.=" AND sat.group_id IN (".$groupList.")";
-		
-		if(!empty($search['month'])){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%m') = ".$search['month'];
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $search;
+		$arrFilter['actionName']="studentAttendance";
+		$arrFilter['studentId']=$this->getUserId();
+		$row = $dbAPi->getDataByAPI($arrFilter);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
 		}
-		if(!empty($search['forSemester'])){
-			$sql.=" AND sat.for_semester = ".$search['forSemester'];
-		}
-		if(!empty($search['academicYear'])){
-			$sql.=" AND g.academic_year = ".$search['academicYear'];
-		}
-		$sql.=" GROUP BY sat.`group_id`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m') ";
-		$sql.=" ORDER BY DATE_FORMAT(sat.`date_attendence`,'%Y%m') DESC ";
 		
 		
-		if(!empty($search['LimitStart'])){
-			$sql.=" LIMIT ".$search['LimitStart'].",".$search['limitRecord'];
-		}else if(!empty($search['limitRecord'])){
-			$sql.=" LIMIT ".$search['limitRecord'];
-		}
-			
-		return $db->fetchAll($sql);
 	}
 	
 	function moreAttendanceRecord($data){//ajaxloadmore 
@@ -241,140 +167,21 @@
 		return $array;
 	}
 	
-	
-	function getStudentTotalAttendanceInfo($search){
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$currentlang= $dbGb->currentlang();
-		
-		$db = $this->getAdapter();
-		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-		$teacherName= "teacher_name_en";
-	   	if($currentlang==1){// khmer
-	   		$teacherName= "teacher_name_kh";
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-				sat.`group_id`
-				,(SELECT b.".$branchName." FROM rms_branch as b WHERE b.br_id=		sat.branch_id LIMIT 1) AS branchName
-				,(SELECT br.branch_namekh FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameKh
-				,(SELECT br.branch_nameen FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameEn
-				,g.group_code AS groupCode
-				,(SELECT t.$teacherName FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teacherName
-				,satd.`attendence_status`
-				,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-				,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			
-				,COUNT(satd.`attendence_status`) AS total
-				,sat.`date_attendence`
-				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
-				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countNoPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countPermission
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countLate
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=1 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=5 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countEalyLeave
-
-		";
-		$sql.="
-			FROM
-				`rms_student_attendence` AS sat 
-				 JOIN `rms_group` AS g ON g.id=sat.group_id
-				LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=1
-				AND sat.`status`=1
-		";
-		$yearMonth = empty($search['id'])?'':$search['id'];
-		$groupID = empty($search['group'])?0:$search['group'];
-		
-		$sql.=" AND sat.group_id IN (".$groupID.")";
-		$sql.=" AND satd.stu_id = $studentId ";
-		if(!empty($yearMonth)){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%Y%m') = ".$yearMonth;
-		}
-		
-		$sql.=" GROUP BY sat.`group_id`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m') ";
-		$sql.=" ORDER BY DATE_FORMAT(sat.`date_attendence`,'%Y%m') DESC ";
-		$sql.=" LIMIT 1 ";
-		
-			
-		return $db->fetchRow($sql);
-	}
-	
 	function getStudentAttendanceDetail($search){
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$currentlang= $dbGb->currentlang();
 		
-		$db = $this->getAdapter();
-		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-		$teacherName= "teacher_name_en";
-	   	if($currentlang==1){// khmer
-	   		$teacherName= "teacher_name_kh";
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-			sat.`group_id`
-			,g.group_code AS groupCode
-			,satd.`attendence_status`
-			,satd.`type`
-			,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-			,CASE
-					WHEN satd.`attendence_status` = 2 THEN '".$tr->translate("NO_PERMISSION")."'
-					WHEN satd.`attendence_status` = 3 THEN '".$tr->translate("PERMISSION")."'
-					WHEN satd.`attendence_status` = 4 THEN '".$tr->translate("LATE")."'
-					WHEN satd.`attendence_status` = 5 THEN '".$tr->translate("EARLY_LEAVE")."'
-				
-			END AS attendenceStatusTitle
-			,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-			,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			,sat.`date_attendence`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m%d') AS yearMonth
-			,satd.description
-		";
-		$sql.="
-			FROM
-			`rms_student_attendence` AS sat 
-			 JOIN `rms_group` AS g ON g.id=sat.group_id
-			LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=1
-				AND sat.`status`=1 
-		";
-		$yearMonth = empty($search['id'])?'':$search['id'];
-		$groupID = empty($search['group'])?0:$search['group'];
-		
-		$sql.=" AND sat.group_id IN (".$groupID.")";
-		$sql.=" AND satd.stu_id = $studentId ";
-		
-		if(!empty($yearMonth)){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%Y%m') = ".$yearMonth;
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $search;
+		$arrFilter['actionName']="studentAttendanceDetail";
+		$arrFilter['studentId']=$this->getUserId();
+		$row = $dbAPi->getDataByAPI($arrFilter);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
 		}
 		
-		$sql.=" GROUP BY sat.`group_id`
-				,sat.`date_attendence`
-			ORDER BY sat.`date_attendence` DESC";
-						
-		return $db->fetchAll($sql);
+		
 	}
 	
 	function detailContent($data){
