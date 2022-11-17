@@ -248,16 +248,30 @@ strong.mark-title {
     line-height: inherit;
     color: #000000;
 }
+.bg-primary {
+    background: #0a4374 !important;
+}
+.bg-darkyellow {
+    background: #f5711d !important;
+}
 
+.blog-tab-home {
+    width: 100%;
+}
+.blog-tab-home .col .row {
+    margin: 0 !important;
+}
 
-
+.blog-tab-home .col .row .col {
+    padding: 0;
+}
 ul.tabs.tab-home  {
     height: 80px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     margin-top: -20px;
     position:relative;
-    z-index:2000;
+    z-index:997;
 }
 ul.tabs.tab-home li  {
     height: initial;
@@ -286,7 +300,35 @@ ul.tabs.tab-course a {
 ul.tabs.tab-course a:hover,ul.tabs.tab-course a.active {
     color: #fff;
 }
+.intro-blog {
+    position: relative;
+    min-height: 200px;
+}
 
+.intro-blog a.ploat-btn {
+    position: absolute;
+    top: 25%;
+    right: 1%;
+    min-width: 70%;
+}
+.starting-btn strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.starting-btn a.btn-large {
+    width: 100%;
+}
+div#modalHowtoUser .modal-content {padding: 0 10px;}
+
+div#modalHowtoUser .modal-content h4 {
+    margin: 10px 0;
+}
+div#modalHowtoUser .youTubeBlog {
+    min-height: 210px;
+    margin: 10px 0;
+    position: relative;
+}
 /*====================
 START BACKGROUND PAGE VIEW
 =======================*/
@@ -1152,9 +1194,11 @@ span.page-footer-info,span.page-footer-info strong {
 .row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p{
     margin: 0;
     font-size: 14px;
-    color: #181818;
+    color: #252323;
 }
-
+.row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p a {
+    color: inherit;
+}
 .row.ui-mediabox.blogs.aligned .row-branch .col {
     margin: 0;
     padding: 0;
@@ -1176,7 +1220,7 @@ span.page-footer-info,span.page-footer-info strong {
 }
 
 .row.ui-mediabox.blogs.small-left.aligned.branchList .blog-info-branch p i.mdi {
-    color: #003452;
+    color: #0a4374;
 }
 .row-branch a.btn-large.btn-rounded {
     width: 100%;

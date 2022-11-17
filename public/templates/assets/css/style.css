@@ -1840,10 +1840,15 @@ display: block;
   padding: 5px;
  
 }
+.contacting .social a.messenger i,
 .page-footer .social a.messenger  i{
-	background: radial-gradient(circle at 25% 98%, rgb(0, 120, 255) 5%, rgb(75, 105, 255) 25%, rgb(175, 55, 240) 55%, rgb(255, 85, 125) 78%, rgb(250, 105, 110) 83%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	color: #0078ff;
+}
+.contacting i {
+    color: #0a4374;
+}
+.contacting  a {
+    color: #252323;
 }
 .page-footer .footer-copyright{
   background: rgb(255 255 255 / 65%);
