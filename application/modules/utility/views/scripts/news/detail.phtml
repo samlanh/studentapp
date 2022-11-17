@@ -31,15 +31,18 @@
 		<div class="row ui-mediabox blogs bot-0">
 			<div class="col s12">
 				<?php 
-					$images = $this->baseUrl()."/images/no-photo.png";
-					$imageFeature = $systemLink.'/images/newsevent/'.$row['image_feature'];
+				$images = $this->baseUrl()."/images/no-photo.png";
+				$imageFeature = $systemLink.'/images/newsevent/'.$row['image_feature'];
 				if ($dbGb->does_url_exists($imageFeature)){
 						
 				?>
 				<a class="img-wrap" href="<?php echo $imageFeature; ?>" data-fancybox="images" data-caption="<?php echo $row['title']; ?>">
 					<img class="z-depth-1" style="width: 100%;" src="<?php echo $imageFeature; ?>">
 				</a>
-				<?php } ?>
+				<?php }else{ ?>
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+				<?php }?>
 				<h5 class="title"><?php echo $row['title']; ?></h5>
 				<span class="small date"><i class="mdi mdi-calendar-clock "></i> <?php echo $days." ".$monthAtt." ".$yearAtt?></span>
 				

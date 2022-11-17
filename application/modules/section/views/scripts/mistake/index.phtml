@@ -1,6 +1,6 @@
  <?php
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle($tr->translate("ENVALUATION"));
+	$this->headTitle($tr->translate("MISTAKE"));
 	echo $this->headTitle();
 	
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
@@ -10,10 +10,14 @@
 	
 	$frm = $this->formFilter;
 	$querystring = $this->queryString;
+	$tSmall 	=0;
+	$tMedium	=0;
+	$tBig 		=0;
+	$tOther 	=0;
 ?>
 <div class="bgBodyhome"></div>	
 
-<div class="bgBody-listview gradientGreen">
+<div class="bgBody-listview gradientBlue">
 	<div class="container">
 			<div class="section">
 				<div class="row">
@@ -22,10 +26,10 @@
 							<i class="mdi mdi-medal "></i>
 						</div>
 						<h5 class="sec-page-tit  ">
-							<?php echo $tr->translate("ENVALUATION"); ?>
+							<?php echo $tr->translate("MISTAKE"); ?>
 						</h5>
 						<span class="sec-page-desc">
-							<?php echo $tr->translate("ENVALUATION_PAGE_DESC"); ?>
+							<?php echo $tr->translate("MISTAKE_PAGE_DESC"); ?>
 						</span>
 					</div>
 				</div>
@@ -34,7 +38,7 @@
 	</div>
 </div>
 <div class="main-page-list">
-	<div class="bl-envaluation-list-row ">
+	<div class="bl-mistake-list-row ">
 		<div class="spacer-medium"></div>
 		<div class="spacer-medium"></div>
 		<div class="container">
@@ -47,10 +51,29 @@
 							$yearAtt = date("Y",strtotime($attedance['date_attendence'])); 
 							$monthAtt = date("M",strtotime($attedance['date_attendence'])); 
 							$monthKey = date("m",strtotime($attedance['date_attendence'])); 
+							
+							$academicYear = $attedance['academicYear']; 
+							
+							$countSmallMistake 		= sprintf('%02d',$attedance['countSmallMistake']);
+							$countMediumMistake 	= sprintf('%02d',$attedance['countMediumMistake']);
+							$countBigMistake 			= sprintf('%02d',$attedance['countBigMistake']);
+							$countOtherMistake 	= sprintf('%02d',$attedance['countOtherMistake']);
+							
 							if($currentlang==1){
+								$academicYear = $dbGb->getNumberInkhmer($academicYear);
 								$yearAtt = $dbGb->getNumberInkhmer($yearAtt);
 								$monthAtt = $dbGb->getMonthInkhmer($monthKey);
+								
+								$countSmallMistake = $dbGb->getNumberInkhmer($countSmallMistake);
+								$countMediumMistake = $dbGb->getNumberInkhmer($countMediumMistake);
+								$countBigMistake = $dbGb->getNumberInkhmer($countBigMistake);
+								$countOtherMistake = $dbGb->getNumberInkhmer($countOtherMistake);
 							}
+							
+							$tSmall 	=$tSmall+$attedance['countSmallMistake'];
+							$tMedium	=$tMedium+$attedance['countMediumMistake'];
+							$tBig 		=$tBig+$attedance['countBigMistake'];
+							$tOther 	=$tOther+$attedance['countOtherMistake'];
 						?>
 						<div class="row lists-view-icon-row  mrg-0">
 							<div class="col s3 blg-row-left">
@@ -63,9 +86,9 @@
 								<div class="row mrg-0 info-blg">
 									<div class="col s6">
 										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
-										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $attedance['academicYear']; ?></strong></span>
+										<span class="row-items-info"><?php echo $tr->translate("ACADEMIC_YEAR"); ?> <strong class="mark-title"><?php echo $academicYear; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/mistake/detail/id/".$attedance['yearMonth']."?group=".$attedance['group_id'];?>">
+										<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $attedance['yearMonth']; ?>,<?php echo $attedance['group_id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -76,10 +99,10 @@
 										<span class="row-items-info text-right"><?php echo $tr->translate("OTHER"); ?></span>
 									</div>
 									<div class="col s3">
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countSmallMistake'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countMediumMistake'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countBigMistake'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
-										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo sprintf('%02d',$attedance['countOtherMistake'])." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countSmallMistake." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countMediumMistake." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countBigMistake." ".$tr->translate("TIME_UNIT"); ?></strong></span>
+										<span class="row-items-info counting text-right "><strong class="mark-title"><?php echo $countOtherMistake." ".$tr->translate("TIME_UNIT"); ?></strong></span>
 									
 									</div>
 								</div>
@@ -177,14 +200,19 @@
 					<div class="row ">
 						<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate("FILTER"); ?></h5>        
 							<div class="row">
-								<div class="input-field colLeft col s6">
-									<?php echo $frm->getElement('month');?>
-								  <label><?php echo $tr->translate("MONTH"); ?></label>
-								</div>
-								<div class="input-field colRight col s6">
+								<div class="input-field  col s12">
 									<?php echo $frm->getElement('academicYear');?>
 								  <label><?php echo $tr->translate("ACADEMIC_YEAR"); ?></label>
 								</div>
+								<div class="input-field colLeft col s6">
+									<?php echo $frm->getElement('forSemester');?>
+								  <label><?php echo $tr->translate("SEMESTER"); ?></label>
+								</div>
+								<div class="input-field  colRight col s6">
+									<?php echo $frm->getElement('month');?>
+								  <label><?php echo $tr->translate("MONTH"); ?></label>
+								</div>
+								
 								<div class="input-field  col s12">
 									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
 								</div>
@@ -195,6 +223,49 @@
 				</form>
 			</div>
 		</div>
+	</div>
+</div>
+<?php 
+$tSmallLB 		= sprintf('%02d',$tSmall);
+$tMediumLB 	= sprintf('%02d',$tMedium);
+$tBigLB 			= sprintf('%02d',$tBig);
+$tOtherLB 	= sprintf('%02d',$tOther);
+
+
+if($currentlang==1){
+	$tSmallLB 	= $dbGb->getNumberInkhmer($tSmallLB);
+	$tMediumLB 	= $dbGb->getNumberInkhmer($tMediumLB);
+	$tBigLB 	= $dbGb->getNumberInkhmer($tBigLB);
+	$tOtherLB 	= $dbGb->getNumberInkhmer($tOtherLB);
+}
+?>
+<div class="total-page-footer total-total">
+	<div class="container">
+		<div class="row mrg-0 ">
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("SMALL_MISTACK"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tSmallLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("MEDIUM_MISTACK"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tMediumLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("BIG_MISTACK"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tBigLB;?></strong></span>
+			</div>
+			<div class="col s3 text-center">
+				<span class="page-footer-info"><?php echo $tr->translate("OTHER"); ?></span>
+				<span class="page-footer-info"><strong><?php echo $tOtherLB;?></strong></span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Structure -->
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+	</div>
+	<div class="modal-footer">
 	</div>
 </div>
 <script type="text/javascript">
@@ -254,6 +325,32 @@
 
 		}
 	<?php } ?>
+	function getPopupContent(yearMonth,group){
+		
+		var urlEvaluationRow = '<?php echo $this->baseUrl().'/section/mistake/detailcontent'; ?>';
+			$.ajax({
+				url:urlEvaluationRow,
+				type: "post",
+				data: {
+					'id':yearMonth
+					,'group':group
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					$('.content-info').html(data.htmlRecord);
+					setTimeout(function () {
+							$('#modal-popup').modal('open');
+					}, 500);
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+	}
 	<?php } ?>
 </script>
 

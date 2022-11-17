@@ -40,8 +40,17 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['academicYear'])){
 		$actionName = $actionName."&academicYear=".$arrFilter['academicYear'];
 	}
+	if(!empty($arrFilter['paymentMethod'])){
+		$actionName = $actionName."&paymentMethod=".$arrFilter['paymentMethod'];
+	}
 	if(!empty($arrFilter['exam_type'])){
 		$actionName = $actionName."&exam_type=".$arrFilter['exam_type'];
+	}
+	if(!empty($arrFilter['startDate'])){
+		$actionName = $actionName."&startDate=".$arrFilter['startDate'];
+	}
+	if(!empty($arrFilter['endDate'])){
+		$actionName = $actionName."&endDate=".$arrFilter['endDate'];
 	}
 	if(!empty($arrFilter['examType'])){
 		$actionName = $actionName."&examType=".$arrFilter['examType'];
@@ -61,6 +70,9 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['evaluationId'])){
 		$actionName = $actionName."&evaluationId=".$arrFilter['evaluationId'];
 	}
+	if(!empty($arrFilter['type'])){
+		$actionName = $actionName."&type=".$arrFilter['type'];
+	}
 	if(!empty($arrFilter['id'])){
 		$actionName = $actionName."&id=".$arrFilter['id'];
 	}
@@ -75,6 +87,9 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	}
 	if(!empty($arrFilter['subjectId'])){
 		$actionName = $actionName."&subjectId=".$arrFilter['subjectId'];
+	}
+	if(!empty($arrFilter['paymentId'])){
+		$actionName = $actionName."&paymentId=".$arrFilter['paymentId'];
 	}
 	
 	$url=$systemLink."/api/index?url=".$actionName;

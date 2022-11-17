@@ -92,51 +92,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$sql="SELECT * FROM `ln_language` AS l WHERE l.`status`=1 ORDER BY l.ordering ASC";
 		return $db->fetchAll($sql);
 	}
-	function getMobileSliding(){
-		$db = $this->getAdapter();
-		$sql="SELECT msl.* FROM mobile_slideshow AS msl";
-		$sql.="";
-		$sql.="  ";
-	   	return $db->fetchAll($sql);
-	}
 	
-	public function getContactAndAbout($arrFilter){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-    		
-    		$sql=" 
-			SELECT
-				l.*,
-				ld.title,
-				ld.description
-    		FROM `mobile_location` AS l,
-				`mobile_location_detail` AS ld
-    		WHERE l.id=ld.location_id
-				AND ld.lang= $currentLang ";
-    		$sql.=" LIMIT 1 ";
-    		$row = $db->fetchRow($sql);
-    		
-			$sql=" SELECT 
-						ad.title,ad.description
-					FROM `mobile_about` AS a,
-						`mobile_about_detail` AS ad
-					WHERE a.id=ad.abouts_id
-						AND ad.lang= $currentLang AND a.status=1 ";
-    		if (!empty($arrFilter['isForHome'])){
-				$sql.=" AND a.isForHome = 1 ";
-			}
-    		$rowabout = $db->fetchAll($sql);
-			
-			$arrReturn = array(
-				'aboutUS'=>$rowabout
-				,'contacting'=>$row
-			);
-    		return $arrReturn;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
 	function getAllViewByType($type=1){
     	$db=$this->getAdapter();
 		$currentLang = $this->currentlang();
@@ -176,30 +132,30 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql.$oder);
     }
 	function getAllDegree(){
-  	$db = $this->getAdapter();
-  	
-  	$currentLang = $this->currentlang();
-  	$colunmname='title_en';
-  	if ($currentLang==1){
-  		$colunmname='title';
-  	}
-  	
-  	$this->_name = "rms_items";
-  	$sql="SELECT m.id, m.$colunmname AS name FROM $this->_name AS m WHERE m.status=1 ";
-  	$sql.=" AND m.type=1 ";
-  	/*
-	if (!empty($schooloption)){
-  		$schooloptionParam = explode(",", $schooloption);
-  		$s_whereee = array();
-  		foreach ($schooloptionParam as $schooloptionId){
-  			$s_whereee[] = $schooloptionId." IN (m.schoolOption)";
-  		}
-  		$sql .=' AND ( '.implode(' OR ',$s_whereee).')';
-  	}
-	*/
-  	$sql .=' ORDER BY m.schoolOption ASC,m.type DESC,m.ordering DESC, m.title ASC';	
-  	return $db->fetchAll($sql);
-  }
+		$db = $this->getAdapter();
+		
+		$currentLang = $this->currentlang();
+		$colunmname='title_en';
+		if ($currentLang==1){
+			$colunmname='title';
+		}
+		
+		$this->_name = "rms_items";
+		$sql="SELECT m.id, m.$colunmname AS name FROM $this->_name AS m WHERE m.status=1 ";
+		$sql.=" AND m.type=1 ";
+		/*
+		if (!empty($schooloption)){
+			$schooloptionParam = explode(",", $schooloption);
+			$s_whereee = array();
+			foreach ($schooloptionParam as $schooloptionId){
+				$s_whereee[] = $schooloptionId." IN (m.schoolOption)";
+			}
+			$sql .=' AND ( '.implode(' OR ',$s_whereee).')';
+		}
+		*/
+		$sql .=' ORDER BY m.schoolOption ASC,m.type DESC,m.ordering DESC, m.title ASC';	
+		return $db->fetchAll($sql);
+	  }
 	function does_url_exists($url) {
 	
 		$ch = curl_init($url);
@@ -216,83 +172,22 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		return $status;
 	}
 	
-	public function getDiscipline(){
+	
+	public function getNewsEvents($search = array()){
     	$db = $this->getAdapter();
     	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						ad.title,
-						ad.description
-					FROM `mobile_disciplinenote` AS a,
-						`mobile_disciplinenote_detail` AS ad
-					WHERE a.id=ad.displicipline_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-			$sql.=" ORDER BY a.ordering ASC ";
-    		$row = $db->fetchAll($sql);
-    		return $row;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
-	public function getGradingSystem(){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						ad.title,
-						ad.description
-					FROM `mobile_grading_system` AS a,
-						`mobile_grading_system_detail` AS ad
-					WHERE a.id=ad.grading_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-			$sql.=" ORDER BY a.id ASC ";
-    		$row = $db->fetchAll($sql);
-    		return $row;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
-	public function getCountAllNews(){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						COUNT(a.id)
-					FROM `mobile_news_event` AS a,
-						`mobile_news_event_detail` AS ad
-					WHERE a.id=ad.news_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-    		$row = $db->fetchOne($sql);
-    		return $row;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
-	public function getNewsEvents($arrFilter = array()){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						a.*,
-						ad.title,
-						ad.description
-					FROM `mobile_news_event` AS a,
-						`mobile_news_event_detail` AS ad
-					WHERE a.id=ad.news_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-			$sql.=" ORDER BY a.publish_date DESC,a.id DESC ";
 			
-			if(!empty($arrFilter['LimitStart'])){
-				$sql.=" LIMIT ".$arrFilter['LimitStart'].",".$arrFilter['limitRecord'];
-			}else if(!empty($arrFilter['limitRecord'])){
-	    		$sql.=" LIMIT ".$arrFilter['limitRecord'];
-	    	}
-    		$row = $db->fetchAll($sql);
-    		return $row;
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$arrFilter = $search;
+			$arrFilter['actionName']="news";
+			$arrFilter['LimitStart']=empty($search['LimitStart'])?null:$search['LimitStart'];
+			$arrFilter['limitRecord']=empty($search['limitRecord'])?null:$search['limitRecord'];
+			$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+			$rsQuery = json_decode($rsQuery, true);
+			if($rsQuery['code']=="SUCCESS"){
+				return $rsQuery['result']['normal_news'];    
+			}
+    		
     	}catch(Exception $e){
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
@@ -300,19 +195,17 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	public function getNewsEventsDetail($id){
     	$db = $this->getAdapter();
     	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						a.*,
-						ad.title,
-						ad.description
-					FROM `mobile_news_event` AS a,
-						`mobile_news_event_detail` AS ad
-					WHERE a.id=ad.news_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-			$sql.=" AND a.id=".$id;
-    		$row = $db->fetchRow($sql);
-    		return $row;
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$arrFilter = array();
+			$arrFilter['actionName']="newsDetail";
+			$arrFilter['id']=$id;
+			$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+			$rsQuery = json_decode($rsQuery, true);
+			if($rsQuery['code']=="SUCCESS"){
+				return $rsQuery['result'];    
+			}
+			
+    		
     	}catch(Exception $e){
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
@@ -398,57 +291,6 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			
 		return $array;
 	}
-	public function getSchoolBranch(){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-			$schoolName='school_nameen';
-			$branchName='branch_nameen';
-			if ($currentLang==1){
-				$schoolName='school_namekh';
-				$branchName='branch_namekh';
-			}
-			
-			$sql=" 
-				SELECT b.*
-						,b.$schoolName AS schoolName
-						,b.$branchName AS branchName
-				FROM `rms_branch` AS b 
-				WHERE b.status=1 ";
-			$sql.=" ORDER BY b.br_id ASC ";
-    		$row = $db->fetchAll($sql);
-    		return $row;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
 	
-	
-	public function getSchoolCourse($arrFilter = array()){
-    	$db = $this->getAdapter();
-    	try{
-    		$currentLang = $this->currentlang();
-			$sql=" SELECT 
-						a.*,
-						ad.title,
-						ad.description
-					FROM `mobile_course` AS a,
-						`mobile_course_detail` AS ad
-					WHERE a.id=ad.course_id
-						AND ad.lang= $currentLang 
-						AND a.status=1 ";
-			$sql.=" ORDER BY a.ordering ASC ";
-			
-			if(!empty($arrFilter['LimitStart'])){
-				$sql.=" LIMIT ".$arrFilter['LimitStart'].",".$arrFilter['limitRecord'];
-			}else if(!empty($arrFilter['limitRecord'])){
-	    		$sql.=" LIMIT ".$arrFilter['limitRecord'];
-	    	}
-    		$row = $db->fetchAll($sql);
-    		return $row;
-    	}catch(Exception $e){
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
-    }
 }
 ?>

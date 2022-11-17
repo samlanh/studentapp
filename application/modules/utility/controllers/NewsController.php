@@ -18,9 +18,10 @@ class Utility_NewsController extends Zend_Controller_Action
 		$limitRecord = $dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
-		$allRow = $dbGb->getCountAllNews();
-		$this->view->allRow = $allRow;
+		//$allRow = $dbGb->getCountAllNews();
 		
+		$allRow = count($dbGb->getNewsEvents($arrFilter));
+		$this->view->allRow = $allRow;
 		
 		$arrFilter['limitRecord']=$limitRecord;
 		$rs = $dbGb->getNewsEvents($arrFilter);

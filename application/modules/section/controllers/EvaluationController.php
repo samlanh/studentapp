@@ -47,7 +47,6 @@ class Section_EvaluationController extends Zend_Controller_Action
 		$this->view->formFilter = $frmsearch;
 		
 		
-		
     }
 	
 	function morerecordAction(){

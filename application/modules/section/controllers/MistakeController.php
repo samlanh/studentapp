@@ -63,23 +63,17 @@ class Section_MistakeController extends Zend_Controller_Action
 		
 	}
 	
-	function detailAction()
-	{
-		
-		
-		$param = $this->getRequest()->getParams();
-		if(empty($param)){
-			$this->_redirect("/section/mistake");
-		}
-		$dbAtt = new Section_Model_DbTable_DbMistake();
-		$row = $dbAtt->getStudentTotalMistakeInfo($param);
-		$this->view->row = $row;
-		
-		$rowDetail = $dbAtt->getStudentEvaluationDetail($param);
-		$this->view->rowDetail = $rowDetail;
-	}	
+	
 
-   
+	function detailcontentAction()
+	{
+		$db = new Section_Model_DbTable_DbMistake();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$record = $db->detailContent($_data);
+			print_r(Zend_Json::encode($record));exit();
+    	}
+	}
 
 }
 

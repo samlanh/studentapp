@@ -35,7 +35,8 @@ class Section_PaymentController extends Zend_Controller_Action
 		$limitRecord = $_dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
-		$allRow = $dbPmt->getCountAllPayment($arrFilter);
+		//$allRow = $dbPmt->getCountAllPayment($arrFilter);
+		$allRow = count($dbPmt->getAllPayment($arrFilter));
 		$this->view->allRow = $allRow;
 		
 		

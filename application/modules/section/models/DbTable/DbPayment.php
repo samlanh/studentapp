@@ -5,6 +5,7 @@
     	$_dbgb = new Application_Model_DbTable_DbGlobal();
     	return $_dbgb->getUserId();
     }
+	/**
 	function getCountAllPayment($search=null){
     	$_dbGb  = new Application_Model_DbTable_DbGlobal();
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
@@ -45,75 +46,20 @@
 	    	$order=" ORDER BY sp.create_date DESC";
 			return $db->fetchOne($sql.$where.$order);
     }
+	**/
 	 function getAllPayment($search=null){
-    	$_dbGb  = new Application_Model_DbTable_DbGlobal();
-    	
-    
-    	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-    	$db=$this->getAdapter();
-    	$lang = $_dbGb->currentlang();
-    	if($lang==1){// khmer
-    		$label = "name_kh";
-    		$branch = "branch_namekh";
-    		$grade = "rms_itemsdetail.title";
-    		$degree = "rms_items.title";
-    	}else{ // English
-    		$label = "name_en";
-    		$branch = "branch_nameen";
-    		$grade = "rms_itemsdetail.title_en";
-    		$degree = "rms_items.title_en";
-    	}
+		 
+		 $dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $search;
+		$arrFilter['actionName']="studentPayment";
+		$arrFilter['studentId']=$this->getUserId();
+		$row = $dbAPi->getDataByAPI($arrFilter);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
+		}
 		
-    	$sql=" SELECT 
-    				sp.*
-    				,(SELECT $branch FROM `rms_branch` WHERE br_id=sp.branch_id LIMIT 1) AS branchName
-    				,sp.receipt_number AS receiptNo
-					,sp.create_date AS paymentDate
-	    			,(CASE WHEN sp.data_from=3 THEN s.serial ELSE s.stu_code END) AS stuCode
-	    			,(CASE WHEN s.stu_khname IS NULL OR s.stu_khname='' THEN s.stu_enname ELSE s.stu_khname END) AS stuName
-					,(SELECT g.group_code FROM `rms_group` AS g WHERE g.id = sp.group_id LIMIT 1) AS groupCode
-	    			,(SELECT CONCAT((SELECT CONCAT(fromYear,'-',toYear) FROM rms_academicyear WHERE rms_academicyear.id=rms_tuitionfee.academic_year LIMIT 1),'(',generation,')') FROM rms_tuitionfee WHERE rms_tuitionfee.id=sp.academic_year) AS academicYear
-					,(SELECT $label FROM `rms_view` WHERE type=8 AND key_code=sp.payment_method LIMIT 1) AS paymentMethod
-					,sp.number AS methodSerialNumber
-	 		       ,(SELECT CONCAT(u.last_name,'-',u.first_name) FROM rms_users AS u WHERE u.id = sp.user_id LIMIT 1) AS userName
-				   ,(SELECT $label FROM rms_view WHERE TYPE=10 AND key_code = sp.is_void LIMIT 1) AS voidTitle
-	 		       
- 			   FROM 
-    				rms_student AS s,
-					rms_student_payment AS sp
-				WHERE 
-					s.stu_id=sp.student_id 
-					";
     	
-	    	$from_date =(empty($search['startDate']))? '1': " sp.create_date >= '".date("Y-m-d",strtotime($search['startDate']))." 00:00:00'";
-	    	$to_date = (empty($search['endDate']))? '1': " sp.create_date <= '".date("Y-m-d",strtotime($search['endDate']))." 23:59:59'";
-	    	$where = " AND ".$from_date." AND ".$to_date;
-			$where.=" AND sp.status = 1 ";
-	    	if(!empty($search['searchBox'])){
-	    		$s_where=array();
-	    		$s_search=addslashes(trim($search['searchBox']));
-	    		$s_search = str_replace(' ', '', addslashes(trim($search['searchBox'])));
-	    		$s_where[]= " REPLACE(sp.receipt_number,' ','') LIKE '%{$s_search}%'";
-	    		$s_where[]= " REPLACE(sp.paid_amount,' ','') LIKE '%{$s_search}%'";
-	    		$s_where[]= " REPLACE(sp.balance_due,' ','') LIKE '%{$s_search}%'";
-	    		$s_where[]= " REPLACE(sp.number,' ','') LIKE '%{$s_search}%'";
-	    		
-	    		$where.=' AND ('.implode(' OR ', $s_where).')';
-	    	}
-	    	if(!empty($search['academicYear'])){
-	    		$where.=" AND sp.academic_year=".$search['academicYear'];
-	    	}
-			if(!empty($search['paymentMethod'])){
-	    		$where.=" AND sp.payment_method=".$search['paymentMethod'];
-	    	}
-			$where.=" AND sp.student_id = ".$this->getUserId();
-	    	$order=" ORDER BY sp.create_date DESC";
-			if(!empty($search['LimitStart'])){
-				$order.=" LIMIT ".$search['LimitStart'].",".$search['limitRecord'];
-			}else if(!empty($search['limitRecord'])){
-	    		$order.=" LIMIT ".$search['limitRecord'];
-	    	}
-			return $db->fetchAll($sql.$where.$order);
     }
 	
 	function morePaymentRecord($data){//ajaxloadmore 
@@ -213,79 +159,34 @@
 	
 	
 	 function getPaymentInfoByID($paymentId){
-    	$_dbGb  = new Application_Model_DbTable_DbGlobal();
-    
-    	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-    	$db=$this->getAdapter();
-    	$lang = $_dbGb->currentlang();
+		 
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="studentPaymentInfo";
+		$arrFilter['studentId']=$this->getUserId();
+		$arrFilter['paymentId']=$paymentId;
+		$row = $dbAPi->getDataByAPI($arrFilter);
 		
-			$label = "name_en";
-			$schooName = "school_nameen";
-    		$branch = "branch_nameen";
-    		$grade = "rms_itemsdetail.title_en";
-    		$degree = "rms_items.title_en";
-    	if($lang==1){// khmer
-    		$label = "name_kh";
-    		$schooName = "school_namekh";
-    		$branch = "branch_namekh";
-    		$grade = "rms_itemsdetail.title";
-    		$degree = "rms_items.title";
-    	}
-		
-    	$sql=" SELECT 
-    				sp.*
-    				,(SELECT $schooName FROM `rms_branch` WHERE br_id=sp.branch_id LIMIT 1) AS schoolName
-    				,(SELECT $branch FROM `rms_branch` WHERE br_id=sp.branch_id LIMIT 1) AS branchName
-    				,sp.receipt_number AS receiptNo
-					,sp.create_date AS paymentDate
-	    			,(CASE WHEN sp.data_from=3 THEN s.serial ELSE s.stu_code END) AS stuCode
-	    			,(CASE WHEN s.stu_khname IS NULL OR s.stu_khname='' THEN s.stu_enname ELSE s.stu_khname END) AS stuName
-					,(SELECT g.group_code FROM `rms_group` AS g WHERE g.id = sp.group_id LIMIT 1) AS groupCode
-	    			,(SELECT CONCAT((SELECT CONCAT(fromYear,'-',toYear) FROM rms_academicyear WHERE rms_academicyear.id=rms_tuitionfee.academic_year LIMIT 1),'(',generation,')') FROM rms_tuitionfee WHERE rms_tuitionfee.id=sp.academic_year) AS academicYear
-					,(SELECT $label FROM `rms_view` WHERE type=8 AND key_code=sp.payment_method LIMIT 1) AS paymentMethod
-					,sp.number AS methodSerialNumber
-	 		       ,(SELECT CONCAT(u.last_name,'-',u.first_name) FROM rms_users AS u WHERE u.id = sp.user_id LIMIT 1) AS userName
-				   ,(SELECT $label FROM rms_view WHERE TYPE=10 AND key_code = sp.is_void LIMIT 1) AS voidTitle
-	 		       
- 			   FROM 
-    				rms_student AS s,
-					rms_student_payment AS sp
-				WHERE 
-					s.stu_id=sp.student_id 
-					";
-			$where=" AND sp.status = 1 ";
-			$where.=" AND sp.student_id = ".$this->getUserId();
-			$where.=" AND sp.id = ".$paymentId;
-			
-		return $db->fetchRow($sql.$where);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
+		}
     }
 	
 	public function getPaymentDetail($id){
-    	$db = $this->getAdapter();
-    	$_db  = new Application_Model_DbTable_DbGlobal();
-    	$lang = $_db->currentlang();
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="studentPaymentDetail";
+		$arrFilter['studentId']=$this->getUserId();
+		$arrFilter['paymentId']=$id;
+		$row = $dbAPi->getDataByAPI($arrFilter);
 		
-			$label = "name_en";
-			$branch = "branch_nameen";
-			$grade = "rms_itemsdetail.title_en";
-			$degree = "rms_items.title_en";
-    	if($lang==1){// khmer
-    		$label = "name_kh";
-    		$branch = "branch_namekh";
-    		$grade = "rms_itemsdetail.title";
-    		$degree = "rms_items.title";
-    	}
-    	$sql=" SELECT 
-					spd.*
-			    	,(SELECT $grade FROM `rms_itemsdetail` WHERE id=spd.itemdetail_id LIMIT 1) AS itemsName
-			    	,(SELECT items_type FROM `rms_itemsdetail` WHERE id=spd.itemdetail_id LIMIT 1) AS itemsType
-			    	,(SELECT $label FROM `rms_view` WHERE  `type`=6 AND key_code= spd.payment_term LIMIT 1) AS paymentTerm
-    			FROM 
-			    	rms_student_payment as sp,
-			    	rms_student_paymentdetail AS spd ";
-    	$sql.='WHERE sp.id=spd.payment_id 
-    		AND spd.payment_id = '.$id;
-		return $db->fetchAll($sql);    	
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
+		}
+		
+    	
     }
 	
 	

@@ -13,6 +13,7 @@
 		$dbAPi = new Application_Model_DbTable_DbGetAPI();
 		$arrFilter = $search;
 		$arrFilter['actionName']="studentAttendance";
+		$arrFilter['type']=1;
 		$arrFilter['studentId']=$this->getUserId();
 		$row = $dbAPi->getDataByAPI($arrFilter);
 		$row = json_decode($row, true);
@@ -174,6 +175,7 @@
 		$dbAPi = new Application_Model_DbTable_DbGetAPI();
 		$arrFilter = $search;
 		$arrFilter['actionName']="studentAttendanceDetail";
+		$arrFilter['type']=1;
 		$arrFilter['studentId']=$this->getUserId();
 		$row = $dbAPi->getDataByAPI($arrFilter);
 		$row = json_decode($row, true);

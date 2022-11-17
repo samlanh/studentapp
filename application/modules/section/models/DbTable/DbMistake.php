@@ -5,93 +5,21 @@
     	$_dbgb = new Application_Model_DbTable_DbGlobal();
     	return $_dbgb->getUserId();
     }
-	function getGroupOfStudent(){
-		$db = $this->getAdapter();
-		$sql="SELECT 
-				GROUP_CONCAT(gds.group_id) 
-			FROM `rms_group_detail_student` AS gds 
-				
-				
-			";
-		$sql.="
-			WHERE 
-				 gds.is_maingrade=1
-				AND gds.is_current=1
-		";
-		$sql.=" AND gds.stu_id=".$this->getUserId();
-		return $db->fetchOne($sql);
-	}
+	
     function getStudentTotalMistake($search=array()){
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$currentlang= $dbGb->currentlang();
 		
-		$db = $this->getAdapter();
-		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-	   	if($currentlang==1){// khmer
-	   		
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-				sat.`group_id`
-				,(SELECT b.".$branchName." FROM rms_branch as b WHERE b.br_id=		sat.branch_id LIMIT 1) AS branchName
-				,(SELECT br.branch_namekh FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameKh
-				,(SELECT br.branch_nameen FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameEn
-				,g.group_code AS groupCode
-				,satd.`attendence_status`
-				,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-				,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			
-				,COUNT(satd.`attendence_status`) AS total
-				,sat.`date_attendence`
-				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
-				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=1 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countSmallMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countMediumMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countBigMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countOtherMistake
-
-		";
-		$sql.="
-			FROM
-				`rms_student_attendence` AS sat 
-				 JOIN `rms_group` AS g ON g.id=sat.group_id
-				LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=2
-				AND sat.`status`=1
-		";
-		$groupList = $this->getGroupOfStudent();
-		$groupList = empty($groupList)?0:$groupList;
-		$sql.=" AND sat.group_id IN (".$groupList.")";
-		
-		if(!empty($search['month'])){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%m') = ".$search['month'];
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $search;
+		$arrFilter['actionName']="studentAttendance";
+		$arrFilter['type']=2;
+		$arrFilter['studentId']=$this->getUserId();
+		$row = $dbAPi->getDataByAPI($arrFilter);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
 		}
-		if(!empty($search['academicYear'])){
-			$sql.=" AND g.academic_year = ".$search['academicYear'];
-		}
-		$sql.=" GROUP BY sat.`group_id`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m') ";
-		$sql.=" ORDER BY DATE_FORMAT(sat.`date_attendence`,'%Y%m') DESC ";
 		
 		
-		if(!empty($search['LimitStart'])){
-			$sql.=" LIMIT ".$search['LimitStart'].",".$search['limitRecord'];
-		}else if(!empty($search['limitRecord'])){
-			$sql.=" LIMIT ".$search['limitRecord'];
-		}
-			
-		return $db->fetchAll($sql);
 	}
 	
 	function moreMistakeRecord($data){//ajaxloadmore 
@@ -179,135 +107,150 @@
 	}
 	
 	
-	function getStudentTotalMistakeInfo($search){
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$currentlang= $dbGb->currentlang();
+	function getStudentMistakeDetail($search){
 		
-		$db = $this->getAdapter();
-		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-		$teacherName= "teacher_name_en";
-	   	if($currentlang==1){// khmer
-	   		$teacherName= "teacher_name_kh";
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-				sat.`group_id`
-				,(SELECT b.".$branchName." FROM rms_branch as b WHERE b.br_id=		sat.branch_id LIMIT 1) AS branchName
-				,(SELECT br.branch_namekh FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameKh
-				,(SELECT br.branch_nameen FROM `rms_branch` AS br  WHERE br.br_id = sat.branch_id LIMIT 1) AS branchNameEn
-				,g.group_code AS groupCode
-				,(SELECT t.$teacherName FROM rms_teacher AS t WHERE t.id = g.teacher_id LIMIT 1) AS teacherName
-				,satd.`attendence_status`
-				,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-				,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			
-				,COUNT(satd.`attendence_status`) AS total
-				,sat.`date_attendence`
-				,DATE_FORMAT(sat.`date_attendence`,'%Y%m') AS yearMonth
-				,satd.description
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=1 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countSmallMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=2 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countMediumMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=3 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countBigMistake
-				,(SELECT COUNT(satd2.id) FROM `rms_student_attendence_detail` AS satd2,`rms_student_attendence` AS sat2  WHERE sat2.`type`=2 AND sat2.`id`= satd2.`attendence_id` AND satd2.stu_id=$studentId AND satd2.`attendence_status`=4 AND DATE_FORMAT(sat2.`date_attendence`,'%m%Y') = DATE_FORMAT(sat.`date_attendence`,'%m%Y') ) AS countOtherMistake
-
-		";
-		$sql.="
-			FROM
-				`rms_student_attendence` AS sat 
-				 JOIN `rms_group` AS g ON g.id=sat.group_id
-				LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=2
-				AND sat.`status`=1
-		";
-		$yearMonth = empty($search['id'])?'':$search['id'];
-		$groupID = empty($search['group'])?0:$search['group'];
-		
-		$sql.=" AND sat.group_id IN (".$groupID.")";
-		
-		if(!empty($yearMonth)){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%Y%m') = ".$yearMonth;
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $search;
+		$arrFilter['actionName']="studentAttendanceDetail";
+		$arrFilter['type']=2;
+		$arrFilter['studentId']=$this->getUserId();
+		$row = $dbAPi->getDataByAPI($arrFilter);
+		$row = json_decode($row, true);
+		if($row['code']=="SUCCESS"){
+			return $row['result'];    
 		}
-		
-		$sql.=" GROUP BY sat.`group_id`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m') ";
-		$sql.=" ORDER BY DATE_FORMAT(sat.`date_attendence`,'%Y%m') DESC ";
-		$sql.=" LIMIT 1 ";
-		
-			
-		return $db->fetchRow($sql);
 	}
 	
-	function getStudentEvaluationDetail($search){
-		$dbGb = new Application_Model_DbTable_DbGlobal();
-		$currentlang= $dbGb->currentlang();
-		
+	
+	function detailContent($data){
 		$db = $this->getAdapter();
+		
+		$dbGb   = new Application_Model_DbTable_DbGlobal();
+		$currentlang = $dbGb ->currentlang();
+		
+		$filter = $data;
+		
+		$row = $this->getStudentMistakeDetail($filter);
+		$string="";
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$label = "name_en";
-		$branchName = "branch_nameen";
-		$teacherName= "teacher_name_en";
-	   	if($currentlang==1){// khmer
-	   		$teacherName= "teacher_name_kh";
-	   		$branchName = "branch_namekh";
-	   		$label = "name_kh";
-	   		
-	   	}
-		$studentId = $this->getUserId();
-		$sql="
-			SELECT
-			sat.`group_id`
-			,g.group_code AS groupCode
-			,satd.`attendence_status`
-			,CASE
-					WHEN satd.`attendence_status` = 1 THEN '".$tr->translate("SMALL_MISTACK")."'
-					WHEN satd.`attendence_status` = 2 THEN '".$tr->translate("MEDIUM_MISTACK")."'
-					WHEN satd.`attendence_status` = 3 THEN '".$tr->translate("BIG_MISTACK")."'
-					WHEN satd.`attendence_status` = 4 THEN '".$tr->translate("OTHER")."'
-				
-			END AS attendenceStatusTitle
-			,(SELECT CONCAT(ac.fromYear,'-',ac.toYear) FROM `rms_academicyear` AS ac WHERE ac.id = g.academic_year LIMIT 1) AS academicYear
-			,(SELECT `r`.`room_name` FROM `rms_room` `r` WHERE (`r`.`room_id` = `g`.`room_id`)) AS `roomName`
-			,sat.`date_attendence`
-			,DATE_FORMAT(sat.`date_attendence`,'%Y%m%d') AS yearMonth
-			,satd.description
-		";
-		$sql.="
-			FROM
-			`rms_student_attendence` AS sat 
-			 JOIN `rms_group` AS g ON g.id=sat.group_id
-			LEFT JOIN`rms_student_attendence_detail` AS satd ON sat.`id`= satd.`attendence_id`
-				
-		";
-		$sql.="
-			WHERE
-				
-				 sat.type=2
-				AND sat.`status`=1 
-		";
-		$yearMonth = empty($search['id'])?'':$search['id'];
-		$groupID = empty($search['group'])?0:$search['group'];
+		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
+		$stringHead="";
+		$stringFooter="";
 		
-		$sql.=" AND sat.group_id IN (".$groupID.")";
 		
-		if(!empty($yearMonth)){
-			$sql.=" AND DATE_FORMAT(sat.`date_attendence`,'%Y%m') = ".$yearMonth;
+		$countSmallMistake 	=	0; 	//1
+		$countMediumMistake = 	0;	//2
+		$countBigMistake 	= 	0;	//3
+		$countOtherMistake 	= 	0;	//4
+		if(!empty($row)){ 
+			$string.='<ul class="collection with-header collection-popup-info">';
+			foreach($row AS $key =>  $attedance){
+				
+				$academicYear = $attedance['academicYear']; 
+				
+				$yearAtt = date("Y",strtotime($attedance['date_attendence'])); 
+				$monthAtt = date("M",strtotime($attedance['date_attendence'])); 
+				$monthKey = date("m",strtotime($attedance['date_attendence'])); 
+				$dayAtt = date("d",strtotime($attedance['date_attendence'])); 
+				
+				$numRow = $key+1;
+				if($currentlang==1){
+					$academicYear = $dbGb->getNumberInkhmer($academicYear);
+					
+					$yearAtt = $dbGb->getNumberInkhmer($yearAtt);
+					$monthAtt = $dbGb->getMonthInkhmer($monthKey);
+					$numRow = $dbGb->getNumberInkhmer($numRow);
+					$dayAtt = $dbGb->getNumberInkhmer($dayAtt);
+				}
+				if($key==0){
+					$stringHead='
+						<div class="modal-header ">
+							<h5>'.$monthAtt.'</h5>
+							<span class="modal-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong> '.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYear.'</strong></span>
+						</div>
+					';
+				}
+				
+				if($attedance['attendence_status']==1){
+					$countSmallMistake = $countSmallMistake+1;
+				}else if($attedance['attendence_status']==2){
+					$countMediumMistake = $countMediumMistake+1;
+				}else if($attedance['attendence_status']==3){
+					$countBigMistake = $countBigMistake+1;
+				}else if($attedance['attendence_status']==4){
+					$countOtherMistake = $countOtherMistake+1;
+				}
+				
+				
+				$string.='
+					<li class="collection-item">
+						<div class="row mrg-0 ">
+							<div class="items-info-left col s9">
+								<i class="mdi mdi-calendar-clock "></i> '.$dayAtt."-".$monthAtt."-".$yearAtt.'
+								<small class="description-items">'.$attedance['description'].'</small>
+							</div>
+							<div class="items-info-right col s3">
+								<span class="secondary-content">'.$attedance['attendenceStatusTitle'].'</span>
+							</div>
+						</div>
+					</li>
+				';
+			
+			}
+			$string.='</ul>';
+			
+			$countSmallMistake = sprintf('%02d',$countSmallMistake);
+			$countMediumMistake = sprintf('%02d',$countMediumMistake);
+			$countBigMistake = sprintf('%02d',$countBigMistake);
+			$countOtherMistake = sprintf('%02d',$countOtherMistake);
+			
+			if($currentlang==1){
+				$countSmallMistake 		= $dbGb->getNumberInkhmer($countSmallMistake);
+				$countMediumMistake 	= $dbGb->getNumberInkhmer($countMediumMistake);
+				$countBigMistake 			= $dbGb->getNumberInkhmer($countBigMistake);
+				$countOtherMistake 	= $dbGb->getNumberInkhmer($countOtherMistake);
+			}
+				
+			$stringFooter.='
+				<div class="content-footer content-total">
+					<div class="row mrg-0 ">
+						<div  class="col s3 text-center">
+							<span class="modal-info">'.$tr->translate("SMALL_MISTACK_SHORT_CUT").'</span>
+							<span class="modal-info"><strong>'.$countSmallMistake.'</strong></span>
+						</div>
+						<div  class="col s3 text-center">
+							<span class="modal-info">'.$tr->translate("MEDIUM_MISTACK_SHORT_CUT").'</span>
+							<span class="modal-info"><strong>'.$countMediumMistake.'</strong></span>
+						</div>
+						<div  class="col s3 text-center">
+							<span class="modal-info">'.$tr->translate("BIG_MISTACK_SHORT_CUT").'</span>
+							<span class="modal-info"><strong>'.$countBigMistake.'</strong></span>
+						</div>
+						<div  class="col s3 text-center">
+							<span class="modal-info">'.$tr->translate("OTHER").'</span>
+							<span class="modal-info"><strong>'.$countOtherMistake.'</strong></span>
+						</div>
+					</div>
+				</li>
+			';
+		}else{
+			$stringFooter.='
+				<div class="empty-content">
+					<div class="row mrg-0 ">
+						<div  class="col s12 text-center">
+							<h3 ><i class="mdi mdi-cloud-off-outline"></i> '.$tr->translate("EMPTY_RECORD").'</h3>
+						</div>
+					</div>
+				</li>
+			';
 		}
 		
-		$sql.=" GROUP BY sat.`group_id`
-				,sat.`date_attendence`
-			ORDER BY sat.`date_attendence` DESC";
-						
-		return $db->fetchAll($sql);
+		
+		$string=$stringHead.$string.$stringFooter;
+		$array = array(
+			'htmlRecord'=>$string,
+			
+			);
+		return $array;
 	}
 }

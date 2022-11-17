@@ -87,11 +87,8 @@
 				
 			</div>
 		</div>
-	</div>
-</div>
-<?php if(count($this->row)<$this->allRow){ ?>
-<div class="ui-grids bl-score-list-row">
-	<div class="row mrg-0">
+		<?php if(count($this->row)<$this->allRow){ ?>
+<div class="row mrg-0">
 		<div class="col s12 center " >
 			<p id="totalRecord" class="total-record"><?php echo count($this->row)."/".$this->allRow; ?></p>
 			<h3 class="title-empty recordMessage"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
@@ -150,8 +147,11 @@
 			</div>
 		</div>
 	</div>
-</div>
 <?php } ?>
+
+	</div>
+</div>
+
 <?php } ?>
 <div class="spacer-xlarge"></div>
 

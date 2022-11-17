@@ -28,9 +28,9 @@
 	function moreEvaluationRecord($data){//ajaxloadmore 
 		$db = $this->getAdapter();
 		
-		$_dbGb  = new Application_Model_DbTable_DbGlobal();
-		$currentlang = $_dbGb->currentlang();
-		$limitRecord = $_dbGb->limitListView();
+		$dbGb  = new Application_Model_DbTable_DbGlobal();
+		$currentlang = $dbGb->currentlang();
+		$limitRecord = $dbGb->limitListView();
 		$limitRecord = empty($limitRecord)?1:$limitRecord;
 		
 		$totalLimitStart= $limitRecord;
@@ -45,7 +45,7 @@
 			$totalLimitStart = $data['page'] + $limitRecord;
 		}
 		
-		$row = $this->getStudentTotalEvaluation($filter);
+		$row = $this->getStudentEnvaluation($filter);
 		$string="";
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
