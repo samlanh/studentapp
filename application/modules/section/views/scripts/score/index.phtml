@@ -74,7 +74,7 @@
 							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $totalAvg; ?></strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $score['id'];?>);" >
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $score['id'];?>);" >
 								<?php echo $tr->translate("MORE_DETAIL"); ?>
 							</a>
 						</div>
@@ -191,7 +191,7 @@
 								</div>
 								
 								<div class="input-field  col s12">
-									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
+									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2 preloader-trigger" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
 								</div>
 							</div>
 							
@@ -288,9 +288,11 @@
 					setTimeout(function () {
 							$('#modal-popup').modal('open');
 					}, 500);
+					$('.preloader-background').delay(10).fadeOut('slow');
 					
 				},
 				error: function(err) {
+					$('.preloader-background').delay(10).fadeOut('slow');
 					alert(err);
 				}
 			});

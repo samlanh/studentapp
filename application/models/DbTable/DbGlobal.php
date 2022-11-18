@@ -140,7 +140,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	function getAllDegree(){
 		
 		$dbAPi = new Application_Model_DbTable_DbGetAPI();
-		$arrFilter = $condiction;
+		$arrFilter = array();
 		$arrFilter['actionName']="systemStudyDegree";
 		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
 		$rsQuery = json_decode($rsQuery, true);

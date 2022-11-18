@@ -102,7 +102,7 @@ if($rsStu['code']=="SUCCESS"){
 <?php 
 $homeNavClass="";
 $backButton='
-	<a href="#" data-target="" class="bgBtn waves-effect waves-circle navicon back-button htmlmode show-on-large "><i class="mdi mdi-chevron-left" data-page=""></i></a>
+	<a href="#" data-target="" class="bgBtn waves-effect waves-circle navicon back-button htmlmode show-on-large preloader-trigger"><i class="mdi mdi-chevron-left" data-page=""></i></a>
 		';
 $profileButton="";
 if($module=="home" AND $controller=="index" AND $action=="index"){
@@ -163,7 +163,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="<?php echo $this->baseUrl()."/home"?>">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/home"?>">
 							<i class="mdi mdi-home-outline"></i>
 							<span class="title"><?php echo $tr->translate("WELCOME"); ?></span>
 						</a>
@@ -180,15 +180,15 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="<?php echo $this->baseUrl()."/utility/discipline"?>">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/discipline"?>">
 							<i class="mdi mdi-library-books"></i>
-							<span class="title"><?php echo $tr->translate("DISCIPLINE"); ?></span>
+							<span class="title"><?php echo $tr->translate("DISCIPLINE_POLICY"); ?></span>
 						</a>
 					</div>
 				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="<?php echo $this->baseUrl()."/utility/grading";?>">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/grading";?>">
 							<i class="mdi mdi-book-plus"></i>
 							<span class="title"><?php echo $tr->translate("GRADING_SYSTEM"); ?></span>
 						</a>
@@ -197,7 +197,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                         <a href="<?php echo $this->baseUrl()."/utility/branch";?>">
+                         <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/branch";?>">
 							<i class="mdi mdi-map-marker-multiple"></i>
 							<span class="title"><?php echo $tr->translate("OUR_BRANCH"); ?></span>
 						</a>
@@ -205,7 +205,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
 							<i class="mdi mdi-information-outline"></i>
 							<span class="title"><?php echo $tr->translate("ABOUTS"); ?></span>
 						</a>
@@ -213,7 +213,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="<?php echo $this->baseUrl()."/utility/contactus";?>">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/contactus";?>">
 							<i class="mdi mdi-contacts"></i>
 							<span class="title"><?php echo $tr->translate("CONTACT_US"); ?></span>
 						</a>
@@ -227,7 +227,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
 					<div class="waves-effect ">
-						<a href="<?php echo $this->baseUrl()."/index/logout?value=1"?>" >
+						<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/index/logout?value=1"?>" >
 							<i class="mdi mdi-settings-outline"></i><span class="title"><?php echo $tr->translate("LOGOUT"); ?></span>  
 						</a>
 					</div>

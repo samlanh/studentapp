@@ -79,7 +79,7 @@
 									<div class="col s6">
 										<span class="row-items-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $attedance['teacherName']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("PHONE"); ?> <strong class="mark-title"><?php echo $attedance['teacherTel']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getPopupContent(<?php echo $attedance['id']; ?>)" >
+										<a class="waves-effect waves-light btn btn-rounded lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $attedance['id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -195,7 +195,7 @@
 									<label><?php echo $tr->translate("MONTH"); ?></label>
 								</div>
 								<div class="input-field  col s12">
-									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
+									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2 preloader-trigger" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
 								</div>
 							</div>
 							
@@ -272,12 +272,13 @@
 						$("#listRecord").append(data.htmlRecord);
 						$("#preLoadRecord").removeClass("active");
 					}, 500);
-					
+					$('.preloader-background').delay(10).fadeOut('slow');
 				  
 					
 				},
 				error: function(err) {
 					alert(err);
+					$('.preloader-background').delay(10).fadeOut('slow');
 				}
 			});
 

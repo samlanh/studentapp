@@ -170,7 +170,7 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 							 <div class="text description primary-text"><?php echo $this->introductionHome['lbl_introduction_i']['title']; ?></div>
 							<div class="center starting-btn">
 								<strong><?php echo $tr->translate("CLICK_FOR_STARTING_USE"); ?></strong>
-								<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large btn-rounded bg-darkyellow'>
+								<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large btn-rounded bg-darkyellow preloader-trigger'>
 									<i class="mdi mdi-account-circle "></i> <?php echo $tr->translate("Get Started"); ?>
 								</a>	
 							</div>
@@ -230,7 +230,7 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 
 
 <div class="center index-start">
-	<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large bg-primary'>
+	<a href="<?php echo $this->baseUrl()."/index/login"?>" class='waves-light btn-large bg-primary preloader-trigger'>
 		<i class="mdi mdi-account-circle "></i> <?php echo $tr->translate("Get Started"); ?>
 	</a>	
 </div>

@@ -43,12 +43,12 @@
 
 						<div class="row center">
 							<div class="input-field col s10 offset-s1">
-							<button type="submit" class="full-width waves-effect waves-light btn-large bg-primary"><i class="mdi mdi-login"></i> <?php echo $tr->translate("LOGIN");?></button>
+							<button type="submit" class="full-width waves-effect waves-light btn-large bg-primary "><i class="mdi mdi-login"></i> <?php echo $tr->translate("LOGIN");?></button>
 							</div>
 							<div class="spacer"></div>
 							<div class="spacer"></div>
 							<div class="links">
-								<a href="<?php echo $this->baseUrl()."/index/"?>" class='waves-effect'>
+								<a href="<?php echo $this->baseUrl()."/index/"?>" class='waves-effect preloader-trigger'>
 									<i class="mdi mdi-backup-restore"></i> <?php echo $tr->translate("BACK_HOME");?>
 								</a>        
 							</div>
@@ -84,6 +84,7 @@
 						displayActionToast(3);
 						 cheking = false;
 					}else{
+						$('.preloader-background').css("display","flex");
 						 $('#frmLogin').submit();
 					}
 				

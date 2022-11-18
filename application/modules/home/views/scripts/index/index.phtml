@@ -35,17 +35,17 @@
 					<div class="row settings-row">
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/payment";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/payment";?>">
 									<div class="icon-block ">
 										<div class="center "><i class="mdi mdi-cash-multiple "></i></div>
-										<h6 class="center "><?php echo $tr->translate("PAYMENT"); ?></h6>
+										<h6 class="center "><?php echo $tr->translate("PAYMENT_HISTORY"); ?></h6>
 									</div>
 								</a>
 						  </div>
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/schedule";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/schedule";?>">
 									<div class="icon-block ">
 										<div class="center "><i class="mdi mdi-calendar-clock "></i></div>
 										<h6 class="center "><?php echo $tr->translate("SCHEDULE"); ?></h6>
@@ -55,27 +55,27 @@
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/attendance";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/attendance";?>">
 									<div class="icon-block ">
 										<div class="center "><i class="mdi mdi-account-multiple-check "></i></div>
-										<h6 class="center "><?php echo $tr->translate("ATTENDENCE"); ?></h6>
+										<h6 class="center "><?php echo $tr->translate("ATTENDENCE_RECORD"); ?></h6>
 									</div>
 								</a>
 						  </div>
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/score";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/score";?>">
 									<div class="icon-block ">
 										<div class="center "><i class="mdi mdi-file-check "></i></div>
-										<h6 class="center "><?php echo $tr->translate("SCORE"); ?></h6>
+										<h6 class="center "><?php echo $tr->translate("STUDY_RESULT"); ?></h6>
 									</div>
 								</a>
 						  </div>
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/section/evaluation";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/evaluation";?>">
 								<div class="icon-block ">
 									<div class="center "><i class="mdi mdi-medal "></i></div>
 									<h6 class="center "><?php echo $tr->translate("EVALUATION"); ?></h6>
@@ -85,7 +85,7 @@
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect" href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
 								<div class="icon-block ">
 									<div class="center "><i class="mdi mdi-information-outline "></i></div>
 									<h6 class="center "><?php echo $tr->translate("ABOUTS"); ?></h6>
@@ -148,7 +148,7 @@
 							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $totalAvg; ?></strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="<?php echo $this->baseUrl()."/section/score/detail/id/".$score['id'];?>">
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $score['id'];?>);">
 								<?php echo $tr->translate("MORE_DETAIL"); ?>
 							</a>
 						</div>
@@ -159,6 +159,12 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+		
+	</div>
+	
 </div>
 <?php } ?>
 <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
@@ -171,8 +177,36 @@
         indicators: true
       }).css("height", 200);
 
-      
+  });   
+  <?php if(!empty($this->rowScore)){ ?>
+		
+	
+	function getPopupContent(scoreKey){
+		
+		var urlDetailContent = '<?php echo $this->baseUrl().'/section/score/detailcontent'; ?>';
+			$.ajax({
+				url:urlDetailContent,
+				type: "post",
+				data: {
+					'id':scoreKey
+				},
+				dataType: "json",
+				success: function(data){
+					
+					$('.content-info').html(data.htmlRecord);
+					setTimeout(function () {
+							$('#modal-popup').modal('open');
+					}, 500);
+					$('.preloader-background').delay(10).fadeOut('slow');
+					
+				},
+				error: function(err) {
+					$('.preloader-background').delay(10).fadeOut('slow');
+					alert(err);
+				}
+			});
 
-
-  });   </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+	}
+	<?php } ?>
+  </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
 

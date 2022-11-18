@@ -234,10 +234,15 @@
 
 
 		<script type="text/javascript">
-		  document.addEventListener("DOMContentLoaded", function(){
-			$('.preloader-background').delay(10).fadeOut('slow');
-		  });
-		  
+			document.addEventListener("DOMContentLoaded", function(){
+				$('.preloader-background').delay(10).fadeOut('slow');
+			});
+			$( "a.preloader-trigger" ).click(function() {
+			  $('.preloader-background').css("display","flex");
+			});
+			$( "button.preloader-trigger" ).click(function() {
+			  $('.preloader-background').css("display","flex");
+			});
 		</script>
 	</body>
 </html>	 

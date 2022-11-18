@@ -40,7 +40,7 @@
 								  <label><?php echo $tr->translate("PAYMENT_METHOD"); ?></label>
 								</div>
 								<div class="input-field col s12">
-									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
+									<button type="submit" class="fullsize waves-effect waves-light btn btn-rounded primary lighten-2 preloader-trigger" name="search"><?php echo $tr->translate("SEARCH"); ?></button>
 								</div>
 							</div>
 							
@@ -118,7 +118,7 @@
 					<?php } ?>
 					<div class="spacer-small"></div>
 					<div class="spacer-small"></div>
-					<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $payment['id']; ?>)" >
+					<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $payment['id']; ?>)" >
 						<?php echo $tr->translate("MORE_DETAIL"); ?>
 					</a>
 				</div>
@@ -301,10 +301,12 @@
 						setTimeout(function () {
 								$('#modal-popup').modal('open');
 						}, 500);
-						
+						$('.preloader-background').delay(10).fadeOut('slow');
 					},
 					error: function(err) {
+						$('.preloader-background').delay(10).fadeOut('slow');
 						alert(err);
+						
 					}
 				});
 
