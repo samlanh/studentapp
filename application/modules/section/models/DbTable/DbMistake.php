@@ -72,7 +72,7 @@
 									<span class="row-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$attedance['academicYear'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ROOM").' <strong class="mark-title">'.$attedance['roomName'].'</strong></span>
-									<a class="waves-effect waves-light btn btn-rounded  lighten-2" href="'.$baseurl.'/section/envaluation/detail/id/'.$attedance['yearMonth'].'?group='.$attedance['group_id'].'">
+									<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" href="'.$baseurl.'/section/envaluation/detail/id/'.$attedance['yearMonth'].'?group='.$attedance['group_id'].'">
 										'.$tr->translate("MORE_DETAIL").'
 									</a>
 								</div>

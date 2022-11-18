@@ -238,11 +238,19 @@
 				$('.preloader-background').delay(10).fadeOut('slow');
 			});
 			$( "a.preloader-trigger" ).click(function() {
+				window.history.pushState('forward', null, '');
 			  $('.preloader-background').css("display","flex");
 			});
 			$( "button.preloader-trigger" ).click(function() {
+				window.history.pushState('forward', null, '');
 			  $('.preloader-background').css("display","flex");
 			});
+			$( "a.preloader-trigger-back" ).click(function() {
+				
+			  $('.preloader-background').css("display","flex");
+			   
+			});
+			
 		</script>
 	</body>
 </html>	 

@@ -62,7 +62,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$paymentMethod->setMultiOptions($_arrOptPaymentMethod);
 		$paymentMethod->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_PAYMENT_METHOD"),
 				)
 			);
@@ -76,7 +76,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$month->setMultiOptions($_arrOptMonth);
 		$month->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_MONTH"),
 				)
 			);
@@ -90,7 +90,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$academicYear->setMultiOptions($_arrOptAca);
 		$academicYear->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_ACADMIC_YEAR"),
 				)
 			);
@@ -104,7 +104,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$degree->setMultiOptions($_arrOptDegree);
 		$degree->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_DEGREE"),
 				)
 			);
@@ -119,7 +119,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$examType->setMultiOptions($_arrOptExamType);
 		$examType->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_EXAM_TYPE"),
 				'onChange'=>'checkingExam();',
 				)
@@ -137,7 +137,7 @@ Class Application_Form_FrmSearch extends Zend_Dojo_Form {
 		$forSemester->setMultiOptions($_arrOptExamType);
 		$forSemester->setAttribs(
 			array(
-				'class'=>'smallHeight ',
+				'class'=>' browser-default',
 				'placeholder'=>$this->tr->translate("CHOOSE_SEMESTER"),
 				)
 			);

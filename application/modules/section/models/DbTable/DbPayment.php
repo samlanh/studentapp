@@ -136,7 +136,7 @@
 								$string.='
 								<div class="spacer-small"></div>
 								<div class="spacer-small"></div>
-								<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent('.$payment['id'].')" >
+								<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent('.$payment['id'].')" >
 									'.$tr->translate("MORE_DETAIL").'
 								</a>
 							</div>
