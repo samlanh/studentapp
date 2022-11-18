@@ -180,8 +180,8 @@ a.languageSwitch img.languageSwitch:hover {
 
 
 .sectionTitle {
-    font-family: 'Khmer OS Muol Light',Roboto;
-    font-weight: 500;
+    font-family: 'open sans condensed','Khmer OS Muol Light';
+    font-weight: normal;
     color: #0a4374;
 }
 .text.description {
@@ -294,11 +294,11 @@ img.intro-image {
     padding: 10px 0;
 }
 ul.tabs.tab-course a {
-    color: #e0e0e0;
+    color: #fff;
 }
 
 ul.tabs.tab-course a:hover,ul.tabs.tab-course a.active {
-    color: #fff;
+	color: #beb7b7;
 }
 .intro-blog {
     position: relative;
@@ -409,15 +409,7 @@ START SCORE LIST VIEW
 .bl-score-list-row {
     padding: 10px 0;
 }
-.bl-score-list-row {
-    background: #fff;
-    opacity: 0.9;
-    position: absolute;
-    width: 100%;
-    min-height: 100%;
-    top: -40px;
-    z-index: 0;
-}
+
 .score-list-info {
     background: #ffffff;
     opacity: 0.8;
@@ -627,6 +619,8 @@ END PAYMENT LIST VIEW
 /*====================
 START SCHDEULE LIST VIEW
 =======================*/
+.bl-mistake-list-row,
+.bl-score-list-row,
 .bl-schedule-list-row {
     background: #fff;
     opacity: 0.9;

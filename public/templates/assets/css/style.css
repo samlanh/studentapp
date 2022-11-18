@@ -833,7 +833,7 @@ button:focus {
   position: relative;
   z-index: 2;
   margin-top: 100px;
-  font-family: 'Khmer OS Muol Light',Roboto;
+  font-family: 'open sans condensed','Khmer OS Muol Light';
   font-weight: normal;
   font-size: 30px;
   line-height: 40px;
