@@ -102,7 +102,7 @@ if($rsStu['code']=="SUCCESS"){
 <?php 
 $homeNavClass="";
 $backButton='
-	<a href="#" data-target="" class="bgBtn waves-effect waves-circle navicon back-button htmlmode show-on-large preloader-trigger"><i class="mdi mdi-chevron-left" data-page=""></i></a>
+	<a href="'.$this->baseUrl()."/home".'" data-target="" class="bgBtn waves-effect waves-circle navicon back-button-home htmlmode show-on-large preloader-trigger"><i class="mdi mdi-chevron-left" data-page=""></i></a>
 		';
 $profileButton="";
 if($module=="home" AND $controller=="index" AND $action=="index"){

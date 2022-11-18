@@ -322,7 +322,7 @@ if($currentlang==1){
 						$(".total-page-footer").html(data.totalPageHtml);
 						$("#preLoadRecord").removeClass("active");
 					}, 500);
-					$('.preloader-background').delay(10).fadeOut('slow');
+					
 				  
 					
 				},
@@ -352,9 +352,10 @@ if($currentlang==1){
 					setTimeout(function () {
 							$('#modal-popup').modal('open');
 					}, 500);
-					
+					$('.preloader-background').delay(10).fadeOut('slow');
 				},
 				error: function(err) {
+					$('.preloader-background').delay(10).fadeOut('slow');
 					alert(err);
 				}
 			});

@@ -309,9 +309,11 @@
 					setTimeout(function () {
 							$('#modal-popup').modal('open');
 					}, 500);
+					$('.preloader-background').delay(10).fadeOut('slow');
 					
 				},
 				error: function(err) {
+					$('.preloader-background').delay(10).fadeOut('slow');
 					alert(err);
 				}
 			});

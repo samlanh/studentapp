@@ -135,13 +135,13 @@
 		<ul>
 			
 			<li>
-				<a href="<?php echo $this->baseUrl()."/utility/news"?>" >          
+				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
 					<i class="mdi mdi-newspaper"></i>
 					<span><?php echo $tr->translate("NEWS"); ?></span>
 				</a>        
 			</li>
 			<li>
-				<a href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
+				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
 					<i class="mdi mdi-home-outline"></i>
 					<span><?php echo $tr->translate("HOME"); ?></span>
 				</a>        
