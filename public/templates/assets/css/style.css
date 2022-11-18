@@ -1333,12 +1333,14 @@ nav .navicon i{
 nav .navicon.right{
   margin-right: -10px;
 }
+nav .navicon.back-button-home,
 nav .navicon.back-button{
   float: left;
   height: 36px;
   width: 36px;
   margin: 10px 15px 10px -15px;
 }
+body.ishome nav .navicon.back-button-home,
 body.ishome nav .navicon.back-button{
   display: none;
 }
@@ -1395,7 +1397,9 @@ nav .nav-wrapper{
 }
 @media only screen and (min-width: 601px){
   nav .navicon.nav-site-mode,
-  nav .navicon.back-button,  nav .navicon.sidenav-trigger{
+  nav .navicon.back-button,  
+  nav .navicon.back-button-home,  
+  nav .navicon.sidenav-trigger{
     margin: 14px 15px 14px -15px;    
   }
 }
@@ -1420,7 +1424,9 @@ nav.navigation{
   float: right;
   margin-right: -8px;
 }
-[data-header_align="left"] nav.navigation .navicon.back-button{
+[data-header_align="left"] nav.navigation .navicon.back-button-home,
+[data-header_align="left"] nav.navigation .navicon.back-button
+{
   position: absolute;
   right: 95px;
 }
