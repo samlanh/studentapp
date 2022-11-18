@@ -11,8 +11,10 @@
 	$this->headTitle($title); 
 	echo $this->headTitle();
 	
-	 $dbgb = new Application_Model_DbTable_DbGlobal();
-	$systemLink = "http://192.168.0.107/camappgit/psst/public/";
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentLang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
 
 
 

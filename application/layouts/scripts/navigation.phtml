@@ -69,18 +69,19 @@ if($rsStu['code']=="SUCCESS"){
                 <div class="col s10 pad-0">
 				  <div class="collection langList">
 				  <?php 
-						$imgLangeCurrent ="";
-						if(!empty($allLang)) foreach($allLang AS $lang){ 
-							if(!empty($dataInfo['logo'])){
-								if (file_exists(PUBLIC_PATH."/images/".$lang['iconImage'])){
-									$imgLange = $this->baseUrl().'/images/'.$lang['iconImage'];
-									$iconCurrent="";
+					$imgLangeCurrent ="";
+					if(!empty($allLang)) foreach($allLang AS $lang){ 
+						if(!empty($lang['iconImage'])){
+							$imgLange = $systemLink.'/images/'.$lang['iconImage'];
+							if ($dbGb->does_url_exists($imgLange)){ 
+								$imgLange = $systemLink.'/images/'.$lang['iconImage'];
+								$iconCurrent="";
+								$current="";
+								if($currentLang==$lang['id']){
+									$imgLangeCurrent = $imgLange;
+									$iconCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
 									$current="";
-									if($currentLang==$lang['id']){
-										$imgLangeCurrent = $imgLange;
-										$iconCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
-										$current="";
-									}
+								}
 					  ?>
 					  <a onClick="changeLange(<?php echo $lang['id'];?>)" class="collection-item <?php echo $current;?>">
 						<img class="languageImage" src="<?php echo $imgLange;?>" alt=""  />

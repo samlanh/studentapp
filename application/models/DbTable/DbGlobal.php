@@ -81,80 +81,73 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	function systemLink(){
 		$systemLink = "http://192.168.0.103/camappgit/psst/public/";
 		$key = new Application_Model_DbTable_DbKeycode();
-		$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+		$dataInfo=$key->getCurrentKeyCodeMiniInv(TRUE);
 		if(!empty($dataInfo['systemLink'])){
 			$systemLink= $dataInfo['systemLink'];
 		}
 		return $systemLink;
 	}
 	public function getAllLanguage(){
-		$db = $this->getAdapter();
-		$sql="SELECT * FROM `ln_language` AS l WHERE l.`status`=1 ORDER BY l.ordering ASC";
-		return $db->fetchAll($sql);
+		
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="systemLanguage";
+		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+		$rsQuery = json_decode($rsQuery, true);
+		if($rsQuery['code']=="SUCCESS"){
+			return $rsQuery['result'];    
+		}
+		
 	}
 	
 	function getAllViewByType($type=1){
-    	$db=$this->getAdapter();
-		$currentLang = $this->currentlang();
-		$colunmname='name_en';
-		if ($currentLang==1){
-			$colunmname='name_kh';
+		
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = array();
+		$arrFilter['actionName']="systemViewType";
+		$arrFilter['type']=$type;
+		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+		$rsQuery = json_decode($rsQuery, true);
+		if($rsQuery['code']=="SUCCESS"){
+			return $rsQuery['result'];    
 		}
-    	$sql="
-			SELECT v.key_code AS id,
-			v.$colunmname AS name
-			FROM `rms_view` AS v WHERE v.status=1 ";
-        $sql.=" AND v.type= ".$type;
-        $oder=" ORDER BY v.key_code ASC ";
-    	return $db->fetchAll($sql.$oder);
+		
     }
 	function getAllMonth($condiction=array()){
-    	$db=$this->getAdapter();
-		$currentLang = $this->currentlang();
-		$colunmname='month_en';
-		if ($currentLang==1){
-			$colunmname='month_kh';
+		
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $condiction;
+		$arrFilter['actionName']="monthOfTheYear";
+		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+		$rsQuery = json_decode($rsQuery, true);
+		if($rsQuery['code']=="SUCCESS"){
+			return $rsQuery['result'];    
 		}
-    	$sql="
-			SELECT m.id,
-			m.$colunmname AS name
-			FROM `rms_month` AS m WHERE m.status=1 ";
-        $oder=" ORDER BY m.id ASC ";
-    	return $db->fetchAll($sql.$oder);
     }
+	
 	function getAcademicYear($condiction=array()){
-    	$db=$this->getAdapter();
-    	$sql="
-			SELECT ay.id,
-				CONCAT(ay.fromYear,'-',ay.toYear) AS name
-			FROM rms_academicyear AS ay WHERE ay.status=1 ";
-        $oder=" ORDER BY ay.fromYear DESC ";
-    	return $db->fetchAll($sql.$oder);
+		
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $condiction;
+		$arrFilter['actionName']="systemAcademicYear";
+		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+		$rsQuery = json_decode($rsQuery, true);
+		if($rsQuery['code']=="SUCCESS"){
+			return $rsQuery['result'];    
+		}
+    	
     }
 	function getAllDegree(){
-		$db = $this->getAdapter();
 		
-		$currentLang = $this->currentlang();
-		$colunmname='title_en';
-		if ($currentLang==1){
-			$colunmname='title';
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$arrFilter = $condiction;
+		$arrFilter['actionName']="systemStudyDegree";
+		$rsQuery = $dbAPi->getDataByAPI($arrFilter);
+		$rsQuery = json_decode($rsQuery, true);
+		if($rsQuery['code']=="SUCCESS"){
+			return $rsQuery['result'];    
 		}
 		
-		$this->_name = "rms_items";
-		$sql="SELECT m.id, m.$colunmname AS name FROM $this->_name AS m WHERE m.status=1 ";
-		$sql.=" AND m.type=1 ";
-		/*
-		if (!empty($schooloption)){
-			$schooloptionParam = explode(",", $schooloption);
-			$s_whereee = array();
-			foreach ($schooloptionParam as $schooloptionId){
-				$s_whereee[] = $schooloptionId." IN (m.schoolOption)";
-			}
-			$sql .=' AND ( '.implode(' OR ',$s_whereee).')';
-		}
-		*/
-		$sql .=' ORDER BY m.schoolOption ASC,m.type DESC,m.ordering DESC, m.title ASC';	
-		return $db->fetchAll($sql);
 	  }
 	function does_url_exists($url) {
 	
