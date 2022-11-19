@@ -20,9 +20,9 @@
 	}
 	$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
 	if(!empty($dataInfo['logo'])){
-		$logo = $systemLink.'/images/logo/'.$dataInfo['logo'];
+		$logo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
 		if ($dbGb->does_url_exists($logo)){ 
-			$defaultLogo = $systemLink.'/images/logo/'.$dataInfo['logo'];
+			$defaultLogo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
 		}
 	}
 	

@@ -9,7 +9,11 @@
 	
 	$key = new Application_Model_DbTable_DbKeycode();
 	$dataInfo=$key->getKeyCodeMiniInv(TRUE);
-		
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentLang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();	
+	
 	$clientTitle= $tr->translate("CUSTOMER_BRANCH");
 	if(!empty($dataInfo['schooolNameKh'])){
 		$clientTitle= $dataInfo['schooolNameKh'];
@@ -20,8 +24,9 @@
 	}
 	$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
 	if(!empty($dataInfo['logo'])){
-		if (file_exists(PUBLIC_PATH."/images/logo/".$dataInfo['logo'])){
-			$defaultLogo = $this->baseUrl().'/images/logo/'.$dataInfo['logo'];
+		$logo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		if ($dbGb->does_url_exists($logo)){ 
+			$defaultLogo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
 		}
 	}
 	if($module!="default"){
@@ -116,7 +121,13 @@
     <body class=" bgBody  <?php if($module=="default"){ echo "ishome  isfullscreen  ";};?> html"  data-header="light" data-footer="dark"  data-header_align="center"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light" >
 			<div class="preloader-background">
 				<div class="preloader-wrapper">
-					<div id="preloader"></div>
+					<div class="preloader-text-img-blg">
+						<img class="preloader-logo-app" src="<?php echo $defaultLogo;?>" alt=""  />
+						<?php echo $tr->translate("LOADING"); ?>
+					</div>
+					<div id="preloader">
+						
+					</div>
 				</div>
 			</div>
 		<?php 
