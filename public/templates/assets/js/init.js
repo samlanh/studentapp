@@ -181,7 +181,11 @@ $(document).ready(function(){
 /********************AJAX BASED SITE - END*******************/
 
 $(document).ready(function(){
-   
+   if (window.history && window.history.pushState) {
+    $(window).on('popstate', function() {
+	  $('.preloader-background').delay(10).fadeOut('slow');
+    });
+  }
  $(document).on( 'click', '.back-button', function (e){
         e.preventDefault();
         $('.sidemenu').sidenav('close');
