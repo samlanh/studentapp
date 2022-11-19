@@ -83,7 +83,7 @@
 							<span class="score-info">'.$tr->translate("AVERAGE").' <strong class="mark-title">'.$totalAvg.'</strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent('.$score['id'].');" >
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger " onClick="getPopupContent('.$score['id'].');" >
 								'.$tr->translate("MORE_DETAIL").'
 							</a>
 						</div>
