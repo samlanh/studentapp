@@ -90,7 +90,7 @@
 								<div class="col s6">
 									<span class="row-items-info">'.$tr->translate("TEACHER").' <strong class="mark-title">'.$attedance['teacherName'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("PHONE").' <strong class="mark-title">'.$attedance['teacherTel'].'</strong></span>
-									<a class="waves-effect waves-light btn btn-rounded lighten-2 preloader-trigger" onClick="getPopupContent('.$attedance['id'].')">
+									<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getPopupContent('.$attedance['id'].')">
 										'.$tr->translate("MORE_DETAIL").'
 									</a>
 								</div>

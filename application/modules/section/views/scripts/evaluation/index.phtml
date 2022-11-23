@@ -79,7 +79,7 @@
 									<div class="col s6">
 										<span class="row-items-info"><?php echo $tr->translate("TEACHER"); ?> <strong class="mark-title"><?php echo $attedance['teacherName']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("PHONE"); ?> <strong class="mark-title"><?php echo $attedance['teacherTel']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $attedance['id']; ?>)" >
+										<a class="waves-effect waves-light btn btn-rounded lighten-2" onClick="getPopupContent(<?php echo $attedance['id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -294,6 +294,7 @@
 		
 	<?php } ?>
 	function getPopupContent(keyValuess){
+		$('.preloader-background').css("display","flex");
 		var urlEvaluationRow = '<?php echo $this->baseUrl().'/section/evaluation/evaluationcontent'; ?>';
 			$.ajax({
 				url:urlEvaluationRow,
@@ -308,8 +309,8 @@
 					 $('.content-info').html(data.htmlRecord);
 					setTimeout(function () {
 							$('#modal-popup').modal('open');
+							$('.preloader-background').delay(10).fadeOut('slow');
 					}, 500);
-					$('.preloader-background').delay(10).fadeOut('slow');
 					
 				},
 				error: function(err) {

@@ -93,7 +93,7 @@
 										<span class="row-items-info"><strong class="mark-title"><?php echo $academicYear; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("CLASS_NAME"); ?> <strong class="mark-title"><?php echo $attedance['groupCode']; ?></strong></span>
 										<span class="row-items-info"><?php echo $tr->translate("ROOM"); ?> <strong class="mark-title"><?php echo $attedance['roomName']; ?></strong></span>
-										<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $attedance['yearMonth']; ?>,<?php echo $attedance['group_id']; ?>)" >
+										<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $attedance['yearMonth']; ?>,<?php echo $attedance['group_id']; ?>)" >
 											<?php echo $tr->translate("MORE_DETAIL"); ?>
 										</a>
 									</div>
@@ -335,7 +335,7 @@ if($currentlang==1){
 		}
 	<?php } ?>
 	function getPopupContent(yearMonth,group){
-		
+		$('.preloader-background').css("display","flex");
 		var urlEvaluationRow = '<?php echo $this->baseUrl().'/section/attendance/detailcontent'; ?>';
 			$.ajax({
 				url:urlEvaluationRow,
@@ -350,9 +350,10 @@ if($currentlang==1){
 					
 					$('.content-info').html(data.htmlRecord);
 					setTimeout(function () {
-							$('#modal-popup').modal('open');
+						$('#modal-popup').modal('open');
+						$('.preloader-background').delay(10).fadeOut('slow');
 					}, 500);
-					$('.preloader-background').delay(10).fadeOut('slow');
+					
 				},
 				error: function(err) {
 					$('.preloader-background').delay(10).fadeOut('slow');

@@ -99,7 +99,7 @@
 									<span class="row-items-info"><strong class="mark-title">'.$academicYear.'</strong></span>
 									<span class="row-items-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$attedance['groupCode'].'</strong></span>
 									<span class="row-items-info">'.$tr->translate("ROOM").' <strong class="mark-title">'.$attedance['roomName'].'</strong></span>
-									<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent('. $attedance['yearMonth'].','.$attedance['group_id'].')" >
+									<a class="waves-effect waves-light btn btn-rounded  lighten-2 " onClick="getPopupContent('. $attedance['yearMonth'].','.$attedance['group_id'].')" >
 										'.$tr->translate("MORE_DETAIL").'
 									</a>
 								</div>

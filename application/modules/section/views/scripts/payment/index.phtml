@@ -118,7 +118,7 @@
 					<?php } ?>
 					<div class="spacer-small"></div>
 					<div class="spacer-small"></div>
-					<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $payment['id']; ?>)" >
+					<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $payment['id']; ?>)" >
 						<?php echo $tr->translate("MORE_DETAIL"); ?>
 					</a>
 				</div>
@@ -286,6 +286,7 @@
 		}
 		
 		function getPopupContent(payment){
+			$('.preloader-background').css("display","flex");
 			var urlRowContent = '<?php echo $this->baseUrl().'/section/payment/detailcontent'; ?>';
 				$.ajax({
 					url:urlRowContent,
@@ -299,9 +300,10 @@
 						
 						$('.content-info').html(data.htmlRecord);
 						setTimeout(function () {
-								$('#modal-popup').modal('open');
+							$('#modal-popup').modal('open');
+							$('.preloader-background').delay(10).fadeOut('slow');
 						}, 500);
-						$('.preloader-background').delay(10).fadeOut('slow');
+						
 					},
 					error: function(err) {
 						$('.preloader-background').delay(10).fadeOut('slow');

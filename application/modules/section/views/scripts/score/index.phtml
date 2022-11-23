@@ -74,7 +74,7 @@
 							<span class="score-info"><?php echo $tr->translate("AVERAGE"); ?> <strong class="mark-title"><?php echo $totalAvg; ?></strong></span>
 							<div class="spacer-small"></div>
 							<div class="spacer-small"></div>
-							<a class="waves-effect waves-light btn btn-rounded  lighten-2 preloader-trigger" onClick="getPopupContent(<?php echo $score['id'];?>);" >
+							<a class="waves-effect waves-light btn btn-rounded  lighten-2" onClick="getPopupContent(<?php echo $score['id'];?>);" >
 								<?php echo $tr->translate("MORE_DETAIL"); ?>
 							</a>
 						</div>
@@ -273,7 +273,7 @@
 	<?php } ?>
 	
 	function getPopupContent(scoreKey){
-		
+		$('.preloader-background').css("display","flex");
 		var urlDetailContent = '<?php echo $this->baseUrl().'/section/score/detailcontent'; ?>';
 			$.ajax({
 				url:urlDetailContent,
@@ -286,9 +286,10 @@
 					
 					$('.content-info').html(data.htmlRecord);
 					setTimeout(function () {
-							$('#modal-popup').modal('open');
+						$('#modal-popup').modal('open');
+						$('.preloader-background').delay(10).fadeOut('slow');
 					}, 500);
-					$('.preloader-background').delay(10).fadeOut('slow');
+					
 					
 				},
 				error: function(err) {
