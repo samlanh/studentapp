@@ -321,7 +321,7 @@ body .bgBody-listview.bluePrimary {
 body, body *,p{
   font-family: 'Open Sans', sans-serif,'Khmer Os Battambang';
   font-size: 16px;
-  line-height: 26px
+  line-height: 26px;
 }
 body.ajax nav.navigation, body.ajaxurl nav.navigation{
   position: relative;
@@ -446,6 +446,7 @@ label{
 }
 .preloader-background{
   background-color: #fefefe;
+  background-image: linear-gradient(to bottom, #30cfd0a8 0%, #082d67c2 100%);
 }
 
 
@@ -528,13 +529,13 @@ body .accent-text{ color: #26C6DA; }
   Preloader
 ------------------------------------------*/
 #preloader:after{
-  border-top-color: #80CBC4;
+  border-top-color: #ff0b0b;
 }
 #preloader:before{
-  border-top-color: rgba(38, 198, 218, 1);;
+  border-top-color: rgb(231 171 0);
 }
 #preloader{
-  border-top-color: rgba(149, 117, 205, 1);
+  border-top-color: rgb(0 15 157);
 }
 
 /*----------------------------------------
@@ -4443,4 +4444,37 @@ body[data-site_mode="dark"] .preloader-background{
 ----------------------------------------*/
 [data-site_mode="dark"] .ui-icons .iprev div{
     background-color: #455A64;
+}
+
+.preloader-wrapper .preloader-text-img-blg {
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+}
+.preloader-wrapper .preloader-text-img-blg:after {
+	content: '';
+	animation-duration: 10s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background-color: #f6f7f800;
+	background: linear-gradient(to right, #eeeeee00 5%, #ffffffb3 6%, #eeeeee00 5%);
+	background-size: 800px 104px;
+	height: 100%;
+	position: absolute;
+	width: 100%;top: 0;left: 0;
+}
+.preloader-wrapper .preloader-text-img-blg img.preloader-logo-app {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -800px 0
+  }
+  100% {
+    background-position: 800px 0
+  }
 }
