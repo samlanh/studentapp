@@ -1,0 +1,218 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("PROFILE"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentlang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
+	$student = $this->student;
+	$userProfile = $this->baseUrl().'/images/user.png';
+	$studenName="";
+	$studenLatinName="";
+	$stuCode="";
+	
+	$stuGender="";
+	$groupCode="";
+	$gradeTitle="";
+	$genderTitle="";
+	$nationality="";
+	$dob="";
+	
+	$provinceTitle="";
+	$districtTitle="";
+	$communeTitle="";
+	$home_num="";
+	$street_num="";
+	$pob="";
+	
+	$fatherName ="";
+	$father_phone = "";
+	$fatherNation = "";
+	
+	$motherName ="";
+	$mother_phone = "";
+	$motherNation = "";
+	
+	$guardianName= "";
+	$guardian_tel= "";
+	$guardianNation = "";
+	if(!empty($student)){
+		if(!empty($student['photo'])){
+			$thisImg = $systemLink.'/images/photo/'.$student['photo'];
+			if ($dbGb->does_url_exists($thisImg)){
+				$userProfile = $thisImg;
+			}
+		}
+		$studenName = empty($student['stu_khname'])?"":$student['stu_khname'];
+		if(empty($studenName)){
+			$studenName = empty($student['studenLatinName'])?"":$student['studenLatinName'];
+		}
+		$studenLatinName = empty($student['studenLatinName'])?"&nbsp;":$student['studenLatinName'];
+		$stuCode = empty($student['stu_code'])?"&nbsp;":$student['stu_code'];
+		$groupCode = empty($student['groupCode'])?"&nbsp;":$student['groupCode'];
+		$gradeTitle = empty($student['gradeTitle'])?"&nbsp;":$student['gradeTitle'];
+		$genderTitle = empty($student['genderTitle'])?"&nbsp;":$student['genderTitle'];
+		$nationality = empty($student['nationality'])?"&nbsp;":$student['nationality'];
+		$dob = empty($student['dob'])?"&nbsp;":$student['dob'];
+		$pob = empty($student['pob'])?"&nbsp;":$student['pob'];
+		
+		$fatherName = empty($student['father_enname'])?"&nbsp;":$student['father_enname'];
+		$father_phone = empty($student['father_phone'])?"&nbsp;":$student['father_phone'];
+		$fatherNation = empty($student['fatherNation'])?"&nbsp;":$student['fatherNation'];
+		
+		$motherName = empty($student['mother_enname'])?"&nbsp;":$student['mother_enname'];
+		$mother_phone = empty($student['mother_phone'])?"&nbsp;":$student['mother_phone'];
+		$motherNation = empty($student['motherNation'])?"&nbsp;":$student['motherNation'];
+		
+		$guardianName = empty($student['guardian_enname'])?"&nbsp;":$student['guardian_enname'];
+		$guardian_tel = empty($student['guardian_tel'])?"&nbsp;":$student['guardian_tel'];
+		$guardianNation = empty($student['guardianNation'])?"&nbsp;":$student['guardianNation'];
+		
+		$provinceTitle = empty($student['provinceTitle'])?"&nbsp;":$student['provinceTitle'];
+		$districtTitle = empty($student['districtTitle'])?"&nbsp;":$student['districtTitle'];
+		$communeTitle = empty($student['communeTitle'])?"&nbsp;":$student['communeTitle'];
+		$home_num = empty($student['home_num'])?"&nbsp;":$student['home_num'];
+		$street_num = empty($student['street_num'])?"&nbsp;":$student['street_num'];
+	}
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgBody-white-background"></div>	
+
+
+<div class="ui-profile">
+    
+    <div class="primg">
+        <img src="<?php echo $userProfile; ?>" alt="">
+        <div class="prname white-text">
+            <h3 class="name"><?php echo $studenName; ?></h3>
+            <div class="pos"><?php echo $studenLatinName; ?></div>
+        </div>
+    </div>
+    <div class="prinfo card-panel cyan darken-2 white-text">
+        <div class="count col-2">
+            <h4 class="num"><?php echo $stuCode; ?></h4>
+            <div class="tit"><?php echo $genderTitle; ?></div>
+        </div>
+        <div class="count col-2">
+            <h4 class="num"><?php echo $groupCode; ?></h4>
+            <div class="tit"><?php echo $gradeTitle; ?></div>
+        </div>
+       
+    </div>
+
+
+	<div class="section pad-0">
+			<div class="row ">
+                <div class="col s12 pad-0">
+					<ul class="collection info-collection">
+						<li class="collection-item avatar collection-title ">
+						  <h5 class="sec-tit  "><?php echo $tr->translate("STUDENT_INFO"); ?></h5>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-globe-model circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("NATIONALITY"); ?></p>
+						  <span class="title"><?php echo $nationality; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-calendar-text circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("DOB"); ?></p>
+						  <span class="title"><?php echo $dob; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						   <i class="mdi mdi-flag-variant-outline circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("POB"); ?></p>
+						  <span class="title"><?php echo $pob; ?></span>
+						</li>
+						
+						<li class="collection-item avatar collection-title ">
+						  <h5 class="sec-tit  "><?php echo $tr->translate("GUARDIAN_INFO"); ?></h5>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-account circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("FATHER_NAME"); ?></p>
+						  <span class="title"><?php echo $fatherName; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-globe-model circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("NATIONALITY"); ?></p>
+						  <span class="title"><?php echo $fatherNation; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-phone-classic circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("TEL"); ?></p>
+						  <span class="title"><?php echo $father_phone; ?></span>
+						</li>
+						
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-account circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("MOTHER_NAME"); ?></p>
+						  <span class="title"><?php echo $motherName; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-globe-model circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("NATIONALITY"); ?></p>
+						  <span class="title"><?php echo $motherNation; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-phone-classic circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("TEL"); ?></p>
+						  <span class="title"><?php echo $mother_phone; ?></span>
+						</li>
+						
+						<?php if(!empty($guardianName)){?>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-account circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("GUARDIAN_NAME"); ?></p>
+						  <span class="title"><?php echo $guardianName; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-globe-model circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("NATIONALITY"); ?></p>
+						  <span class="title"><?php echo $guardianNation; ?></span>
+						</li>
+						<li class="collection-item avatar">
+							<i class="mdi mdi-phone-classic circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("TEL"); ?></p>
+						  <span class="title"><?php echo $guardian_tel; ?></span>
+						</li>
+						<?php } ?>
+						
+						<li class="collection-item avatar collection-title ">
+						  <h5 class="sec-tit  "><?php echo $tr->translate("CONTACT"); ?></h5>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-city  circle cyan darken-2"></i>
+						   <p><?php echo $tr->translate("PROVINCE_CITY"); ?></p>
+						  <span class="title"><?php echo $provinceTitle; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-flag-variant-outline circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("DISTRICT"); ?></p>
+						  <span class="title"><?php echo $districtTitle; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-pillar circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("COMMUNE"); ?></p>
+						  <span class="title"><?php echo $communeTitle; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-home-outline circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("HOME_NUMBER"); ?></p>
+						  <span class="title"><?php echo $home_num; ?></span>
+						</li>
+						<li class="collection-item avatar">
+						  <i class="mdi mdi-road-variant circle cyan darken-2"></i>
+						  <p><?php echo $tr->translate("STREE_NUMBER"); ?></p>
+						  <span class="title"><?php echo $street_num; ?></span>
+						</li>
+					  </ul>
+
+				</div>
+			</div>
+		</div>
+
+</div>
+<div class="spacer-xlarge"></div>

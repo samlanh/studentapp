@@ -31,6 +31,7 @@ $rsStu = json_decode($rsStu, true);
 
 $userProfile = $this->baseUrl().'/images/user.png';
 $studenName="";
+$studenLatinName="";
 $stuCode="";
 if($rsStu['code']=="SUCCESS"){
 	if(!empty($rsStu['result'])){
@@ -171,7 +172,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
-                        <a href="#">
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/profile"?>">
 							<i class="mdi mdi-account-circle"></i>
 							<span class="title"><?php echo $tr->translate("PROFILE"); ?></span>
 						</a>
