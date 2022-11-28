@@ -1231,8 +1231,8 @@ span.page-footer-info,span.page-footer-info strong {
 }
 
 .ui-profile .primg img {
-    max-width: 200px;
-    height: auto;
+    width: 200px;
+    height: 200px;
     padding: 10px;
     border-radius: 50%;
 }
@@ -1247,13 +1247,42 @@ ul.collection.info-collection .collection-item.avatar.collection-title {
 
 .collection .collection-item.avatar.collection-title h5.sec-tit {
     line-height: 26px;
+    font-size: 14px;
+    margin: 0;
 }
 
-ul.collection.info-collection .collection-item{
+ul.collection.info-collection .collection-item {
     color: #252323;
+    min-height: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 ul.collection.info-collection .collection-item.avatar i {
     background: none !important;
     color: #252323;
+}
+ul.collection.info-collection .collection-item p {
+    font-size: 12px;
+}
+
+ul.collection.info-collection .collection-item span.title {
+    font-size: 14px;
+}
+.footer-menu li a.active span.menuBadge.new.badge.red {
+    display: block;
+    color: #fff;
+}
+span.menuBadge.badge {
+    position: absolute;
+    top: -15px;
+    right: -5px;
+    min-width: 0;
+    height: auto;
+    padding: 5px 10px;
+    line-height: 16px;
+}
+
+span.menuBadge.badge:after {
+    content: "";
 }

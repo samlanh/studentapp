@@ -3011,16 +3011,23 @@ body[data-menu_icons="colored"][data-menu="colored"] .sidenav li a i{
   width: 100%;
   text-align: center;
   margin: 0px 0px 0px 0px;
+  font-size: 16px;
+}
+.ui-profile .prinfo .tit {
+    font-size: 14px;
 }
 .ui-profile .prname{
     position: relative;
     /*margin: -170px 10% 70px 10%;*/
     z-index: 3;
-	margin: -115px 10% 30px 10%;
+	margin: -80px 10% 30px 10%;
     text-align: left;
 }
 .ui-profile .prname .name{
-  margin-bottom: 5px;
+	margin-bottom: 5px;
+	font-size: 20px;
+	line-height: 24px;
+	margin: 0;
 }
 .ui-profile .carousel-basic{
   height: 200px;
@@ -3722,7 +3729,7 @@ body.isfullscreen .footer-menu{
 }
 .footer-menu li{
   float: left;
-  width: 33.33%;
+  width: 25%;
   display: inline-block;
   height: 100%;
   text-align: center;
@@ -3730,6 +3737,7 @@ body.isfullscreen .footer-menu{
 .footer-menu li a{
   display: inline-block;
   color: #404040;
+      position: relative;
 }
 .isfullscreen .footer-menu li a{
   color: #f5f5f5;
