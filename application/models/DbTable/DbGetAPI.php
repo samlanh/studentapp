@@ -91,7 +91,9 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['paymentId'])){
 		$actionName = $actionName."&paymentId=".$arrFilter['paymentId'];
 	}
-	
+	if(!empty($arrFilter['unreadSection'])){
+		$actionName = $actionName."&unreadSection=".$arrFilter['unreadSection'];
+	}
 	$url=$systemLink."/api/index?url=".$actionName;
 
 	if(!empty($arrFilter['methodPost'])){

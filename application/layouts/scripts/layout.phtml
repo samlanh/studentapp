@@ -40,6 +40,31 @@
     		Application_Form_FrmMessage::redirectUrl("/");
     	}
 	}
+	
+	
+	$dbAPi = new Application_Model_DbTable_DbGetAPI();
+	$arrFilter = array();
+	$arrFilter['actionName']="unread";
+	$arrFilter['studentId']=$dbGb->getUserId();
+	
+	$rsUnreadNews = $dbAPi->getDataByAPI($arrFilter);
+	$rsUnreadNews = json_decode($rsUnreadNews, true);
+	$countingNews = 0;
+	if($rsUnreadNews['code']=="SUCCESS"){
+		$countingNews = $rsUnreadNews['result']['countingRecord'];    
+	}
+	
+	$arrFilter['unreadSection']="paymentUnread";
+	$rsUnreadPayment = $dbAPi->getDataByAPI($arrFilter);
+	$rsUnreadPayment = json_decode($rsUnreadPayment, true);
+	$countingPayment = 0;
+	if($rsUnreadPayment['code']=="SUCCESS"){
+		$countingPayment = $rsUnreadPayment['result']['countingRecord'];    
+	}
+	
+	
+	$countingNewsLabel = $dbGb->getNumberInkhmer($countingNews);
+	$countingPaymentsLabel = $dbGb->getNumberInkhmer($countingPayment);
  ?>
 
 <!DOCTYPE html>
@@ -144,15 +169,26 @@
 	?>
 	<div class="footer-menu">
 		<ul>
-			
 			<li>
 				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
-					<i class="mdi mdi-newspaper"></i>
-					<span><?php echo $tr->translate("NEWS"); ?></span>
+					<i class="mdi mdi-bell"></i>
+					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
+					<?php if($countingPayment>0){?>
+					<span class="menuBadge new badge red "><?php echo $countingPaymentsLabel; ?></span>
+					<?php } ?>
 				</a>        
 			</li>
 			<li>
-				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
+				<a class="preloader-trigger <?php if($module=="utility" && $controller=="news" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
+					<i class="mdi mdi-newspaper"></i>
+					<span><?php echo $tr->translate("NEWS"); ?></span>
+					<?php if($countingNews>0){?>
+					<span class="menuBadge new badge red "><?php echo $countingNewsLabel; ?></span>
+					<?php } ?>
+				</a>        
+			</li>
+			<li>
+				<a class="preloader-trigger <?php if($module=="home" && $controller=="index" && $action=="index"){ echo "active";} ?> " href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
 					<i class="mdi mdi-home-outline"></i>
 					<span><?php echo $tr->translate("HOME"); ?></span>
 				</a>        
