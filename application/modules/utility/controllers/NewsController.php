@@ -38,7 +38,18 @@ class Utility_NewsController extends Zend_Controller_Action
 		
 		$dbGb = new Application_Model_DbTable_DbGlobal();
 		$rs = $dbGb->getNewsEventsDetail($id);
-		$this->view->row  =$rs;    
+		$this->view->row  =$rs;   
+
+		$userId = $dbGb->getUserId();
+		$dbAPi = new Application_Model_DbTable_DbGetAPI();
+		$data['actionName']="newsRead";
+		$data['methodPost']="POST";
+		$data['newsId']=$id;
+		$data['studentId']=$userId;
+					
+		$rs = $dbAPi->getDataByAPI($data);
+		$rs = json_decode($rs, true);
+			
     }
    
 	function morerecordAction(){

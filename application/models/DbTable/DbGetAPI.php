@@ -23,6 +23,8 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 		);
 	
 	$actionName = $arrFilter['actionName'];
+	$actionNameApi = empty($arrFilter['actionName'])?"":$arrFilter['actionName'];
+	
 	$actionName=empty($arrFilter['actionName'])?'introductionhome':$arrFilter['actionName']."&currentLang=".$currentLang;
 	
 	if(!empty($arrFilter['isForHome'])){
@@ -94,14 +96,23 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['unreadSection'])){
 		$actionName = $actionName."&unreadSection=".$arrFilter['unreadSection'];
 	}
+	if(!empty($arrFilter['markAllRead'])){
+		$actionName = $actionName."&markAllRead=".$arrFilter['markAllRead'];
+	}
 	$url=$systemLink."/api/index?url=".$actionName;
 
 	if(!empty($arrFilter['methodPost'])){
 		$headers = array('Content-Type: application/x-www-form-urlencoded');
 		
-		$studentCode = empty($arrFilter['account'])?"":$arrFilter['account'];
-		$password = empty($arrFilter['password'])?"":$arrFilter['password'];
-		$fields =('studentCode='.$studentCode.'&password='.$password);
+		if($actionNameApi=="newsRead"){
+			$newsId = empty($arrFilter['newsId'])?"":$arrFilter['newsId'];
+			$studentId = empty($arrFilter['studentId'])?"":$arrFilter['studentId'];
+			$fields =('newsId='.$newsId.'&studentId='.$studentId);
+		}else{
+			$studentCode = empty($arrFilter['account'])?"":$arrFilter['account'];
+			$password = empty($arrFilter['password'])?"":$arrFilter['password'];
+			$fields =('studentCode='.$studentCode.'&password='.$password);
+		}
 		
 		 $curl = curl_init();
 		  curl_setopt_array($curl, array(

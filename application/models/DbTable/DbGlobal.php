@@ -173,6 +173,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			$dbAPi = new Application_Model_DbTable_DbGetAPI();
 			$arrFilter = $search;
 			$arrFilter['actionName']="news";
+			$arrFilter['studentId']=$this->getUserId();
 			$arrFilter['LimitStart']=empty($search['LimitStart'])?null:$search['LimitStart'];
 			$arrFilter['limitRecord']=empty($search['limitRecord'])?null:$search['limitRecord'];
 			$rsQuery = $dbAPi->getDataByAPI($arrFilter);

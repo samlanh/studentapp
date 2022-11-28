@@ -53,15 +53,19 @@
 					
 					//$strDescription = mb_substr(strip_tags($row['description']), 0, 200, "UTF-8");
 				}
+				$class="unread";
+				if($row['isRead']==1){
+					$class="";
+				}
 							
 				?>	
-			<div class="col s12">
+			<div class="col s12 <?php echo $class; ?>">
 				<div class="blog-img-wrap">
 					<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="<?php echo $row['title']; ?>">
 					<img class="z-depth-1" style="width: 100%;" src="<?php echo $images; ?>">
 					</a>
 				</div>
-				<div class="blog-info">
+				<div class="blog-info ">
 					<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news/detail/id/".$row['id']; ?>" >                    
 						<h5 class="title"><?php echo $row['title']; ?></h5>
 					</a>

@@ -170,12 +170,9 @@
 	<div class="footer-menu">
 		<ul>
 			<li>
-				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
-					<i class="mdi mdi-bell"></i>
-					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
-					<?php if($countingPayment>0){?>
-					<span class="menuBadge new badge red "><?php echo $countingPaymentsLabel; ?></span>
-					<?php } ?>
+				<a class="preloader-trigger <?php if($module=="home" && $controller=="index" && $action=="index"){ echo "active";} ?> " href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
+					<i class="mdi mdi-home-outline"></i>
+					<span><?php echo $tr->translate("HOME"); ?></span>
 				</a>        
 			</li>
 			<li>
@@ -188,12 +185,14 @@
 				</a>        
 			</li>
 			<li>
-				<a class="preloader-trigger <?php if($module=="home" && $controller=="index" && $action=="index"){ echo "active";} ?> " href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
-					<i class="mdi mdi-home-outline"></i>
-					<span><?php echo $tr->translate("HOME"); ?></span>
+				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
+					<i class="mdi mdi-bell"></i>
+					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
+					<?php if($countingPayment>0){?>
+					<span class="menuBadge new badge red "><?php echo $countingPaymentsLabel; ?></span>
+					<?php } ?>
 				</a>        
 			</li>
-			
 			<li>
 				<a data-target="slide-nav" href="#" class="sidenav-trigger">          
 					<i class="mdi mdi-menu"></i>
