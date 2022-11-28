@@ -317,7 +317,15 @@ body .bgBody-listview.bluePrimary {
     background: #095988;
     border-radius: 0;
 }
-
+body .bgBody-white-background {
+    background: #fff;
+    opacity: 0.9;
+    position: fixed;
+    width: 100%;
+    min-height: 100%;
+    top: 0;
+    z-index: 0;
+}
 body, body *,p{
   font-family: 'Open Sans', sans-serif,'Khmer Os Battambang';
   font-size: 16px;
@@ -525,6 +533,9 @@ body .accent-text{ color: #26C6DA; }
     color: #0a4374 !important;
 }
 .blue-bg{ background-color: #0a4374; }
+.orange-bg {
+    background-color: #f5711d;
+}
 /*----------------------------------------
   Preloader
 ------------------------------------------*/
@@ -3003,8 +3014,10 @@ body[data-menu_icons="colored"][data-menu="colored"] .sidenav li a i{
 }
 .ui-profile .prname{
     position: relative;
-    margin: -170px 10% 70px 10%;
+    /*margin: -170px 10% 70px 10%;*/
     z-index: 3;
+	margin: -115px 10% 30px 10%;
+    text-align: left;
 }
 .ui-profile .prname .name{
   margin-bottom: 5px;
