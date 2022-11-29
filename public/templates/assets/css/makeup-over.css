@@ -1286,3 +1286,6 @@ span.menuBadge.badge {
 span.menuBadge.badge:after {
     content: "";
 }
+.unread {
+    background: #bfe1ff9e;
+}
