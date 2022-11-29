@@ -1289,3 +1289,85 @@ span.menuBadge.badge:after {
 .unread {
     background: #bfe1ff9e;
 }
+
+
+.bgBody-notification {
+    background: #034165;
+    padding-left: 60px;
+    width: 100%;
+   
+}
+.top-bar-title h5.sec-page-tit {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0;
+}
+
+.top-bar-title h5.sec-page-tit i {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.bgBody-notification .section {
+    padding: 20px 0;
+}
+
+.bgBody-notification .section .row {
+    margin: 0;
+}
+.row.notification-blog {
+}
+.card.sticky-action.notification-item .card-content {
+    position: relative;
+	    min-height: 72px;
+    padding-left: 72px;
+}
+.card.sticky-action.notification-item .card-reveal{
+	 min-height: 72px;
+    padding-left: 72px;
+}
+
+.card.sticky-action.notification-item .card-content .circle,
+.card.sticky-action.notification-item .card-reveal .circle {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card.sticky-action.notification-item .card-content i.circle,
+.card.sticky-action.notification-item .card-reveal i.circle {
+    font-size: 18px;
+    line-height: 42px;
+    color: #fff;
+    background-color: #999;
+    text-align: center;
+}
+
+.card.sticky-action.notification-item {
+    margin-bottom: 5px;
+}
+.card.sticky-action.notification-item span.card-title {
+    font-size: 18px;
+    line-height: 24px;
+	    margin: 0;
+}
+
+.card.sticky-action.notification-item  small {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.card.sticky-action.notification-item p,.card.sticky-action.notification-item strong {
+    font-size: 16px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+}
+.card.sticky-action.notification-item p.activator {
+    text-align: right;
+    color: #034165;
+}
