@@ -252,9 +252,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					
 					//$strDescription = mb_substr(strip_tags($row['description']), 0, 200, "UTF-8");
 				}
-				
+				$class="unread";
+				if($row['isRead']==1){
+					$class="";
+				}
 				$string.='
-					<div class="col s12">
+					<div class="col s12 '.$class.'">
 						<div class="blog-img-wrap">
 							<a class="img-wrap" href="'.$images.'" data-fancybox="images" data-caption="'.$row['title'].'">
 							<img class="z-depth-1" style="width: 100%;" src="'.$images.'">
@@ -274,6 +277,140 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					</div>
 				
 				';
+			}
+		}
+		
+		$array = array(
+			'htmlRecord'=>$string,
+			'trackPage'=>$totalLimitStart,
+			
+			);
+			
+		return $array;
+	}
+	
+	
+	
+	public function getNotificationList($search = array()){
+    	$db = $this->getAdapter();
+    	try{
+			
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$arrFilter = $search;
+			
+			$arrFilter['actionName']="unread";
+			$arrFilter['unreadSection']="notificationUnread";
+			$arrFilter['unreadRecord']=3;
+			$arrFilter['studentId']=$this->getUserId();
+			$arrFilter['LimitStart']=empty($search['LimitStart'])?null:$search['LimitStart'];
+			$arrFilter['limitRecord']=empty($search['limitRecord'])?null:$search['limitRecord'];
+			$rsUnreadPayment = $dbAPi->getDataByAPI($arrFilter);
+			$rsUnreadPayment = json_decode($rsUnreadPayment, true);
+			$countingPayment = 0;
+			if($rsUnreadPayment['code']=="SUCCESS"){
+				return $rsUnreadPayment['result']['rowData'];    
+			}
+		
+    	}catch(Exception $e){
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
+    }
+	
+	function moreNotification($data){
+		$db = $this->getAdapter();
+		
+		$systemLink = $this->systemLink();
+		$currentlang = $this->currentlang();
+		$limitRecord = $this->limitListView();
+		$limitRecord = empty($limitRecord)?1:$limitRecord;
+		
+		$totalLimitStart= $limitRecord;
+		$filter = $data;
+		$filter['limitRecord'] = $limitRecord;
+		if(!empty($data['page'])){
+			if($data['page']<$limitRecord){
+				$data['page'] = $limitRecord;
+			}
+			$filter['LimitStart'] = $data['page'];
+			$filter['limitRecord'] = $limitRecord;
+			$totalLimitStart = $data['page'] + $limitRecord;
+		}
+		
+		$rs = $this->getNotificationList($filter);
+		$string="";
+		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
+		
+		if(!empty($rs)){ 
+			foreach($rs AS $rs){
+				
+				$year = date("Y",strtotime($rs['recordDate'])); 
+				$day = date("d",strtotime($rs['recordDate'])); 
+				$month = date("M",strtotime($rs['recordDate'])); 
+				$monthKey = date("m",strtotime($rs['recordDate'])); 
+				
+				$timeLabel="";
+				if(date("H:i:s",strtotime($rs['recordDate']))!="00:00:00"){
+					$timeLabel = " | ".date("H:i:s",strtotime($rs['recordDate'])); 
+				}
+				$rank = empty($rs['rank'])?0:$rs['rank']; 
+				$totalScore = empty($rs['totalScore'])?0:$rs['totalScore']; 
+				$totalAvg = empty($rs['totalAvg'])?0:$rs['totalAvg']; 
+				if($currentlang==1){
+					$rank = $this->getNumberInkhmer($rank);
+					$totalAvg = $this->getNumberInkhmer($totalAvg);
+					$totalScore = $this->getNumberInkhmer($totalScore);
+				
+					$timeLabel = $this->getNumberInkhmer($timeLabel);
+					$year = $this->getNumberInkhmer($year);
+					$day = $this->getNumberInkhmer($day);
+					$month = $this->getMonthInkhmer($monthKey);
+					
+				}
+				$class="";
+				if($rs['recordIsread']==0){
+					$class="unread";
+				}
+				$string.='<div class="card sticky-action notification-item '.$class.'">';
+				if($rs['recordType']=="payment"){
+					$string.='
+					<div class="card-content">
+						<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
+						<span class="card-title ">'.$tr->translate("SCHOOL_PAYMENT").' '.$rs['recordTitle'].' </span>
+						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
+						<p><strong>$ '.number_format($rs['paid_amount'],2).'</strong> '.$tr->translate("PMT_METHOD").' <strong>'.$rs['paymentMethod'].'</strong></p>
+						<p class="activator">'.$tr->translate("MORE_DETAIL").'</p>
+					</div>
+					<div class="card-reveal">
+						<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
+						<span class="card-title ">'.$tr->translate("SCHOOL_PAYMENT").' '.$rs['recordTitle'].' <i class="mdi mdi-close right"></i></span>
+						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
+						<p><strong>$ '.number_format($rs['paid_amount'],2).'</strong> '.$tr->translate("PMT_METHOD").' <strong>'.$rs['paymentMethod'].'</strong></p>
+						<p>'.$tr->translate("CLASS_NAME").' <strong>'.$rs['groupCode'].'</strong> '.$tr->translate("CASHIER").' <strong>'.$rs['userName'].'</strong></p>
+						
+					</div>
+					';
+				}else if($rs['recordType']=="studyScore"){
+					$string.='
+					<div class="card-content">
+						<i class="mdi mdi-trophy circle green darken-2"></i>
+						<span class="card-title ">'.$tr->translate("STUDY_RESULT").' '.$rs['recordTitle'].'</span>
+						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
+						<p>'.$tr->translate("RANKING").' <strong>'.$rank.'</strong> '.$tr->translate("CLASS_NAME").' <strong>'.$rs['groupCode'].'</strong></p>
+						<p class="activator">'.$tr->translate("MORE_DETAIL").'</p>
+					</div>
+					
+					<div class="card-reveal">
+						<i class="mdi mdi-trophy circle green darken-2"></i>
+						<span class="card-title ">'.$tr->translate("STUDY_RESULT").' '.$rs['recordTitle'].' <i class="mdi mdi-close right"></i></span>
+						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
+						<p>'.$tr->translate("RANKING").' <strong>'.$rank.'</strong> '.$tr->translate("CLASS_NAME").' <strong>'.$rs['groupCode'].'</strong></p>
+						<p>'.$tr->translate("TOTAL_SCORE").'<strong>'.$totalScore.'</strong> '.$tr->translate("AVERAGE").' <strong>'.$totalAvg.'</strong></p>
+					</div>
+					';
+				}
+				$string.='</div>';
+					
 			}
 		}
 		

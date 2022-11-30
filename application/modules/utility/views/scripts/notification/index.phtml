@@ -1,0 +1,230 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("NOTIFICATION").$this->allRow);
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	$currentlang = $dbGb->currentlang();
+	
+	$countNews = count($this->rs);
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-notification ">
+	<div class="container">
+		<div class="section z-depth-1">
+			<div class="row">
+				<div class="col s12 pad-0 top-bar-title">
+					<h5 class="sec-page-tit  ">
+						<i class="mdi mdi-bell "></i> <?php echo $tr->translate("NOTIFICATION"); ?>
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row notification-blog">
+	<div id="listRecord" class="col s12 pad-0">
+		<?php 
+		
+		if(!empty($this->rs)) foreach($this->rs as $rs){ 
+		
+			$year = date("Y",strtotime($rs['recordDate'])); 
+			$day = date("d",strtotime($rs['recordDate'])); 
+			$month = date("M",strtotime($rs['recordDate'])); 
+			$monthKey = date("m",strtotime($rs['recordDate'])); 
+			
+			$timeLabel="";
+			if(date("H:i:s",strtotime($rs['recordDate']))!="00:00:00"){
+				$timeLabel = " | ".date("H:i:s",strtotime($rs['recordDate'])); 
+			}
+			$rank = empty($rs['rank'])?0:$rs['rank']; 
+			$totalScore = empty($rs['totalScore'])?0:$rs['totalScore']; 
+			$totalAvg = empty($rs['totalAvg'])?0:$rs['totalAvg']; 
+			
+			if($currentlang==1){
+				$rank = $dbGb->getNumberInkhmer($rank);
+				$totalAvg = $dbGb->getNumberInkhmer($totalAvg);
+				$totalScore = $dbGb->getNumberInkhmer($totalScore);
+				
+				$timeLabel = $dbGb->getNumberInkhmer($timeLabel);
+				$year = $dbGb->getNumberInkhmer($year);
+				$day = $dbGb->getNumberInkhmer($day);
+				$month = $dbGb->getMonthInkhmer($monthKey);
+				
+			}
+			$class="";
+			if($rs['recordIsread']==0){
+				$class="unread";
+			}
+		?>
+		<div class="card sticky-action notification-item <?php echo $class; ?>">
+			<?php if($rs['recordType']=="payment"){ ?>
+			<div class="card-content">
+				<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
+				<span class="card-title "><?php echo $tr->translate("SCHOOL_PAYMENT"); ?> <?php echo $rs['recordTitle']; ?></span>
+				<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
+				<p><strong>$ <?php echo number_format($rs['paid_amount'],2); ?></strong> <?php echo $tr->translate("PMT_METHOD"); ?> <strong><?php echo $rs['paymentMethod']; ?></strong></p>
+				<p class="activator"><?php echo $tr->translate("MORE_DETAIL"); ?></p>
+			</div>
+			<div class="card-reveal">
+				<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
+				<span class="card-title "><?php echo $tr->translate("SCHOOL_PAYMENT"); ?> <?php echo $rs['recordTitle']; ?> <i class="mdi mdi-close right"></i></span>
+				<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
+				<p><strong>$ <?php echo number_format($rs['paid_amount'],2); ?></strong> <?php echo $tr->translate("PMT_METHOD"); ?> <strong><?php echo $rs['paymentMethod']; ?></strong></p>
+				<p><?php echo $tr->translate("CLASS_NAME"); ?> <strong><?php echo $rs['groupCode']; ?></strong> <?php echo $tr->translate("CASHIER"); ?> <strong><?php echo $rs['userName']; ?></strong></p>
+				
+			</div>
+			<?php }else if($rs['recordType']=="studyScore"){ ?>
+				<div class="card-content">
+					<i class="mdi mdi-trophy circle green darken-2"></i>
+					<span class="card-title "><?php echo $tr->translate("STUDY_RESULT"); ?> <?php echo $rs['recordTitle']; ?></span>
+					<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
+					<p><?php echo $tr->translate("RANKING"); ?> <strong><?php echo $rank; ?></strong> <?php echo $tr->translate("CLASS_NAME"); ?> <strong><?php echo $rs['groupCode']; ?></strong></p>
+					<p class="activator"><?php echo $tr->translate("MORE_DETAIL"); ?></p>
+				</div>
+				
+				<div class="card-reveal">
+					<i class="mdi mdi-trophy circle green darken-2"></i>
+					<span class="card-title "><?php echo $tr->translate("STUDY_RESULT"); ?> <?php echo $rs['recordTitle']; ?> <i class="mdi mdi-close right"></i></span>
+					<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
+					<p><?php echo $tr->translate("RANKING"); ?> <strong><?php echo $rank; ?></strong> <?php echo $tr->translate("CLASS_NAME"); ?> <strong><?php echo $rs['groupCode']; ?></strong></p>
+					<p><?php echo $tr->translate("TOTAL_SCORE"); ?><strong><?php echo $totalScore; ?></strong> <?php echo $tr->translate("AVERAGE"); ?> <strong><?php echo $totalAvg; ?></strong></p>
+					
+				</div>
+			<?php } ?>
+		</div>
+		<?php } ?>
+		
+    </div>
+</div>
+	<?php if(count($this->rs)<$this->allRow){ ?>
+			<div class="row mrg-0">
+				<div class="col s12 center " >
+					<p id="totalRecord" class="total-record dark-text"><?php echo $countNews."/".$this->allRow; ?></p>
+					<h3 class="title-empty recordMessage dark-text"><?php echo $tr->translate("SCROLL_FOR_MORE_DATA"); ?></h3>
+				</div>
+			</div>
+			<div class="row mrg-0">
+				<div class="col s12 center valign-wrapper" style="height: 100px;">
+					<div id="preLoadRecord" class="preloader-wrapper small ">
+						<div class="spinner-layer spinner-blue">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-red">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-yellow">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+
+						<div class="spinner-layer spinner-green">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
+  
+
+<div class="spacer-xlarge"></div>
+<script type="text/javaScript">
+
+	
+<?php if(!empty($this->rs)){ if($countNews < $this->allRow){?>
+		var allRecord ='<?php echo $this->allRow; ?>';
+		
+		var trackPage = <?php echo $countNews; ?>;
+		var check = 1;
+   
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+			   if(check==1){
+				  loadContents();
+				}
+		   }
+		});
+
+		function loadContents(){
+			check=0;
+			var urlMoreRow = '<?php echo $this->baseUrl().'/utility/notification/morerecord'; ?>';
+			$("#preLoadRecord").addClass("active");
+			
+			$.ajax({
+				url:urlMoreRow,
+				type: "post",
+				data: {
+					'page':trackPage
+					
+				},
+				dataType: "json",
+				success: function(data){
+					alert(trackPage);
+					trackPage = data.trackPage;
+					
+					if(trackPage>allRecord){
+					   trackPage = allRecord;
+					   $('.recordMessage').html('');
+						
+					}else{
+						$('.recordMessage').html('<?php echo $tr->translate("SCROLL_FOR_MORE_DATA");?>');
+						setTimeout(function () {
+							check = 1;
+						}, 1000);
+					}
+					setTimeout(function () {
+						$('#totalRecord').html(trackPage+' /'+allRecord);
+						$("#listRecord").append(data.htmlRecord);
+						$("#preLoadRecord").removeClass("active");
+					}, 500);
+					
+				  
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+		}
+	<?php } ?>
+	<?php } ?>
+  
+</script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 

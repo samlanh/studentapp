@@ -54,7 +54,7 @@
 		$countingNews = $rsUnreadNews['result']['countingRecord'];    
 	}
 	
-	$arrFilter['unreadSection']="paymentUnread";
+	$arrFilter['unreadSection']="notificationUnread";
 	$rsUnreadPayment = $dbAPi->getDataByAPI($arrFilter);
 	$rsUnreadPayment = json_decode($rsUnreadPayment, true);
 	$countingPayment = 0;
@@ -64,7 +64,7 @@
 	
 	
 	$countingNewsLabel = $dbGb->getNumberInkhmer($countingNews);
-	$countingPaymentsLabel = $dbGb->getNumberInkhmer($countingPayment);
+	$countingNoficationLabel = $dbGb->getNumberInkhmer($countingPayment);
  ?>
 
 <!DOCTYPE html>
@@ -185,11 +185,11 @@
 				</a>        
 			</li>
 			<li>
-				<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
+				<a class="preloader-trigger <?php if($module=="utility" && $controller=="notification" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/notification"?>" >          
 					<i class="mdi mdi-bell"></i>
 					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
 					<?php if($countingPayment>0){?>
-					<span class="menuBadge new badge red "><?php echo $countingPaymentsLabel; ?></span>
+					<span class="menuBadge new badge red "><?php echo $countingNoficationLabel; ?></span>
 					<?php } ?>
 				</a>        
 			</li>

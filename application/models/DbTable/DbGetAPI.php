@@ -96,6 +96,9 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['unreadSection'])){
 		$actionName = $actionName."&unreadSection=".$arrFilter['unreadSection'];
 	}
+	if(!empty($arrFilter['unreadRecord'])){
+		$actionName = $actionName."&unreadRecord=".$arrFilter['unreadRecord'];
+	}
 	if(!empty($arrFilter['markAllRead'])){
 		$actionName = $actionName."&markAllRead=".$arrFilter['markAllRead'];
 	}
