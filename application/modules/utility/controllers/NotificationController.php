@@ -43,6 +43,39 @@ class Utility_NotificationController extends Zend_Controller_Action
     	}
 		
 	}
+	
+	function markasreadAction(){
+		if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+			
+			$dbGb = new Application_Model_DbTable_DbGlobal();
+			$currentlang=$dbGb->currentlang();
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$arrFilter = $_data;
+			$arrFilter['methodPost']="POST";
+			$arrFilter['actionName']="notificationRead";
+			$arrFilter['studentId']=$dbGb->getUserId();
+			
+			
+			$rsResult = $dbAPi->getDataByAPI($arrFilter);
+			$rsResult = json_decode($rsResult, true);
+			
+			if($rsResult['code']=="SUCCESS"){
+				$unreadAmountLabel = $rsResult['result'];
+				if($currentlang==1){
+					$unreadAmountLabel = $dbGb->getNumberInkhmer($rsResult['result']);
+				}
+				$array = array(
+					'unreadAmount'=>$rsResult['result']
+					,'unreadAmountLabel'=>$unreadAmountLabel
+				);
+				print_r(Zend_Json::encode($array));exit();	
+			}
+			echo 0;exit();	
+			
+    	}
+		
+	}
 }
 
 

@@ -93,24 +93,29 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 	if(!empty($arrFilter['paymentId'])){
 		$actionName = $actionName."&paymentId=".$arrFilter['paymentId'];
 	}
+	
 	if(!empty($arrFilter['unreadSection'])){
 		$actionName = $actionName."&unreadSection=".$arrFilter['unreadSection'];
 	}
 	if(!empty($arrFilter['unreadRecord'])){
 		$actionName = $actionName."&unreadRecord=".$arrFilter['unreadRecord'];
 	}
-	if(!empty($arrFilter['markAllRead'])){
-		$actionName = $actionName."&markAllRead=".$arrFilter['markAllRead'];
-	}
+	
 	$url=$systemLink."/api/index?url=".$actionName;
 
 	if(!empty($arrFilter['methodPost'])){
 		$headers = array('Content-Type: application/x-www-form-urlencoded');
 		
 		if($actionNameApi=="newsRead"){
-			$newsId = empty($arrFilter['newsId'])?"":$arrFilter['newsId'];
+			$newsId = empty($arrFilter['recordId'])?0:$arrFilter['recordId'];
+			$recordType = empty($arrFilter['recordType'])?"":$arrFilter['recordType'];
+			$studentId = empty($arrFilter['studentId'])?0:$arrFilter['studentId'];
+			$fields =('recordType='.$recordType.'&newsId='.$newsId.'&studentId='.$studentId);
+		}else if($actionNameApi=="notificationRead"){
+			$recordType = empty($arrFilter['recordType'])?"":$arrFilter['recordType'];
+			$recordId = empty($arrFilter['recordId'])?"":$arrFilter['recordId'];
 			$studentId = empty($arrFilter['studentId'])?"":$arrFilter['studentId'];
-			$fields =('newsId='.$newsId.'&studentId='.$studentId);
+			$fields =('recordType='.$recordType.'&recordId='.$recordId.'&studentId='.$studentId);
 		}else{
 			$studentCode = empty($arrFilter['account'])?"":$arrFilter['account'];
 			$password = empty($arrFilter['password'])?"":$arrFilter['password'];

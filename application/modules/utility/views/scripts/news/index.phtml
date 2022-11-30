@@ -12,26 +12,28 @@
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgWhite-for-list "></div>
-<div class="bgBody-listview gradientBluePrimary">
+<div class="bgBody-notification z-depth-1">
 	<div class="container">
-		<div class="section">
+		<div class="section ">
 			<div class="row">
-				<div class="col s12 pad-0 blog-page-title">
-					<div class="page-icon">
-						<i class="mdi mdi-library-books "></i>
-					</div>
+				<div class="col s12 pad-0 top-bar-title">
 					<h5 class="sec-page-tit  ">
-						<?php echo $tr->translate("NEWS"); ?>
+						<i class="mdi mdi-library-books "></i> <?php echo $tr->translate("NEWS"); ?>
 					</h5>
+					<small class="mark-all-read " onclick="markAsRead('markAllRead');" >
+						<?php echo $tr->translate("MARK_ALL_AS_READ"); ?>
+					</small>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 <div class="container">
     <div class="section">
 		<div id="listRecord" class="row ui-mediabox blogs    ">
-			<?php if(!empty($this->rs)){ foreach($this->rs AS $row){
+			<?php if(!empty($this->rs)){ foreach($this->rs AS $key => $row){
 				 
 				$strDescription = mb_substr(strip_tags($row['description']), 0, 150, "UTF-8");
 				 
@@ -59,7 +61,7 @@
 				}
 							
 				?>	
-			<div class="col s12 <?php echo $class; ?>">
+			<div class="col s12 news-item record-<?php echo $row['id']; ?> <?php echo $class; ?>">
 				<div class="blog-img-wrap">
 					<a class="img-wrap" href="<?php echo $images; ?>" data-fancybox="images" data-caption="<?php echo $row['title']; ?>">
 					<img class="z-depth-1" style="width: 100%;" src="<?php echo $images; ?>">
@@ -72,6 +74,12 @@
 					<span class="small date"><i class="mdi mdi-calendar-clock "></i> <?php echo $days." ".$monthAtt." ".$yearAtt?></span>
 					                              
 					<p class="bot-0 text"><?php echo $strDescription;   ?>...</p>
+					<?php if($row['isRead']==0){ ?> 
+					<small class="mark-as-read" onclick="markAsRead('','<?php echo $row['id'];?>');" >
+					<i class="mdi mdi-email-open "></i> <?php echo $tr->translate("MARK_AS_READ"); ?>
+					</small>
+					 <?php } ?> 
+			
 					<div class="spacer"></div>
 					<div class="divider"></div>
 					<div class="spacer"></div>
@@ -224,4 +232,41 @@
 		}
 	<?php } ?>
 	<?php } ?>
+	
+	function markAsRead(recordType=null,recordId=null){
+		if(recordType =="markAllRead"){
+			$('.preloader-background').css("display","flex");
+		}
+		var urlMarkAsRead = '<?php echo $this->baseUrl().'/utility/news/markasread'; ?>';
+		$.ajax({
+			url:urlMarkAsRead,
+			type: "post",
+			data: {
+				'recordType':recordType
+				,'recordId':recordId
+				
+			},
+			dataType: "json",
+			success: function(data){
+				if(recordType !="markAllRead"){
+					$(".record-"+recordId).removeClass("unread");
+				}else{
+					$(".news-item").removeClass("unread");
+				}
+				if(data.unreadAmount<=0){
+					$(".menuBadgeNews").css("display", "none");
+				}else{
+					$(".menuBadgeNews").html(data.unreadAmountLabel);
+				}
+				setTimeout(function () {
+					$('.preloader-background').delay(10).fadeOut('slow');
+				}, 500);
+				
+			},
+			error: function(err) {
+				alert(err);
+			}
+		});
+
+	}
 </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 

@@ -75,7 +75,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     	return $num;
     }
 	function limitListView(){
-		$limited = 5;
+		$limited = 2;
 		return $limited;
 	}
 	function systemLink(){
@@ -230,7 +230,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
 		
 		if(!empty($rs)){ 
-			foreach($rs AS $row){
+			foreach($rs AS $key => $row){
 				
 				$strDescription = mb_substr(strip_tags($row['description']), 0, 150, "UTF-8");
 				 
@@ -257,7 +257,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					$class="";
 				}
 				$string.='
-					<div class="col s12 '.$class.'">
+					<div class="col s12 news-item record-'.$row['id'].' '.$class.'">
 						<div class="blog-img-wrap">
 							<a class="img-wrap" href="'.$images.'" data-fancybox="images" data-caption="'.$row['title'].'">
 							<img class="z-depth-1" style="width: 100%;" src="'.$images.'">
@@ -270,13 +270,23 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 							<span class="small date"><i class="mdi mdi-calendar-clock "></i> '.$days." ".$monthAtt." ".$yearAtt.'</span>
 														  
 							<p class="bot-0 text">'.$strDescription.'...</p>
+							
+				
+				';
+				
+				if($row['isRead']==0){ 
+					$string.='<small class="mark-as-read" onclick="markAsRead('."''".','."'".$row['id']."'".');" >
+					<i class="mdi mdi-email-open "></i> '.$tr->translate("MARK_AS_READ").'
+					</small>';
+				}
+				$string.='
 							<div class="spacer"></div>
 							<div class="divider"></div>
 							<div class="spacer"></div>
 						</div>
 					</div>
-				
 				';
+					 
 			}
 		}
 		
@@ -342,7 +352,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
 		
 		if(!empty($rs)){ 
-			foreach($rs AS $rs){
+			foreach($rs AS $key => $rs){
 				
 				$year = date("Y",strtotime($rs['recordDate'])); 
 				$day = date("d",strtotime($rs['recordDate'])); 
@@ -368,10 +378,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					
 				}
 				$class="";
+				$function="";
 				if($rs['recordIsread']==0){
 					$class="unread";
+					$function='onclick="markAsRead('."'".$rs['recordType']."'".','."'".$rs['id']."'".');"';
 				}
-				$string.='<div class="card sticky-action notification-item '.$class.'">';
+				$string.='<div class="card sticky-action notification-item record-'.$rs['recordType'].$rs['id'].' '.$class.'">';
 				if($rs['recordType']=="payment"){
 					$string.='
 					<div class="card-content">
@@ -379,7 +391,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 						<span class="card-title ">'.$tr->translate("SCHOOL_PAYMENT").' '.$rs['recordTitle'].' </span>
 						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
 						<p><strong>$ '.number_format($rs['paid_amount'],2).'</strong> '.$tr->translate("PMT_METHOD").' <strong>'.$rs['paymentMethod'].'</strong></p>
-						<p class="activator">'.$tr->translate("MORE_DETAIL").'</p>
+						<p class="activator" '.$function.'>'.$tr->translate("MORE_DETAIL").'</p>
 					</div>
 					<div class="card-reveal">
 						<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
@@ -397,7 +409,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 						<span class="card-title ">'.$tr->translate("STUDY_RESULT").' '.$rs['recordTitle'].'</span>
 						<small><i class="mdi mdi-calendar-text "></i> '.$day."-".$month."-".$year.' '.$timeLabel.'</small> 
 						<p>'.$tr->translate("RANKING").' <strong>'.$rank.'</strong> '.$tr->translate("CLASS_NAME").' <strong>'.$rs['groupCode'].'</strong></p>
-						<p class="activator">'.$tr->translate("MORE_DETAIL").'</p>
+						<p class="activator" '.$function.'>'.$tr->translate("MORE_DETAIL").'</p>
 					</div>
 					
 					<div class="card-reveal">

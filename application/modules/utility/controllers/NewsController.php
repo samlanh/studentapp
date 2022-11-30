@@ -27,7 +27,6 @@ class Utility_NewsController extends Zend_Controller_Action
 		$rs = $dbGb->getNewsEvents($arrFilter);
 		$this->view->rs  =$rs;    
 		
-		
     }
 	
 	public function detailAction()
@@ -44,7 +43,7 @@ class Utility_NewsController extends Zend_Controller_Action
 		$dbAPi = new Application_Model_DbTable_DbGetAPI();
 		$data['actionName']="newsRead";
 		$data['methodPost']="POST";
-		$data['newsId']=$id;
+		$data['recordId']=$id;
 		$data['studentId']=$userId;
 					
 		$rs = $dbAPi->getDataByAPI($data);
@@ -59,6 +58,39 @@ class Utility_NewsController extends Zend_Controller_Action
 			
 			$record = $db->moreNewsEvents($_data);
 			print_r(Zend_Json::encode($record));exit();	
+			
+    	}
+		
+	}
+	
+	function markasreadAction(){
+		if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+			
+			$dbGb = new Application_Model_DbTable_DbGlobal();
+			$currentlang=$dbGb->currentlang();
+			$dbAPi = new Application_Model_DbTable_DbGetAPI();
+			$arrFilter = $_data;
+			$arrFilter['methodPost']="POST";
+			$arrFilter['actionName']="newsRead";
+			$arrFilter['studentId']=$dbGb->getUserId();
+			
+			
+			$rsResult = $dbAPi->getDataByAPI($arrFilter);
+			$rsResult = json_decode($rsResult, true);
+			
+			if($rsResult['code']=="SUCCESS"){
+				$unreadAmountLabel = $rsResult['result'];
+				if($currentlang==1){
+					$unreadAmountLabel = $dbGb->getNumberInkhmer($rsResult['result']);
+				}
+				$array = array(
+					'unreadAmount'=>$rsResult['result']
+					,'unreadAmountLabel'=>$unreadAmountLabel
+				);
+				print_r(Zend_Json::encode($array));exit();	
+			}
+			echo 0;exit();	
 			
     	}
 		

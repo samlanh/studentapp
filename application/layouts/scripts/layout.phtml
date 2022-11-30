@@ -62,9 +62,12 @@
 		$countingPayment = $rsUnreadPayment['result']['countingRecord'];    
 	}
 	
-	
-	$countingNewsLabel = $dbGb->getNumberInkhmer($countingNews);
-	$countingNoficationLabel = $dbGb->getNumberInkhmer($countingPayment);
+	$countingNewsLabel = $countingNews;
+	$countingNoficationLabel = $countingPayment;
+	if($currentLang==1){
+		$countingNewsLabel = $dbGb->getNumberInkhmer($countingNews);
+		$countingNoficationLabel = $dbGb->getNumberInkhmer($countingPayment);
+	}
  ?>
 
 <!DOCTYPE html>
@@ -180,7 +183,7 @@
 					<i class="mdi mdi-newspaper"></i>
 					<span><?php echo $tr->translate("NEWS"); ?></span>
 					<?php if($countingNews>0){?>
-					<span class="menuBadge new badge red "><?php echo $countingNewsLabel; ?></span>
+					<span class="menuBadgeNews menuBadge new badge red "><?php echo $countingNewsLabel; ?></span>
 					<?php } ?>
 				</a>        
 			</li>
@@ -189,7 +192,7 @@
 					<i class="mdi mdi-bell"></i>
 					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
 					<?php if($countingPayment>0){?>
-					<span class="menuBadge new badge red "><?php echo $countingNoficationLabel; ?></span>
+					<span class="menuBadgeNotif menuBadge new badge red "><?php echo $countingNoficationLabel; ?></span>
 					<?php } ?>
 				</a>        
 			</li>

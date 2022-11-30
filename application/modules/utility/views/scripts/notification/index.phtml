@@ -1,6 +1,6 @@
  <?php
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle($tr->translate("NOTIFICATION").$this->allRow);
+	$this->headTitle($tr->translate("NOTIFICATION"));
 	echo $this->headTitle();
 	
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
@@ -12,14 +12,17 @@
 ?>
 <div class="bgBodyhome"></div>	
 <div class="bgWhite-for-list "></div>
-<div class="bgBody-notification ">
+<div class="bgBody-notification z-depth-1">
 	<div class="container">
-		<div class="section z-depth-1">
+		<div class="section ">
 			<div class="row">
 				<div class="col s12 pad-0 top-bar-title">
 					<h5 class="sec-page-tit  ">
 						<i class="mdi mdi-bell "></i> <?php echo $tr->translate("NOTIFICATION"); ?>
 					</h5>
+					<small class="mark-all-read " onclick="markAsRead('markAllRead');" >
+						<?php echo $tr->translate("MARK_ALL_AS_READ"); ?>
+					</small>
 				</div>
 			</div>
 		</div>
@@ -30,7 +33,7 @@
 	<div id="listRecord" class="col s12 pad-0">
 		<?php 
 		
-		if(!empty($this->rs)) foreach($this->rs as $rs){ 
+		if(!empty($this->rs)) foreach($this->rs as $key => $rs){ 
 		
 			$year = date("Y",strtotime($rs['recordDate'])); 
 			$day = date("d",strtotime($rs['recordDate'])); 
@@ -61,14 +64,14 @@
 				$class="unread";
 			}
 		?>
-		<div class="card sticky-action notification-item <?php echo $class; ?>">
+		<div class="card sticky-action notification-item record-<?php echo $rs['recordType'].$rs['id']; ?> <?php echo $class; ?>">
 			<?php if($rs['recordType']=="payment"){ ?>
 			<div class="card-content">
 				<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
 				<span class="card-title "><?php echo $tr->translate("SCHOOL_PAYMENT"); ?> <?php echo $rs['recordTitle']; ?></span>
 				<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
 				<p><strong>$ <?php echo number_format($rs['paid_amount'],2); ?></strong> <?php echo $tr->translate("PMT_METHOD"); ?> <strong><?php echo $rs['paymentMethod']; ?></strong></p>
-				<p class="activator"><?php echo $tr->translate("MORE_DETAIL"); ?></p>
+				<p class="activator" <?php if($rs['recordIsread']==0){ ?> onclick="markAsRead('<?php echo $rs['recordType'];?>','<?php echo $rs['id'];?>');" <?php } ?>  ><?php echo $tr->translate("MORE_DETAIL"); ?></p>
 			</div>
 			<div class="card-reveal">
 				<i class="mdi mdi-cash-multiple circle cyan darken-2"></i>
@@ -84,7 +87,7 @@
 					<span class="card-title "><?php echo $tr->translate("STUDY_RESULT"); ?> <?php echo $rs['recordTitle']; ?></span>
 					<small><i class="mdi mdi-calendar-text "></i> <?php echo $day."-".$month."-".$year; ?> <?php echo $timeLabel; ?></small> 
 					<p><?php echo $tr->translate("RANKING"); ?> <strong><?php echo $rank; ?></strong> <?php echo $tr->translate("CLASS_NAME"); ?> <strong><?php echo $rs['groupCode']; ?></strong></p>
-					<p class="activator"><?php echo $tr->translate("MORE_DETAIL"); ?></p>
+					<p class="activator" <?php if($rs['recordIsread']==0){ ?> onclick="markAsRead('<?php echo $rs['recordType'];?>','<?php echo $rs['id'];?>');" <?php } ?> ><?php echo $tr->translate("MORE_DETAIL"); ?></p>
 				</div>
 				
 				<div class="card-reveal">
@@ -196,7 +199,6 @@
 				},
 				dataType: "json",
 				success: function(data){
-					alert(trackPage);
 					trackPage = data.trackPage;
 					
 					if(trackPage>allRecord){
@@ -224,7 +226,44 @@
 			});
 
 		}
+		
 	<?php } ?>
 	<?php } ?>
-  
+  function markAsRead(recordType=null,recordId=null){
+			if(recordType =="markAllRead"){
+				$('.preloader-background').css("display","flex");
+			}
+			var urlMarkAsRead = '<?php echo $this->baseUrl().'/utility/notification/markasread'; ?>';
+			$.ajax({
+				url:urlMarkAsRead,
+				type: "post",
+				data: {
+					'recordType':recordType
+					,'recordId':recordId
+					
+				},
+				dataType: "json",
+				success: function(data){
+					
+					if(recordType !="markAllRead"){
+						$(".record-"+recordType+recordId).removeClass("unread");
+					}else{
+						$(".notification-item").removeClass("unread");
+					}
+					if(data.unreadAmount<=0){
+						$(".menuBadgeNotif").css("display", "none");
+					}else{
+						$(".menuBadgeNotif").html(data.unreadAmountLabel);
+					}
+					setTimeout(function () {
+						$('.preloader-background').delay(10).fadeOut('slow');
+					}, 500);
+					
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+
+		}
 </script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
