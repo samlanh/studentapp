@@ -1293,7 +1293,7 @@ span.menuBadge.badge:after {
 
 .bgBody-notification {
     background: #034165;
-    padding-left: 60px;
+    padding-left: 35px;
     width: 100%;
    
 }
@@ -1301,6 +1301,17 @@ span.menuBadge.badge:after {
     font-size: 20px;
     line-height: 24px;
     margin: 0;
+}
+.top-bar-title small.mark-all-read {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 5px;
+    font-weight: 600;
+	    z-index: 1000;
 }
 
 .top-bar-title h5.sec-page-tit i {
@@ -1370,4 +1381,16 @@ span.menuBadge.badge:after {
 .card.sticky-action.notification-item p.activator {
     text-align: right;
     color: #034165;
+}
+
+small.mark-as-read {
+    font-size: 12px;
+    line-height: 18px;
+    color: #034165;
+    font-weight: 600;
+}
+
+small.mark-as-read i {
+    font-size: inherit;
+    line-height: inherit;
 }
