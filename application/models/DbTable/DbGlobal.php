@@ -75,7 +75,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     	return $num;
     }
 	function limitListView(){
-		$limited = 2;
+		$limited = 5;
 		return $limited;
 	}
 	function systemLink(){
