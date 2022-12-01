@@ -842,7 +842,7 @@ p.total-record,h3.title-empty.recordMessage {
     margin: 0;
     padding: 0;
     color: #fff;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 24px;
     font-weight: normal;
 }
@@ -1286,6 +1286,23 @@ span.menuBadge.badge {
 span.menuBadge.badge:after {
     content: "";
 }
+
+
+.news-item h5.title {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.news-item span.small.date,.news-item span.small.date i {
+    font-size: 11px;
+    line-height: 18px;
+}
+
+.news-item p.text {
+    font-size: 14px;
+    line-height: 20px;
+}
+
 .unread {
     background: #bfe1ff9e;
 }
@@ -1298,20 +1315,20 @@ span.menuBadge.badge:after {
    
 }
 .top-bar-title h5.sec-page-tit {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 20px;
     margin: 0;
 }
 .top-bar-title small.mark-all-read {
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 10px;
     color: #fff;
     font-size: 12px;
     line-height: 18px;
-    padding: 5px;
+    padding: 10px 5px;
     font-weight: 600;
-	    z-index: 1000;
+    z-index: 1000;
 }
 
 .top-bar-title h5.sec-page-tit i {
@@ -1330,7 +1347,8 @@ span.menuBadge.badge:after {
 }
 .card.sticky-action.notification-item .card-content {
     position: relative;
-	    min-height: 72px;
+    min-height: 72px;
+    padding: 10px;
     padding-left: 72px;
 }
 .card.sticky-action.notification-item .card-reveal{
@@ -1362,19 +1380,20 @@ span.menuBadge.badge:after {
     margin-bottom: 5px;
 }
 .card.sticky-action.notification-item span.card-title {
-    font-size: 18px;
-    line-height: 24px;
-	    margin: 0;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0;
 }
 
-.card.sticky-action.notification-item  small {
-    font-size: 12px;
-    line-height: 18px;
+.card.sticky-action.notification-item  small,
+.card.sticky-action.notification-item small i {
+    font-size: 11px;
+    line-height: 16px;
 }
 
 .card.sticky-action.notification-item p,.card.sticky-action.notification-item strong {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 12px;
+    line-height: 18px;
     margin: 0;
     padding: 0;
 }
