@@ -1228,13 +1228,15 @@ span.page-footer-info,span.page-footer-info strong {
     width: 100%;
     min-height: 245px;
     background: #185183;
+    padding: 10px 0;
 }
 
 .ui-profile .primg img {
-    width: 200px;
-    height: 200px;
-    padding: 10px;
+    width: 180px;
+    height: 180px;
+    padding: 0;
     border-radius: 50%;
+    border: solid 5px #fff;
 }
 .ui-profile .prinfo .count.col-2 {
     width: 50% ;

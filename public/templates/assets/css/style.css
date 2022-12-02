@@ -3028,6 +3028,7 @@ body[data-menu_icons="colored"][data-menu="colored"] .sidenav li a i{
 	font-size: 20px;
 	line-height: 24px;
 	margin: 0;
+	text-shadow: 1px 1px 1px #292828;
 }
 .ui-profile .carousel-basic{
   height: 200px;
