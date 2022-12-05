@@ -35,10 +35,10 @@
 					<div class="row settings-row">
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/payment";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/score";?>">
 									<div class="icon-block ">
-										<div class="center "><i class="mdi mdi-cash-multiple "></i></div>
-										<h6 class="center "><?php echo $tr->translate("PAYMENT_HISTORY"); ?></h6>
+										<div class="center iconscore"></div>
+										<h6 class="center "><?php echo $tr->translate("STUDY_RESULT"); ?></h6>
 									</div>
 								</a>
 						  </div>
@@ -47,7 +47,7 @@
 							<div class="setting-box center">
 								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/schedule";?>">
 									<div class="icon-block ">
-										<div class="center "><i class="mdi mdi-calendar-clock "></i></div>
+										<div class="center iconschedule"></div>
 										<h6 class="center "><?php echo $tr->translate("SCHEDULE"); ?></h6>
 									</div>
 								</a>
@@ -57,7 +57,7 @@
 							<div class="setting-box center">
 								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/attendance";?>">
 									<div class="icon-block ">
-										<div class="center "><i class="mdi mdi-account-multiple-check "></i></div>
+										<div class="center iconatt"></div>
 										<h6 class="center "><?php echo $tr->translate("ATTENDENCE_RECORD"); ?></h6>
 									</div>
 								</a>
@@ -65,34 +65,66 @@
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/score";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/discipline";?>">
 									<div class="icon-block ">
-										<div class="center "><i class="mdi mdi-file-check "></i></div>
-										<h6 class="center "><?php echo $tr->translate("STUDY_RESULT"); ?></h6>
+										<div class="center icondiscipline"></div>
+										<h6 class="center "><?php echo $tr->translate("DISCIPLINE"); ?></h6>
 									</div>
 								</a>
 						  </div>
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
-								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/evaluation";?>">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/payment";?>">
+									<div class="icon-block ">
+										<div class="center iconpayment"></div>
+										<h6 class="center "><?php echo $tr->translate("PAYMENT_HISTORY"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/course";?>">
 								<div class="icon-block ">
-									<div class="center "><i class="mdi mdi-medal "></i></div>
-									<h6 class="center "><?php echo $tr->translate("EVALUATION"); ?></h6>
+									<div class="center iconcourse"></div>
+									<h6 class="center "><?php echo $tr->translate("PROGRAM"); ?></h6>
 								</div>
 							  </a>
+						  </div>
+						</div>
+						
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/section/discipline";?>">
+									<div class="icon-block ">
+										<div class="center iconcalendar"></div>
+										<h6 class="center "><?php echo $tr->translate("CALENDAR"); ?></h6>
+									</div>
+								</a>
+						  </div>
+						</div>
+						<div class="col s4">
+							<div class="setting-box center">
+								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/utility/news";?>">
+									<div class="icon-block ">
+										<div class="center iconnews"></div>
+										<h6 class="center "><?php echo $tr->translate("NEWS_EVENT"); ?></h6>
+									</div>
+								</a>
 						  </div>
 						</div>
 						<div class="col s4">
 							<div class="setting-box center">
 								<a class="waves-effect preloader-trigger" href="<?php echo $this->baseUrl()."/utility/aboutus";?>">
 								<div class="icon-block ">
-									<div class="center "><i class="mdi mdi-information-outline "></i></div>
+									<div class="center iconabout"></div>
 									<h6 class="center "><?php echo $tr->translate("ABOUTS"); ?></h6>
 								</div>
 							  </a>
 						  </div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
