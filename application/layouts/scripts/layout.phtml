@@ -147,17 +147,22 @@
 
     
     <body class=" bgBody  <?php if($module=="default"){ echo "ishome  isfullscreen  ";};?> html"  data-header="light" data-footer="dark"  data-header_align="center"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light" >
-			<div class="preloader-background">
-				<div class="preloader-wrapper">
-					<div class="preloader-text-img-blg">
-						<img class="preloader-logo-app" src="<?php echo $defaultLogo;?>" alt=""  />
-						<?php echo $tr->translate("LOADING"); ?>
-					</div>
-					<div id="preloader">
-						
-					</div>
+		<div class="preloader-background">
+			<div class="preloader-wrapper">
+				<div class="preloader-text-img-blg">
+					<img class="preloader-logo-app" src="<?php echo $defaultLogo;?>" alt=""  />
+					<?php echo $tr->translate("LOADING"); ?>
+				</div>
+				<div id="preloader">
+					
 				</div>
 			</div>
+		</div>
+		
+		<div class="desktop__section">
+			<?php echo $this->render('desktopsection.phtml');?>
+		</div>
+		<div class="mobile__section">
 		<?php 
 			if($module!="default"){
 				echo $this->render('navigation.phtml');
@@ -166,50 +171,44 @@
 	<?php 
 		echo $this->layout()->content;
 	 ?>		
-	<?php 
-			if($module!="default"){
-				
-	?>
-	<div class="footer-menu">
-		<ul>
-			<li>
-				<a class="preloader-trigger <?php if($module=="home" && $controller=="index" && $action=="index"){ echo "active";} ?> " href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
-					<i class="mdi mdi-home-outline"></i>
-					<span><?php echo $tr->translate("HOME"); ?></span>
-				</a>        
-			</li>
-			<li>
-				<a class="preloader-trigger <?php if($module=="utility" && $controller=="news" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
-					<i class="mdi mdi-newspaper"></i>
-					<span><?php echo $tr->translate("NEWS"); ?></span>
-					<?php if($countingNews>0){?>
-					<span class="menuBadgeNews menuBadge new badge red "><?php echo $countingNewsLabel; ?></span>
-					<?php } ?>
-				</a>        
-			</li>
-			<li>
-				<a class="preloader-trigger <?php if($module=="utility" && $controller=="notification" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/notification"?>" >          
-					<i class="mdi mdi-bell"></i>
-					<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
-					<?php if($countingPayment>0){?>
-					<span class="menuBadgeNotif menuBadge new badge red "><?php echo $countingNoficationLabel; ?></span>
-					<?php } ?>
-				</a>        
-			</li>
-			<li>
-				<a data-target="slide-nav" href="#" class="sidenav-trigger">          
-					<i class="mdi mdi-menu"></i>
-					<span><?php echo $tr->translate("MORE"); ?></span>
-				</a>        
-			</li>
-      </ul>
-    </div>
-<?php 
-			}
-				
-	?>
+		<?php if($module!="default"){ ?>
+			<div class="footer-menu">
+				<ul>
+					<li>
+						<a class="preloader-trigger <?php if($module=="home" && $controller=="index" && $action=="index"){ echo "active";} ?> " href="<?php echo $this->baseUrl()."/home/index"?>" class=' <?php if($module=="home" AND $controller=="index" AND $action=="index"){ echo "active";} ?>'>          
+							<i class="mdi mdi-home-outline"></i>
+							<span><?php echo $tr->translate("HOME"); ?></span>
+						</a>        
+					</li>
+					<li>
+						<a class="preloader-trigger <?php if($module=="utility" && $controller=="news" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/news"?>" >          
+							<i class="mdi mdi-newspaper"></i>
+							<span><?php echo $tr->translate("NEWS"); ?></span>
+							<?php if($countingNews>0){?>
+							<span class="menuBadgeNews menuBadge new badge red "><?php echo $countingNewsLabel; ?></span>
+							<?php } ?>
+						</a>        
+					</li>
+					<li>
+						<a class="preloader-trigger <?php if($module=="utility" && $controller=="notification" && $action=="index"){ echo "active";} ?>" href="<?php echo $this->baseUrl()."/utility/notification"?>" >          
+							<i class="mdi mdi-bell"></i>
+							<span><?php echo $tr->translate("NOTIFICATION"); ?></span>
+							<?php if($countingPayment>0){?>
+							<span class="menuBadgeNotif menuBadge new badge red "><?php echo $countingNoficationLabel; ?></span>
+							<?php } ?>
+						</a>        
+					</li>
+					<li>
+						<a data-target="slide-nav" href="#" class="sidenav-trigger">          
+							<i class="mdi mdi-menu"></i>
+							<span><?php echo $tr->translate("MORE"); ?></span>
+						</a>        
+					</li>
+				</ul>
+			</div>
+		<?php } ?>
 
-
+		</div>
 		<!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
 
 		
@@ -232,32 +231,7 @@
 					}
 				});
 			}
-			<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
-			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
-			$(document).ready(function(){
-
-			 <!-- $(".carousel-fullscreen.carousel-slider").carousel({--> 
-				<!--fullWidth: true,--> 
-				<!--indicators: true,--> 
-			  <!--}).css("height", $(window).height());--> 
-			  
-			  
-			  $(".carousel-fullscreen.carousel-slider").carousel({
-					fullWidth: true,
-					indicators: false,
-					
-				}).css("height", 300);
-		
 			
-			  setTimeout(autoplay, 3500);
-			  function autoplay() {
-				  $(".carousel-fullscreen.carousel-slider").carousel("next");
-				  setTimeout(autoplay, 3500);
-			  }
-
-			});   
-		  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
-		  <?php } ?>
 		  <?php if($module=="home" AND $controller=="index" AND $action=="index"){ ?>
 			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
 			 $(".slider3").slider({
@@ -283,6 +257,29 @@
 
 
 		<script type="text/javascript">
+			$(document).ready(function(){
+			<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
+			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
+			
+			  $(".carousel-fullscreen.carousel-slider").carousel({
+					fullWidth: true,
+					indicators: false,
+					
+				}).css("height", 300);
+		
+			
+			  setTimeout(autoplay, 3500);
+			  function autoplay() {
+				  $(".carousel-fullscreen.carousel-slider").carousel("next");
+				  setTimeout(autoplay, 3500);
+			  }
+
+			 
+		  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+		  <?php } ?>
+		   
+			  
+		  });  
 			document.addEventListener("DOMContentLoaded", function(){
 				$('.preloader-background').delay(10).fadeOut('slow');
 			});

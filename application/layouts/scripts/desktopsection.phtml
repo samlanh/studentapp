@@ -1,0 +1,253 @@
+<?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage(1);
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	
+	$key = new Application_Model_DbTable_DbKeycode();
+	$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	
+	$currentLang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	$allLang  =$dbGb->getAllLanguage();
+	
+	$clientTitle= $tr->translate("CUSTOMER_BRANCH");
+	if(!empty($dataInfo['schooolNameKh'])){
+		$clientTitle= $dataInfo['schooolNameKh'];
+	}
+	$clientTitleEn="";
+	if(!empty($dataInfo['schooolNameEng'])){
+		$clientTitleEn= $dataInfo['schooolNameEng'];
+	}
+	$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+	if(!empty($dataInfo['logo'])){
+		$logo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		if ($dbGb->does_url_exists($logo)){ 
+			$defaultLogo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		}
+	}
+	
+	$mockupAppImage = $this->baseUrl()."/images/mobile-mockup.png";
+	if(!empty($dataInfo['mockupAppImage'])){
+		$rsImage = $systemLink.'/images/slide/app-utility/'.$dataInfo['mockupAppImage'];
+		if ($dbGb->does_url_exists($rsImage)){ 
+			$mockupAppImage = $systemLink.'/images/slide/app-utility/'.$dataInfo['mockupAppImage'];
+		}
+	}
+	$qrCodeAppImg = $this->baseUrl()."/images/qr-code.png";
+	if(!empty($dataInfo['qrcodeAppLink'])){
+		$rsImage = $systemLink.'/images/slide/app-utility/'.$dataInfo['qrcodeAppLink'];
+		if ($dbGb->does_url_exists($rsImage)){ 
+			$qrCodeApp = $systemLink.'/images/slide/app-utility/'.$dataInfo['qrcodeAppLink'];
+		}
+	}
+	
+$dbAPi = new Application_Model_DbTable_DbGetAPI();	
+$arrFilter = array();	
+
+$slideRs = array();	
+$contact = array();	
+$aboutUsRs = array();	
+
+$arrFilter['actionName']="slieshow";
+$rsSlide = $dbAPi->getDataByAPI($arrFilter);
+$rsSlide = json_decode($rsSlide, true);
+if($rsSlide['code']=="SUCCESS"){
+	$slideRs  =$rsSlide['result'];
+}
+
+$arrFilter['actionName']="contactus";
+$arrFilter['isForHome']=1;
+$rsContactus = $dbAPi->getDataByAPI($arrFilter);
+$rsContactus = json_decode($rsContactus, true);
+if($rsContactus['code']=="SUCCESS"){
+	
+	$aboutUsRs  =$rsContactus['result']['about'];    
+	$contact  =$rsContactus['result']['contact'];  
+}
+
+$contact['latitude'] = empty($contact['latitude'])?"11.594111046749918":$contact['latitude'];
+$contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact['latitude'];
+
+?>
+<div class="bgWhite-for-list "></div>
+<!-- START navigation -->
+<nav class=" preLogin topbar navigation" role="navigation">
+    <div class=" nav-wrapper container">
+    
+	 
+
+	  <!-- Modal Structure -->
+      <div id="modalLanguage" class="modal bottom-sheet white dark-text">
+        <div class="modal-content">
+          <h4 class="text-center"><?php echo $tr->translate("CHOOSE_LANGUAGE"); ?></h4>
+			<div class="row ">
+                <div class="col s1 pad-0">
+				</div>
+                <div class="col s10 pad-0">
+				  <div class="collection langList">
+				   <?php 
+					$imgLangeCurrent ="";
+					if(!empty($allLang)) foreach($allLang AS $lang){ 
+						if(!empty($lang['iconImage'])){
+							$imgLange = $systemLink.'/images/'.$lang['iconImage'];
+							if ($dbGb->does_url_exists($imgLange)){ 
+								$imgLange = $systemLink.'/images/'.$lang['iconImage'];
+								$iconCurrent="";
+								$current="";
+								if($currentLang==$lang['id']){
+									$imgLangeCurrent = $imgLange;
+									$iconCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
+									$current="";
+								}
+					  ?>
+					  <a onClick="changeLange(<?php echo $lang['id'];?>)" class="collection-item <?php echo $current;?>">
+						<img class="languageImage" src="<?php echo $imgLange;?>" alt=""  />
+						<?php echo $lang['title']." ".$iconCurrent; ?>
+						</a>
+					<?php }
+				} ?>
+		  <?php } ?>
+					
+					
+				  </div>
+				</div>
+				<div class="col s1 pad-0">
+				</div>
+			</div>
+        </div>
+      </div>
+      <a href="#modalLanguage" class="languageSwitch waves-effect waves-circle navicon right modal-trigger show-on-large pulse">
+		<?php ?>
+		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
+	  </a>
+
+      
+	  
+    </div>
+</nav>
+
+<div class="body-info">
+	<div class="container">
+		<div class="section">
+		
+		 
+			<div class="row">
+				<div class="col s12 ">
+					<div class="image-info-blog center">
+						<img class="introduction-logo" src="<?php echo $defaultLogo;?>" alt=""  />
+						<h2 class=" white-text"><?php echo $clientTitle; ?></h2>
+						<h6 class=" white-text"><?php echo $clientTitleEn; ?></h6>
+					</div>
+				</div>
+			</div>
+		  <!--   Icon Section   -->
+		  <div class="row">
+			<div class="col s8 ">
+				<div class="image-info-blog">
+					<img class="image-introduction" src="<?php echo $mockupAppImage; ?>" />
+				</div>
+			</div>
+			
+			<div class="col s4 ">
+				<div class="icon-block">
+					<h2 class="center white-text"><?php echo $tr->translate("DESKTOP_EXPORE_TITLE"); ?></h2>
+					<p class="center white-text"><?php echo $tr->translate("DESKTOP_EXPORE_DESC"); ?></p>
+					<div class="qr-blog">
+						<img class="qrAdress" src="<?php echo $qrCodeAppImg; ?>" />
+					</div>
+				</div>
+			</div>
+
+			
+
+			
+		  </div>
+		<div class="spacer"></div>
+	</div>
+</div>
+</div>
+<footer class="page-footer">
+    <div class="container footer-content">
+      <div class="row">
+		<div class="col s6 ">
+			<ul class="social-wrap">
+            <li class="social">
+			<?php if(!empty($contact['facebook'])){?>
+              <a class="facebook" href="<?PHP  echo $contact['facebook']; ?>"><i class="mdi mdi-facebook"></i></a>
+			<?php } ?>
+			<?php if(!empty($contact['other_social'])){?>
+              <a class="messenger" href="<?PHP  echo $contact['other_social']; ?>"><i class="mdi mdi-facebook-messenger"></i></a>
+			<?php } ?>
+			<?php if(!empty($contact['youtube'])){?>
+              <a class="youtube" href="<?PHP  echo $contact['youtube']; ?>"><i class="mdi mdi-youtube"></i></a>
+			<?php } ?>
+			
+			<?php if(!empty($contact['instagram'])){?>
+              <a class="telegram" href="<?PHP  echo $contact['instagram']; ?>"><i class="mdi mdi-telegram"></i></a>
+			<?php } ?>
+			
+            </li>
+          </ul>
+		  <p class="white-text">
+			<i class="mdi mdi-map-marker"></i> <?PHP  echo strip_tags($contact['description']); ?>
+		  </p>
+		</div>
+		<div class="col s6 ">
+			<div class="link-wrap">
+          <ul class="link-ul">
+            <li><a class="white-text" href="tel:<?PHP  echo $contact['phone']; ?>"><i class="mdi mdi-phone white-text"></i> <?PHP  echo $contact['phone']; ?></a></li>
+            <li><a class="white-text" href="mailto:<?PHP  echo $contact['email']; ?>"><i class="mdi mdi-email white-text"></i> <?PHP  echo $contact['email']; ?></a></li>
+            <li><a class="white-text" target="_blank" href="<?PHP  echo $contact['website']; ?>"><i class="mdi mdi-web white-text"></i> <?PHP  echo $contact['website']; ?></a></li>
+           </ul>
+            
+        </div>
+		</div>
+        
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container white-text">
+      &copy; <?php echo $tr->translate("Developed By"); ?> <a class="white-text" href="http://www.cam-app.com/"><?php echo $tr->translate("CAMAPP_TECHNOLOGY"); ?></a>
+      </div>
+    </div>
+</footer>
+
+ <!-- Modal Structure -->
+  <div id="modalHowtoUser" class="modal white dark-text">
+	<div class="modal-content">
+	  <h5 class="center bot-20 sec-tit sectionTitle"><?php echo $tr->translate("HOW_TO_USE"); ?></h5>
+		<div class="row ">
+			<?php $video_id = $this->introductionHome['lbl_howtouse']['title']; ?>
+			<div class="col s12 pad-0">
+				<div class="youTubeBlog" >
+					<iframe src="http://www.youtube.com/embed/<?php echo $video_id;?>?rel=0&amp;autoplay=1&mute=1&loop=1" frameborder="0" style="position:absolute;width:100%;height:100%;left:0"  allowfullscreen></iframe>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+  </div>
+	  
+<script>
+$(".tabs").tabs();
+</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
