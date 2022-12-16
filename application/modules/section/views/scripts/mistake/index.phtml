@@ -19,19 +19,18 @@
 
 <div class="bgBody-listview gradientBlue">
 	<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 pad-0 blog-page-title">
-						<div class="page-icon">
-							<i class="mdi mdi-medal "></i>
-						</div>
-						<h5 class="sec-page-tit  ">
-							<?php echo $tr->translate("DISCIPLINE"); ?>
-						</h5>
-						<span class="sec-page-desc">
-							<?php echo $tr->translate("DISCIPLINE_PAGE_DESC"); ?>
-						</span>
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-medal "></i>
 					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("DISCIPLINE"); ?>
+					</h5>
+					<span class="sec-page-desc">
+						<?php echo $tr->translate("DISCIPLINE_PAGE_DESC"); ?>
+					</span>
 				</div>
 			</div>
 		</div>
@@ -284,6 +283,11 @@ if($currentlang==1){
 		   }
 		});
 
+		var tSmall 	='<?php echo $tSmall;?>'; 
+		var tMedium 	='<?php echo $tMedium;?>';
+		var tBig 		='<?php echo $tBig;?>'; 
+		var tOther 	='<?php echo $tOther;?>';
+
 		function loadContents(){
 			check=0;
 			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord/'.$querystring; ?>';
@@ -294,11 +298,22 @@ if($currentlang==1){
 				data: {
 					'page':trackPage
 					
+					,'tSmall':tSmall
+					,'tMedium':tMedium
+					,'tBig':tBig
+					,'tOther':tOther
+					
 				},
 				dataType: "json",
 				success: function(data){
 					
 					trackPage = data.trackPage;
+					
+					tSmall 		= data.tSmall;
+					tMedium 	= data.tMedium;
+					tBig 		= data.tBig;
+					tOther 		= data.tOther;
+					
 					if(trackPage>allRecord){
 					   trackPage = allRecord;
 					   $('.recordMessage').html('');
@@ -312,6 +327,7 @@ if($currentlang==1){
 					setTimeout(function () {
 						$('#totalRecord').html(trackPage+' /'+allRecord);
 						$("#listRecord").append(data.htmlRecord);
+						$(".total-page-footer").html(data.totalPageHtml);
 						$("#preLoadRecord").removeClass("active");
 					}, 500);
 					

@@ -20,24 +20,24 @@
 
 <div class="bgBody-listview gradientBluePrimary">
 	<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 pad-0 blog-page-title">
-						<div class="page-icon">
-							<i class="mdi mdi-account-multiple-check "></i>
-						</div>
-						<h5 class="sec-page-tit  ">
-							<?php echo $tr->translate("ATTENDENCE"); ?>
-						</h5>
-						<span class="sec-page-desc">
-							<?php echo $tr->translate("ATTENDENCE_PAGE_DESC"); ?>
-						</span>
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<i class="mdi mdi-account-multiple-check "></i>
 					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("ATTENDENCE"); ?>
+					</h5>
+					<span class="sec-page-desc">
+						<?php echo $tr->translate("ATTENDENCE_PAGE_DESC"); ?>
+					</span>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <div class="main-page-list">
 	<div class="bl-attedance-list-row ">
 		<div class="spacer-medium"></div>
@@ -286,7 +286,10 @@ if($currentlang==1){
 				}
 		   }
 		});
-
+		var tAbsent = '<?php echo $tAbsent;?>';
+		var tPermission = '<?php echo $tPermission;?>';
+		var tLate = '<?php echo $tLate;?>';
+		var tEalyLeave = '<?php echo $tEalyLeave;?>';
 		function loadContents(){
 			check=0;
 			var urlMoreRow = '<?php echo $this->baseUrl().'/section/attendance/morerecord/'.$querystring; ?>';
@@ -296,16 +299,22 @@ if($currentlang==1){
 				type: "post",
 				data: {
 					'page':trackPage
-					,'tAbsent':'<?php echo $tAbsent;?>'
-					,'tPermission':'<?php echo $tPermission;?>'
-					,'tLate':'<?php echo $tLate;?>'
-					,'tEalyLeave':'<?php echo $tEalyLeave;?>'
+					,'tAbsent':tAbsent
+					,'tPermission':tPermission
+					,'tLate':tLate
+					,'tEalyLeave':tEalyLeave
 					
 				},
 				dataType: "json",
 				success: function(data){
 					
 					trackPage = data.trackPage;
+					
+					tAbsent 	= data.tAbsent;
+					tPermission = data.tPermission;
+					tLate 		= data.tLate;
+					tEalyLeave 	= data.tEalyLeave;
+					
 					if(trackPage>allRecord){
 					   trackPage = allRecord;
 					   $('.recordMessage').html('');

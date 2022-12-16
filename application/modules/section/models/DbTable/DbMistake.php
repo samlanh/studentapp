@@ -47,6 +47,12 @@
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$baseurl= Zend_Controller_Front::getInstance()->getBaseUrl();
 		
+		$tSmall 	=empty($data['tSmall'])?0:$data['tSmall'];
+		$tMedium	=empty($data['tMedium'])?0:$data['tMedium'];
+		$tLate 		=empty($data['tBig'])?0:$data['tBig'];
+		$tEalyLeave =empty($data['tOther'])?0:$data['tOther'];
+		$totalPageHtml="";
+		
 		if(!empty($row)){ 
 			foreach($row AS $attedance){
 				
@@ -58,7 +64,11 @@
 					$monthAtt = $_dbGb->getMonthInkhmer($monthKey);
 				}
 				
-				
+				$tSmall 	=$tSmall+$attedance['countSmallMistake'];
+				$tMedium	=$tMedium+$attedance['countMediumMistake'];
+				$tBig 		=$tBig+$attedance['countBigMistake'];
+				$tOther 	=$tOther+$attedance['countOtherMistake'];
+							
 				$string.='
 					<div class="row lists-view-icon-row  mrg-0">
 						<div class="col s3 blg-row-left">
@@ -96,11 +106,51 @@
 				';
 			
 			}
+			
+			$tSmallLB 		= sprintf('%02d',$tSmall);
+			$tMediumLB 	= sprintf('%02d',$tMedium);
+			$tBigLB 			= sprintf('%02d',$tBig);
+			$tOtherLB 	= sprintf('%02d',$tOther);
+			if($currentlang==1){
+				$tSmallLB 	= $_dbGb->getNumberInkhmer($tSmallLB);
+				$tMediumLB 	= $_dbGb->getNumberInkhmer($tMediumLB);
+				$tBigLB 	= $_dbGb->getNumberInkhmer($tBigLB);
+				$tOtherLB 	= $_dbGb->getNumberInkhmer($tOtherLB);
+			}
+			$totalPageHtml='
+				<div class="container">
+					<div class="row mrg-0 ">
+						<div class="col s3 text-center">
+							<span class="page-footer-info">'.$tr->translate("SMALL_MISTACK").'</span>
+							<span class="page-footer-info"><strong>'.$tSmallLB.'</strong></span>
+						</div>
+						<div class="col s3 text-center">
+							<span class="page-footer-info">'.$tr->translate("MEDIUM_MISTACK").'</span>
+							<span class="page-footer-info"><strong>'.$tMediumLB.'</strong></span>
+						</div>
+						<div class="col s3 text-center">
+							<span class="page-footer-info">'.$tr->translate("BIG_MISTACK").'</span>
+							<span class="page-footer-info"><strong>'.$tBigLB.'</strong></span>
+						</div>
+						<div class="col s3 text-center">
+							<span class="page-footer-info">'.$tr->translate("OTHER").'</span>
+							<span class="page-footer-info"><strong>'.$tOtherLB.'</strong></span>
+						</div>
+					</div>
+				</div>
+			';
 		}
 		$array = array(
 			'countitem'=>count($row),
 			'htmlRecord'=>$string,
 			'trackPage'=>$totalLimitStart,
+			
+			'totalPageHtml'=>$totalPageHtml,
+			
+			'tSmall'=>$tSmall,
+			'tMedium'=>$tMedium,
+			'tBig'=>$tBig,
+			'tOther'=>$tOther,
 			
 			);
 		return $array;

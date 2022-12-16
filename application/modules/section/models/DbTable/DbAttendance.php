@@ -164,6 +164,11 @@
 			'trackPage'=>$totalLimitStart,
 			'totalPageHtml'=>$totalPageHtml,
 			
+			'tAbsent'=>$tAbsent,
+			'tPermission'=>$tPermission,
+			'tLate'=>$tLate,
+			'tEalyLeave'=>$tEalyLeave,
+			
 			);
 		return $array;
 	}
