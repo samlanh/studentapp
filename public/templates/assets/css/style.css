@@ -1063,7 +1063,7 @@ body .noUi-target.noUi-vertical .noUi-tooltip{
   box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
 }
 .btn-large {
-    height: 38px;
+    height: 44px;
     line-height: 38px;
     font-size: 14px;
     padding: 0 14px;
@@ -2511,12 +2511,12 @@ input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=
     color: #185183;
 }
 input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label{
-    color: #0a4374;
+    color: #fff;
 }
 input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #0a4374;
-    -webkit-box-shadow: 0 1px 0 0 #0a4374;
-    box-shadow: 0 1px 0 0 #0a4374;
+	border-bottom: 2px solid #81a8f6;
+    -webkit-box-shadow: 0 2px 0 0 #81a8f6;
+    box-shadow: 0 1px 0 0 #81a8f6;
 }
 .input-field input[type=search] ~ .mdi-navigation-close, .input-field input[type=search] ~ .material-icons{
   font-size: 22px;
