@@ -116,6 +116,13 @@ class Application_Model_DbTable_DbGetAPI extends Zend_Db_Table_Abstract
 			$recordId = empty($arrFilter['recordId'])?"":$arrFilter['recordId'];
 			$studentId = empty($arrFilter['studentId'])?"":$arrFilter['studentId'];
 			$fields =('recordType='.$recordType.'&recordId='.$recordId.'&studentId='.$studentId);
+		}else if($actionNameApi=="changePassword"){
+			
+			$studentId = empty($arrFilter['studentId'])?"":$arrFilter['studentId'];
+			$currentPassword = empty($arrFilter['currentPassword'])?"":$arrFilter['currentPassword'];
+			$newPassword = empty($arrFilter['newPassword'])?"":$arrFilter['newPassword'];
+			$fields =('oldPassword='.$currentPassword.'&newPassword='.$newPassword.'&stu_id='.$studentId);
+			
 		}else{
 			$studentCode = empty($arrFilter['account'])?"":$arrFilter['account'];
 			$password = empty($arrFilter['password'])?"":$arrFilter['password'];
