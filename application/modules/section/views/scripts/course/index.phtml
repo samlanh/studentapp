@@ -1,0 +1,71 @@
+ <?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle($tr->translate("PROGRAM"));
+	echo $this->headTitle();
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$systemLink = $dbGb->systemLink();
+	$currentlang = $dbGb->currentlang();
+
+	
+?>
+<div class="bgBodyhome"></div>	
+<div class="bgWhite-for-list "></div>
+<div class="bgBody-listview gradientBluePrimary program-page-title">
+	<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s12 pad-0 blog-page-title">
+					<div class="page-icon">
+						<div class="icon-img">
+							<div class="icon-inc-img iconcourse"></div>
+						</div>
+					</div>
+					<h5 class="sec-page-tit  ">
+						<?php echo $tr->translate("PROGRAM"); ?>
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="program-page">
+<?php if(!empty($this->course)){?>
+<div class="row">
+	<div class="col s12">
+		<ul class="tabs blue-bg colored tab-course ">
+			<?php foreach($this->course AS $key => $course){?>
+			<li class="tab col s8">
+				<a href="#program<?php echo $key; ?>-8"  >
+					<?php echo $course['title']; ?>
+				</a>
+			</li>
+			<?php } ?>
+			
+		</ul>
+	</div>
+	<?php foreach($this->course AS $key => $course){?>
+		<div id="program<?php echo $key; ?>-8" class="col s12 <?php if($key==0){ echo 'active';}?>">
+			<div class="tab-content tab-content-home ">
+				<h5 class="center bot-20 sec-tit sectionTitle"><?php echo $course['title']; ?></h5>
+				<div class="text description primary-text tab-detail"><?php echo $course['description']; ?></div>
+			</div>
+		</div>
+		<?php } ?>
+</div>
+<?php } ?>
+</div>					
+<div class="spacer-xlarge"></div>
+<!-- Modal Structure -->
+<div id="modal-popup" class="modal bottom-sheet modal-popup-info">
+	<div class="modal-content content-info">
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+
+	$(".tabs").tabs();
+</script>
+
