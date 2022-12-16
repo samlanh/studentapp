@@ -9,7 +9,7 @@ $module=$request->getModuleName();
 $key = new Application_Model_DbTable_DbKeycode();
 $dataInfo=$key->getKeyCodeMiniInv(TRUE);
 
-$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+$defaultLogo = $this->baseUrl()."/images/Logo.png";
 if(!empty($dataInfo['logo'])){
 	if (file_exists(PUBLIC_PATH."/images/logo/".$dataInfo['logo'])){
 		$defaultLogo = $this->baseUrl().'/images/logo/'.$dataInfo['logo'];
@@ -113,6 +113,9 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 	$profileButton='
 	<a href="#" data-target="slide-nav" class="bgBtn waves-effect waves-circle navicon sidenav-trigger show-on-large"><i class="mdi mdi-menu"></i></a>
 	';
+}
+if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
+	$backButton="";
 }
 ?>	  
 <!-- START navigation -->
@@ -227,6 +230,15 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 				</li>
 				<li class="lvl1 ">
 					<div class="waves-effect">
+                    <div class=" waves-effect " >
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/profile/changepassword";?>">
+							<i class="mdi mdi-lock-reset"></i>
+							<span class="title"><?php echo $tr->translate("CHANGE_PASSWORD"); ?></span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+					<div class="waves-effect ">
 						<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/index/logout?value=1"?>" >
 							<i class="mdi mdi-power"></i><span class="title"><?php echo $tr->translate("LOGOUT"); ?></span>  
 						</a>
