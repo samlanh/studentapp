@@ -1,6 +1,6 @@
  <?php
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle($tr->translate("ATTENDENCE"));
+	$this->headTitle($tr->translate("ATTENDENCE_RECORD"));
 	echo $this->headTitle();
 	
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
@@ -29,7 +29,7 @@
 						</div>
 					</div>
 					<h5 class="sec-page-tit  ">
-						<?php echo $tr->translate("ATTENDENCE"); ?>
+						<?php echo $tr->translate("ATTENDENCE_RECORD"); ?>
 					</h5>
 					<span class="sec-page-desc">
 						<?php echo $tr->translate("ATTENDENCE_PAGE_DESC"); ?>

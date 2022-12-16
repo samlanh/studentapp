@@ -232,13 +232,6 @@
 				});
 			}
 			
-		  <?php if($module=="home" AND $controller=="index" AND $action=="index"){ ?>
-			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
-			 $(".slider3").slider({
-					height: 200,
-				});
-			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
-		  <?php } ?>
 		 </script>
 	
 
@@ -259,23 +252,10 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 			<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
-			<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
-			
-			  $(".carousel-fullscreen.carousel-slider").carousel({
-					fullWidth: true,
-					indicators: false,
-					
-				}).css("height", 300);
-		
-			
-			  setTimeout(autoplay, 3500);
-			  function autoplay() {
-				  $(".carousel-fullscreen.carousel-slider").carousel("next");
-				  setTimeout(autoplay, 3500);
-			  }
-
-			 
-		  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END --> 
+			$(".carousel-content.carousel-slider").carousel({
+				fullWidth: true,
+				indicators: true
+			  }).css("height", 200);
 		  <?php } ?>
 		   
 			  
