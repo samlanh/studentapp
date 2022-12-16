@@ -114,16 +114,19 @@ a.languageSwitch img.languageSwitch:hover {
     line-height: 28px;
 }
 .boxDashboard .setting-box h6 {
-    margin: 0px;
+        margin: 0px;
     color: #ffffff;
     font-size: 12px;
-    font-weight: 600;
-	white-space: nowrap;
+    font-weight: normal;
+    white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
+    font-family:'open sans condensed','Battambang Bold';
 }
 
 .boxDashboard .setting-box .icon-block {
     margin-bottom: 0;
+	    width: 100%;
 }
 
 .boxDashboard .setting-box .icon-block.circular i {
@@ -247,6 +250,8 @@ strong.mark-title {
     font-size: inherit;
     line-height: inherit;
     color: #000000;
+	font-weight:200;
+	font-family:'open sans condensed','Battambang Bold';
 }
 .bg-primary {
     background: #0a4374 !important;
@@ -371,7 +376,9 @@ h5.sec-page-tit {
     font-size: 28px;
     line-height: 24px;
     margin: 0;
-	    margin-bottom: 20px;
+	margin-bottom: 20px;
+	font-weight:200;
+	font-family:'open sans condensed','Battambang Bold';
 }
 span.sec-page-desc {
     color: #fff;
@@ -421,6 +428,7 @@ START SCORE LIST VIEW
 }
 .score-list-info h5.sec-tit {
     color: #002240;
+	font-family:'open sans condensed','Battambang Bold';
 }
 .score-list-info h5.sec-tit a.view-all {
     font-size: 11px;
@@ -477,6 +485,8 @@ START SCORE LIST VIEW
     line-height: 45px;
     margin: 0;
     padding: 0;
+	font-weight:200;
+	font-family:'open sans condensed','Battambang Bold';
 }
 .blg-score-right a.btn {
     font-size: 11px;
@@ -512,6 +522,8 @@ div.bl-score-list-row h3.title-empty.recordMessage {
 .home-list.score-list-info h3.title-score strong.mark-title, 
 .home-list.score-list-info span.score-info strong.mark-title {
     color: #0b253c;
+	font-weight:200;
+	font-family:'open sans condensed','Battambang Bold';
 }
 
 /*====================
@@ -1324,6 +1336,8 @@ span.menuBadge.badge:after {
     font-size: 16px;
     line-height: 20px;
     margin: 0;
+	font-weight:200;
+	font-family:'open sans condensed','Battambang Bold';
 }
 .top-bar-title small.mark-all-read {
     position: absolute;

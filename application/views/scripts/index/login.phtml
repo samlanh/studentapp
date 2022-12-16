@@ -14,6 +14,21 @@
 	$dbGb = new Application_Model_DbTable_DbGlobal();
 	$currentLang = $dbGb->currentlang();
 	$systemLink = $dbGb->systemLink();
+	
+	
+	
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	
+	
+	$defaultLogo = $this->baseUrl()."/images/logo.png";
+	if(!empty($dataInfo['logo'])){
+		$logo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		if ($dbGb->does_url_exists($logo)){
+			$defaultLogo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		}
+	}
+	
 ?>
 	<div class="login-bg access-login"></div>
 	<div class="container login-area">
@@ -21,7 +36,7 @@
 			<div class="row ">
                 <div class="col s12 pad-0">
 					<div class="spacer-xlarge"></div>
-					<div class="center"><img src="<?php echo $this->baseUrl();?>/images/logo/logo.png" height="100px" /></div>
+					<div class="center"><img src="<?php echo $defaultLogo;?>" height="100px" /></div>
 					<h5 class="bot-20 sec-tit center white-text"><?php echo $tr->translate("LOGIN_ACCOUNT");?></h5>
 					<form id="frmLogin" method="post" action="">
 						<div class="row">

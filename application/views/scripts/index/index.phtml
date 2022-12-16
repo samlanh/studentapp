@@ -99,29 +99,22 @@ $allLang = $this->allLang;
 </nav>
  <div class="col s12 pad-0">
 	<div class="index-carousel">
-	   <div class="carousel carousel-fullscreen carousel-slider">
+		<div class="carousel carousel-content carousel-slider center home-carousel">
 			<?php if(!empty($this->slide)) foreach($this->slide AS $key => $slide ){?>
-			<?php if(!empty($slide['images'])){ 
-					$slideImg = $systemLink.'/images/slide/'.$slide['images'];
-					if ($dbGb->does_url_exists($slideImg)){ 
-					 
-					?>
-			<div class="carousel-item" href="#one<?php echo $key; ?>">
-				<div class="bg" style="background-image: url('<?php echo $slideImg; ?>')">
-				</div>
-				<div class="item-content center-align white-text">
-					  <div class="spacer-xlarge"></div>
-					   <!--
-					   <h3>ZAK is multi purpose Mobile App</h3>
-					  <h5 class="light white-text">The best mobile app template ever.</h5>
-					   -->
+				<?php 	if(!empty($slide['images'])){ 
+							$slideImg = $systemLink.'/images/slide/'.$slide['images'];
+							if ($dbGb->does_url_exists($slideImg)){ 
+							 
+							?>
+			<div class="carousel-item primary-bg white-text" style="background-image: url('<?php echo $slideImg; ?>')" href="#<?php echo $key; ?>!">
+				<div class="item-content">
 				</div>
 			</div>
-			<?php }
-			} ?>
-			<?php } ?>
-			
-		</div>    
+			<?php 			}
+						} 
+				} 
+			?>
+		</div> 
 	</div> 
 </div> 
 <div class="container blog-tab-home">
@@ -301,7 +294,6 @@ $allLang = $this->allLang;
 		</div>
 	</div>
   </div>
-	  
 <script>
 $(".tabs").tabs();
 </script>
