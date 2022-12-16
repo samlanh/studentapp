@@ -1,6 +1,6 @@
  <?php
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle($tr->translate("PAYMENT"));
+	$this->headTitle($tr->translate("PAYMENT_HISTORY"));
 	echo $this->headTitle();
 	
 	$baseUrl = Application_Form_FrmMessage::getUrl("/");
@@ -62,7 +62,7 @@
 						</div>
 					</div>
 					<h5 class="sec-page-tit  ">
-						<?php echo $tr->translate("PAYMENT"); ?>
+						<?php echo $tr->translate("PAYMENT_HISTORY"); ?>
 					</h5>
 					<span class="sec-page-desc">
 						<?php echo $tr->translate("PAYMENT_PAGE_DESC"); ?>
