@@ -105,7 +105,7 @@ a.languageSwitch img.languageSwitch:hover {
 .boxDashboard .setting-box a {
     display: block;
     color: inherit;
-    padding: 15px;
+    padding: 5px 15px;
 }
 
 .boxDashboard .setting-box a i {

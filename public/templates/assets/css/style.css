@@ -4500,3 +4500,50 @@ body[data-site_mode="dark"] .preloader-background{
     background-position: 800px 0
   }
 }
+.iconscore{
+  background: url("../../../images/icon/score.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconschedule{
+  background: url("../../../images/icon/schedule.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconatt{
+  background: url("../../../images/icon/attendance.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.icondiscipline{
+  background: url("../../../images/icon/discipline.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconpayment{
+  background: url("../../../images/icon/payment.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconcourse{
+  background: url("../../../images/icon/elearning.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+
+.iconcalendar{
+  background: url("../../../images/icon/calendar.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconnews{
+  background: url("../../../images/icon/news.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+.iconabout{
+  background: url("../../../images/icon/about.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
+

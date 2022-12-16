@@ -79,7 +79,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		return $limited;
 	}
 	function systemLink(){
-		$systemLink = "http://192.168.0.103/camappgit/psst/public/";
+		$systemLink = "http://124.248.190.112:81/testschoolapi2023/public/";
 		$key = new Application_Model_DbTable_DbKeycode();
 		$dataInfo=$key->getCurrentKeyCodeMiniInv(TRUE);
 		if(!empty($dataInfo['systemLink'])){
