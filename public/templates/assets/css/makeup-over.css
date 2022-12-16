@@ -383,7 +383,11 @@ span.sec-page-desc {
     position: absolute;
     top: 0;
     right: 5px;
+	width: 100%;
+	text-align: right;
 }
+.page-icon .icon-img {margin-top: -30px;}
+.page-icon .icon-inc-img {background-position: right;height: 90px;opacity: 0.6;}
 
 .page-icon i {
     font-size: 98px;
@@ -1416,6 +1420,29 @@ small.mark-as-read i {
     line-height: inherit;
 }
 
+
+
+.bgBody-listview.gradientBluePrimary.program-page-title {
+    border-radius: 0 !important;
+}
+.program-page {
+    margin-top: -80px;
+    z-index: 11;
+    position: relative;
+    width: 100%;
+}
+
+.program-page .row .col.s12 {
+    padding: 0;
+}
+
+.row .col.s12 ul.tabs.tab-course a {
+    font-size: 18px;
+}
+
+.program-page .tab-content {
+    background: none;
+}
 
 
 .desktop__section nav.preLogin.topbar.navigation {
