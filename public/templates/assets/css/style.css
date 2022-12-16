@@ -1063,6 +1063,7 @@ body .noUi-target.noUi-vertical .noUi-tooltip{
 }
 .btn, .btn-large, .btn-small, .btn-floating{
   background-color: #0a4374;
+  font-family: inherit;
 }
 .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover,
 .btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
@@ -1075,6 +1076,7 @@ body .noUi-target.noUi-vertical .noUi-tooltip{
     line-height: 38px;
     font-size: 14px;
     padding: 0 14px;
+    font-family: inherit;
 }
 .btn-large i{
   font-size: 1.4rem;
