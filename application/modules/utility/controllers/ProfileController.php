@@ -37,6 +37,12 @@ class Utility_ProfileController extends Zend_Controller_Action
 		
     }
 	
+	public function changepasswordAction(){
+		if($this->getRequest()->isPost()){
+    		Application_Form_FrmMessage::redirectUrl("/home?message=succuess");	
+    	}
+	}
+	
 	
 }
 

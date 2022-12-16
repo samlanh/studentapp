@@ -601,8 +601,6 @@ START PAYMENT LIST VIEW
     font-size: 24px;
     line-height: 28px;
     color: #0f5374;
-    text-shadow: 1px 0px #727272;
-    font-weight: 600;
 }
 .blg-payment-left {border-right: dashed 2px #263238;}
 
@@ -611,9 +609,7 @@ h3.title-payment {
     margin: 0;
     font-size: 16px;
     line-height: 24px;
-    font-weight: 600;
     color: #0f5374;
-    text-shadow: 1px 0px #727272;
 }
 h3.title-payment sup {
     font-size: 60%;
