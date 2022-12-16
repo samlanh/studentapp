@@ -133,7 +133,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
 	  </a>	
 	<?php } ?> 
-	<?php if($module=="section" AND $controller!="schedule" ){ ?>  
+	<?php if($module=="section" AND $controller!="schedule" AND $controller!="course" ){ ?>  
 	<a href="#modalFilter" title="<?php echo $tr->translate("FILTER"); ?>" class="bgBtn waves-effect waves-circle navicon right modal-trigger show-on-large"><i class="mdi mdi-filter-outline"></i></a>
 	<?php } ?> 
     </div>

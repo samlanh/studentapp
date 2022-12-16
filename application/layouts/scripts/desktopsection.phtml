@@ -69,6 +69,12 @@ if($rsContactus['code']=="SUCCESS"){
 
 $contact['latitude'] = empty($contact['latitude'])?"11.594111046749918":$contact['latitude'];
 $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact['latitude'];
+$contact['facebook'] = empty($contact['facebook'])?"#":$contact['facebook'];
+$contact['youtube'] = empty($contact['youtube'])?"#":$contact['youtube'];
+$contact['website'] = empty($contact['website'])?"#":$contact['website'];
+$contact['email'] = empty($contact['email'])?"":$contact['email'];
+$contact['phone'] = empty($contact['phone'])?"":$contact['phone'];
+$contact['description'] = empty($contact['description'])?"":$contact['description'];
 
 ?>
 <div class="bgWhite-for-list "></div>
@@ -79,7 +85,7 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 	 
 
 	  <!-- Modal Structure -->
-      <div id="modalLanguage" class="modal bottom-sheet white dark-text">
+      <div id="modalLanguageDesk" class="modal bottom-sheet white dark-text">
         <div class="modal-content">
           <h4 class="text-center"><?php echo $tr->translate("CHOOSE_LANGUAGE"); ?></h4>
 			<div class="row ">
@@ -118,7 +124,7 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
 			</div>
         </div>
       </div>
-      <a href="#modalLanguage" class="languageSwitch waves-effect waves-circle navicon right modal-trigger show-on-large pulse">
+      <a href="#modalLanguageDesk" class="languageSwitch waves-effect waves-circle navicon right modal-trigger show-on-large pulse">
 		<?php ?>
 		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
 	  </a>
@@ -213,26 +219,6 @@ $contact['latitude'] = empty($contact['latitude'])?"104.88356770859102":$contact
       </div>
     </div>
 </footer>
-
- <!-- Modal Structure -->
-  <div id="modalHowtoUser" class="modal white dark-text">
-	<div class="modal-content">
-	  <h5 class="center bot-20 sec-tit sectionTitle"><?php echo $tr->translate("HOW_TO_USE"); ?></h5>
-		<div class="row ">
-			<?php $video_id = $this->introductionHome['lbl_howtouse']['title']; ?>
-			<div class="col s12 pad-0">
-				<div class="youTubeBlog" >
-					<iframe src="http://www.youtube.com/embed/<?php echo $video_id;?>?rel=0&amp;autoplay=1&mute=1&loop=1" frameborder="0" style="position:absolute;width:100%;height:100%;left:0"  allowfullscreen></iframe>
-				</div>
-			</div>
-			
-		</div>
-	</div>
-  </div>
-	  
-<script>
-$(".tabs").tabs();
-</script>
 
 	
 
