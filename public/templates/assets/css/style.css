@@ -4543,4 +4543,8 @@ body[data-site_mode="dark"] .preloader-background{
   background-size: contain;
   height:40px;
 }
-
+.iconpassword{
+  background: url("../../../images/icon/password.png") no-repeat center;
+  background-size: contain;
+  height:40px;
+}
