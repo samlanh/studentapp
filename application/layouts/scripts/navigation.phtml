@@ -9,7 +9,7 @@ $module=$request->getModuleName();
 $key = new Application_Model_DbTable_DbKeycode();
 $dataInfo=$key->getKeyCodeMiniInv(TRUE);
 
-$defaultLogo = $this->baseUrl()."/images/Logo/Logo.png";
+$defaultLogo = $this->baseUrl()."/images/Logo.png";
 if(!empty($dataInfo['logo'])){
 	if (file_exists(PUBLIC_PATH."/images/logo/".$dataInfo['logo'])){
 		$defaultLogo = $this->baseUrl().'/images/logo/'.$dataInfo['logo'];
