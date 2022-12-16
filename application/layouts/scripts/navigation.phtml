@@ -133,8 +133,8 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 		<img class="languageSwitch" src="<?php echo $imgLangeCurrent;?>" alt=""  />
 	  </a>	
 	<?php } ?> 
-	<?php if($module=="section" AND $controller!="schedule" AND $controller!="course" ){ ?>  
-	<a href="#modalFilter" title="<?php echo $tr->translate("FILTER"); ?>" class="bgBtn waves-effect waves-circle navicon right modal-trigger show-on-large"><i class="mdi mdi-filter-outline"></i></a>
+	<?php if($module=="section" AND $controller!="schedule" AND $controller!="course" AND $controller!="calendar" ){ ?>  
+		<a href="#modalFilter" title="<?php echo $tr->translate("FILTER"); ?>" class="bgBtn waves-effect waves-circle navicon right modal-trigger show-on-large"><i class="mdi mdi-filter-outline"></i></a>
 	<?php } ?> 
     </div>
   </nav>
@@ -165,7 +165,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
                     <div class=" waves-effect " >
                         <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/home"?>">
 							<i class="mdi mdi-home-outline"></i>
-							<span class="title"><?php echo $tr->translate("WELCOME"); ?></span>
+							<span class="title"><?php echo $tr->translate("HOME"); ?></span>
 						</a>
 					</div>
 				</li>
@@ -226,9 +226,9 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 					<div class="divider"></div>
 				</li>
 				<li class="lvl1 ">
-					<div class="waves-effect ">
+					<div class="waves-effect">
 						<a class="preloader-trigger" href="<?php echo $this->baseUrl()."/index/logout?value=1"?>" >
-							<i class="mdi mdi-settings-outline"></i><span class="title"><?php echo $tr->translate("LOGOUT"); ?></span>  
+							<i class="mdi mdi-power"></i><span class="title"><?php echo $tr->translate("LOGOUT"); ?></span>  
 						</a>
 					</div>
 				</li>
