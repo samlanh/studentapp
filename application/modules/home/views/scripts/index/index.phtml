@@ -199,6 +199,13 @@
 	
 </div>
 <?php } ?>
+
+<?php if(!empty($this->messageAlert)){?>
+	<div class="messageAlert">
+		<?php echo $this->messageAlert; ?>
+	</div>
+<?php } ?>
+
 <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START --> 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -208,7 +215,11 @@
         fullWidth: true,
         indicators: true
       }).css("height", 200);
-
+	<?php if(!empty($this->messageAlert)){?>
+		var htmlStringMsg = $( '.messageAlert' ).html();
+		var toastHTML = '<span>'+htmlStringMsg+'</span><button class="btn-flat toast-action" onclick="M.Toast.dismissAll(),resetForm();"><?php echo $tr->translate("CLEAR");?></button>';
+				M.toast({html: toastHTML});
+	<?php } ?>			
   });   
   <?php if(!empty($this->rowScore)){ ?>
 		
