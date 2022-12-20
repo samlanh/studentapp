@@ -1,0 +1,143 @@
+<?php
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage(1);
+	
+	$baseUrl = Application_Form_FrmMessage::getUrl("/");
+	
+	$key = new Application_Model_DbTable_DbKeycode();
+	$dataInfo=$key->getKeyCodeMiniInv(TRUE);
+		
+	
+	$title = $tr->translate("LOGIN_MORE_ACCOUNT");
+	$this->headTitle($title); 
+	echo $this->headTitle();
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	$currentLang = $dbGb->currentlang();
+	$systemLink = $dbGb->systemLink();
+	
+	
+	
+	
+	$dbGb = new Application_Model_DbTable_DbGlobal();
+	
+	
+	$defaultLogo = $this->baseUrl()."/images/logo.png";
+	if(!empty($dataInfo['logo'])){
+		$logo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		if ($dbGb->does_url_exists($logo)){
+			$defaultLogo = $systemLink.'/images/Logo/'.$dataInfo['logo'];
+		}
+	}
+	
+?>
+	<div class="login-bg access-login"></div>
+	<div class="container login-area">
+		<div class="section">
+			<div class="row ">
+                <div class="col s12 pad-0">
+					<div class="spacer-xlarge"></div>
+					<div class="center"><img src="<?php echo $defaultLogo;?>" height="100px" /></div>
+					<h5 class="bot-20 sec-tit center white-text"><?php echo $tr->translate("LOGIN_MORE_ACCOUNT");?></h5>
+					<form id="frmLogin" method="post" action="">
+						<div class="row">
+							<div class="input-field col s10 offset-s1">
+							  <input id="email3" type="text" class="validate" name="account"  >
+							  <label for="email3"><?php echo $tr->translate("STUDENT_CODE");?></label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s10 offset-s1">
+								<input id="pass3" type="password" class="validate" name="password" >
+								<label for="pass3"><?php echo $tr->translate("PASSWORD");?></label>
+							</div>
+						</div>
+
+						<div class="row center">
+							<div class="input-field col s10 offset-s1">
+							<button type="submit" class="full-width waves-effect waves-light btn-large bg-primary "><i class="mdi mdi-login"></i> <?php echo $tr->translate("LOGIN");?></button>
+							</div>
+							<div class="spacer"></div>
+							<div class="spacer"></div>
+							<div class="links">
+								<a href="<?php echo $this->baseUrl()."/index/"?>" class='waves-effect preloader-trigger'>
+									<i class="mdi mdi-backup-restore"></i> <?php echo $tr->translate("BACK_HOME");?>
+								</a>        
+							</div>
+							<div class="spacer"></div>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		
+		$(document).on('click', 'form button[type=submit]', function(e) {
+			var account = $('#email3').val();
+			var password = $('#pass3').val();
+			if(account==''){
+				displayActionToast(1);
+				return false;
+			}
+			if(password==''){
+				displayActionToast(2);
+				return false;
+			}
+			cheking = false;
+			urlValidate = '<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'validate'));?>';
+			$.ajax({
+				url: urlValidate,
+				type: "post",
+				data:{'account':account,'password':password},
+				success: function(data){
+					if(data==0){
+						displayActionToast(3);
+						 cheking = false;
+					}else{
+						$('.preloader-background').css("display","flex");
+						 $('#frmLogin').submit();
+					}
+				
+				},
+				error:function(err){
+					
+				}
+			});
+			
+			return false;
+		});
+		function displayActionToast(key){
+			M.Toast.dismissAll();
+			var message;
+			if(key==1){
+				message="<?php echo $tr->translate("Please Enter Student Code");?>";
+			}else if(key==2){
+				message="<?php echo $tr->translate("Please Enter Password");?>";
+			}else if(key==3){
+				message="<?php echo $tr->translate("Incorrect Student Code or Password");?>";
+			}
+             var toastHTML = '<span>'+message+'</span><button class="btn-flat toast-action" onclick="M.Toast.dismissAll(),resetForm();"><?php echo $tr->translate("CLEAR");?></button>';
+				M.toast({html: toastHTML});
+         }
+        function resetForm(){
+        	document.getElementById("frmLogin").reset();
+           }
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
