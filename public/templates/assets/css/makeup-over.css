@@ -1453,10 +1453,17 @@ small.mark-as-read i {
 .program-page .tab-content {
     background: none;
 }
-a.removing.red-text {
+a.removing {
     font-size: 11px;
     text-align: right;
     line-height: 18px;
+}
+a.collection-btn.btn i {
+    line-height: inherit;
+    font-size: inherit;
+}
+h5.bot-20.sec-tit i {
+    font-size: 120%;
 }
 
 .desktop__section nav.preLogin.topbar.navigation {
