@@ -34,6 +34,12 @@ class Home_IndexController extends Zend_Controller_Action
 		$dbScore = new Section_Model_DbTable_DbScore();
 		$row = $dbScore->getScoreLists($search);
 		$this->view->rowScore=$row;
+		
+		$message=$this->getRequest()->getParam("message");
+		if(!empty($message)){
+			$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+			$this->view->messageAlert = $tr->translate($message);
+		}
     }
 
    

@@ -534,6 +534,7 @@ body .primary-text{color: #0a4374;}
 body .accent-bg{ background-color: #26C6DA; }
 body .accent-bg-light{ background-color: rgba(38, 198, 218, 0.1); }
 body .accent-text{ color: #26C6DA; }
+body .red-text{ color: #f44336; }
 .dark-text {
     color: #2d2c2c !important;
 }

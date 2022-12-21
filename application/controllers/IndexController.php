@@ -88,6 +88,7 @@ class IndexController extends Zend_Controller_Action
 			setcookie(SYSTEM_SES.'stuID', null, -1, '/'); 
 			setcookie(SYSTEM_SES.'stuCode', null, -1, '/'); 
 			setcookie(SYSTEM_SES.'password', null, -1, '/'); 
+			setcookie(SYSTEM_SES.'arrayStudentList', null, -1, '/'); 
 			
 			Application_Form_FrmMessage::redirectUrl("/");
 			exit();
@@ -103,8 +104,6 @@ class IndexController extends Zend_Controller_Action
 		$zendRequest = new Zend_Controller_Request_Http();
 		$stuID = $zendRequest->getCookie(SYSTEM_SES.'stuID');
 		
-		//$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-    	//$stuID = $sessionStudent->stuID;
     	if (!empty($stuID)){
     		$this->_redirect("/home");
     	}
@@ -121,39 +120,20 @@ class IndexController extends Zend_Controller_Action
 			if($rs['code']=="SUCCESS"){
 				$studentRS = $rs['result'];
 				if(!empty($studentRS)){
-					$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-					$sessionStudent->stuID 		= $studentRS['id'];
-					$sessionStudent->stuCode	= $studentRS['stuCode'];
-					$sessionStudent->password	= $password;
-					$sessionStudent->lock();
 					
+					$arrayStudentList = array(
+						'keyStudent'.$studentRS['id'] => $studentRS
+					);
+					$jsonArrayStudentList = json_encode($arrayStudentList);
 					setcookie(SYSTEM_SES.'stuID', $studentRS['id'], time() + (86400 * 30), '/');// 86400 = 1 day
 					setcookie(SYSTEM_SES.'stuCode', $studentRS['stuCode'], time() + (86400 * 30), '/');
+					setcookie(SYSTEM_SES.'arrayStudentList', $jsonArrayStudentList, time() + (86400 * 30), '/');
 					
 					Application_Form_FrmMessage::redirectUrl("/home");	
 				}
 			}
 		
-			/**
-			$dbSt = new Application_Model_DbTable_DbStudentAuth();
-    		$studentRS = $dbSt->getStudentAuth($data);
-			$password = empty($data['password'])?"":$data['password'];
-			if(!empty($studentRS)){
-				
-				$sessionStudent=new Zend_Session_Namespace(SYSTEM_SES);
-				$sessionStudent->stuID 		= $studentRS['stu_id'];
-				$sessionStudent->stuCode	= $studentRS['stu_code'];
-				$sessionStudent->password	= $password;
-				$sessionStudent->lock();
-				
-				setcookie(SYSTEM_SES.'stuID', $studentRS['stu_id'], time() + (86400 * 30), '/');// 86400 = 1 day
-				setcookie(SYSTEM_SES.'stuCode', $studentRS['stu_code'], time() + (86400 * 30), '/');
-				setcookie(SYSTEM_SES.'password', $password, time() + (86400 * 30), '/');
-				
-				Application_Form_FrmMessage::redirectUrl("/home");	
-			}
 			
-			*/
     	}
 	}
 	
