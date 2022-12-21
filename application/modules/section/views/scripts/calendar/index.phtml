@@ -6,22 +6,31 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<?php echo $this->baseUrl();?>/templates/calendar/css/style.css">
 	<link rel="stylesheet" href="<?php echo $this->baseUrl();?>/templates/assets/css/style.css">
-	</head>
-	
-	<section class="ftco-section">
+	<style>
+	.collection{box-shadow:none !important;}
+	</style>
+	<div class="elegant-calencar d-md-flex">
+			<div class="wrap-header d-flex align-items-center img" style="background-image: url(<?php echo $this->baseUrl();?>/templates/calendar/images/bg.jpg);">
+		      <p id="reset">Today</p>
+	        <div id="header" class="p-0">
+            <div class="head-info">
+            	<div class="head-month"></div>
+                <div class="head-day"></div>
+            </div>
+	        </div>
+	      </div>
+	</div>
+	<section class="ftco-sections">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="elegant-calencar d-md-flex">
-						<div class="wrap-header d-flex align-items-center img" style="background-image: url(<?php echo $this->baseUrl();?>/templates/calendar/images/bg.jpg);">
-				      <p id="reset">Today</p>
 			        <div id="header" class="p-0">
 		            <div class="head-info">
 		            	<div class="head-month"></div>
 		                <div class="head-day"></div>
 		            </div>
 			        </div>
-			      </div>
 			      <div class="calendar-wrap">
 			      	<div class="w-100 button-wrap">
 				      	<div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
@@ -98,23 +107,30 @@
 			        </table>
 			      </div>
 			    </div>
-			    
-			   	 <div class="row ">
-			                <div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate('PUBLIC_HOLIDAY_CEREMONY')?></h5>            
-					    		<ul id="holidayList" class="collection invoice-item">
-					     		</ul>
-				    		</div>
-				    		
-			     	</div>
-			     	
 				</div>
 			</div>
-			
-			<a href="<?php echo $this->baseUrl()."/index/"?>" class='waves-effect preloader-trigger'>
-					<i class="mdi mdi-backup-restore"></i> <?php echo $tr->translate("BACK_HOME");?>
-				</a>      
+			<div class="col s12 pad-0"><h5 class="bot-20 sec-tit  "><?php echo $tr->translate('PUBLIC_HOLIDAY_CEREMONY')?></h5>  
+			<ul id="holidayList" class="collection invoice-item">
+	     		</ul>          
+    		</div>
 		</div>
 	</section>
+	<div class="col s12 center valign-wrapper" style="height: 100px;">
+		<div id="preLoadRecord" class="preloader-wrapper small ">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+			
 	<!-- Modal Structure -->
 <div id="modal-popup" class="modal bottom-sheet modal-popup-info">
 	<div class="modal-content content-info">
@@ -124,15 +140,13 @@
 </div>
 	<?php $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl(); ?>
 	<!--<script src="<?php echo $this->baseUrl();?>/templates/calendar/js/jquery.min.js"></script>
-	 <script src="<?php echo $this->baseUrl();?>/templates/calendar/js/bootstrap.min.js"></script> -->
+		<script src="<?php echo $this->baseUrl();?>/templates/calendar/js/bootstrap.min.js"></script> -->
     <script src="<?php echo $this->baseUrl();?>/templates/calendar/js/popper.js"></script>
-  
-  <script src="<?php echo $this->baseUrl();?>/templates/calendar/js/main.js"></script>
+   <script src="<?php echo $this->baseUrl();?>/templates/calendar/js/main.js"></script>
 
-	</body>
 	<script type="text/javascript">
-		
 		function getAllHoliday(month){
+			$("#preLoadRecord").addClass("active");
 			holidayList='';
 			$("#holidayList").empty();
 			if(month==0){
@@ -146,39 +160,26 @@
 					data: {
 						'url':'getholiday',
 						'mothHoliday':month,
-						'currentLang':'1',
+						'currentLang':'2',
 					},
 					dataType: "json",
 					success: function(data){
-						for(i=0;i<data.length;i++){
+						for(var i=0;i<data.length;i++){
 					    		holidayList+='<li class="collection-item avatar">';
-					    		holidayList+='<div class="item-det"><span class="title">'+data[i].holiday_name+'</span></div>';
-					    		holidayList+='<div class="secondary-content"><h6 class="top-0">'+data[i].holiday_day+'<br />'+data[i].holiday_string+'</h6></div>';
-					    		holidayList+='</div></li>';
-
-					    		/*<li class="collection-item avatar">
-					              <div class="item-det">
-					                  <span class="title">Wenasdf asdf asdfa sdf asdf asdf asdflkasdlkfjasdklfa s</span>
-					              </div>
-					                <div class="secondary-content">
-					                    <h6 class="top-0">Wed<br /> 01</h6>
-					                </div>
-					            </li>*/
-					            
+					    		holidayList+='<i class="mdi mdi-calendar circle red dark-2">Thu</i><span class="title">'+data[i].holiday_day+'-'+data[i].holiday_string+'</span>';
+					    		holidayList+='<p>'+data[i].holiday_name+'</p>';
+					    		holidayList+='</li>';
 						}
 						 $("#holidayList").append(holidayList);
-						
+						 setTimeout(function () {
+								$("#preLoadRecord").removeClass("active");
+							}, 50);
 					},
 					error: function(err) {
-						alert('err'+err);
-						console.log(err);
-						
+						setTimeout(function () {
+							$("#preLoadRecord").removeClass("active");
+						}, 50);
 					}
 				});
 		    }
-
-		</script>
-</html>
-
-
-
+</script>
