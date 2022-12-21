@@ -50,31 +50,31 @@
 			            </thead>
 			            <tbody>
 		                <tr>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                  <td data-label="value1"></td>
+		                </tr>
+		               <tr>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
 		                </tr>
 		                <tr>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                </tr>
-		                <tr>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
-		                  <td></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1"class="value1"></td>
+		                  <td  data-label="value1"class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
+		                  <td data-label="value1" class="value1"></td>
 		                </tr>
 		                <tr>
 		                  <td></td>
@@ -170,10 +170,12 @@
 					    		holidayList+='<p>'+data[i].holiday_name+'</p>';
 					    		holidayList+='</li>';
 						}
+						
 						 $("#holidayList").append(holidayList);
 						 setTimeout(function () {
 								$("#preLoadRecord").removeClass("active");
 							}, 50);
+						 return holidayList=19;
 					},
 					error: function(err) {
 						setTimeout(function () {
@@ -181,5 +183,6 @@
 						}, 50);
 					}
 				});
+		    	//var newOne = document.getElementById('setCustomer').innerHTML;
 		    }
 </script>
