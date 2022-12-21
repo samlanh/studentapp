@@ -139,7 +139,7 @@ $numberAcc = count($arrayStudentList);
 						</div>
 					<?php } ?>
 					<div class="collection-item text-center">
-						<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class=" ">
+						<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class="preloader-trigger  collection-btn waves-effect waves-light btn btn-rounded white-text ">
 						<i class="mdi mdi-account-multiple-plus"></i> <?php echo $tr->translate("ADD_MORE_ACCOUNT"); ?> 
 						</a>
 					</div>
@@ -165,7 +165,7 @@ if($module=="home" AND $controller=="index" AND $action=="index"){
 	<a href="#" data-target="slide-nav" class="bgBtn waves-effect waves-circle navicon sidenav-trigger show-on-large"><i class="mdi mdi-menu"></i></a>
 	';
 }
-if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
+if($module=="utility" AND $controller=="profile" AND ($action=="changepassword" OR $action=="loginmore") ){
 	$backButton="";
 }
 ?>	  
@@ -207,7 +207,7 @@ if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
 					<?php if($numberAcc >1){?>
 					<a href="#modalSwitchAcc" class="waves-effect modal-trigger btn-acc"><span class="email primary-text"><?php echo $tr->translate("SWITCH_STUDENT"); ?> <i class="mdi mdi-account-switch"></i></span></a>
 					<?php }else{?>
-					<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class="waves-effect modal-trigger btn-acc"><span class="email primary-text"><?php echo $tr->translate("ADD_MORE_ACCOUNT"); ?> <i class="mdi mdi-account-multiple-plus"></i></span></a>
+					<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class="preloader-trigger waves-effect modal-trigger btn-acc"><span class="email primary-text"><?php echo $tr->translate("ADD_MORE_ACCOUNT"); ?> <i class="mdi mdi-account-multiple-plus"></i></span></a>
 					<?php }?>
 				</div>
 			</div>
