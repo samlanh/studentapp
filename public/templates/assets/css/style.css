@@ -462,7 +462,7 @@ label{
 }
 .preloader-background{
   background-color: #fefefe;
-  background-image: linear-gradient(to bottom, #30cfd0a8 0%, #082d67c2 100%);
+  background-image: linear-gradient(to top, #30cfd0a8 0%, #1b5384 100%);
 }
 
 
