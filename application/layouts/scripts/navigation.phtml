@@ -52,10 +52,15 @@ if($rsStu['code']=="SUCCESS"){
 	}
 }
 		
-//$dbSt = new Application_Model_DbTable_DbStudentAuth();
-//$student = $dbSt->getStudentInfo();
 
 
+$zendRequest = new Zend_Controller_Request_Http();
+$arrayStudentList = $zendRequest->getCookie(SYSTEM_SES.'arrayStudentList');
+
+$arrayStudentList = stripslashes($arrayStudentList);
+$arrayStudentList = json_decode($arrayStudentList, true);
+
+$numberAcc = count($arrayStudentList);
 
 
 ?>
@@ -100,6 +105,52 @@ if($rsStu['code']=="SUCCESS"){
 			</div>
         </div>
       </div>
+	  
+	  <?php if($numberAcc >1){?>
+      <div id="modalSwitchAcc" class="modal bottom-sheet white dark-text">
+        <div class="modal-content">
+          <h4 class="text-center"><?php echo $tr->translate("SWITCH_STUDENT"); ?></h4>
+			<div class="row ">
+                <div class="col s1 pad-0">
+				</div>
+                <div class="col s10 pad-0">
+					<div class="collection langList">
+				  <?php 
+					if(!empty($arrayStudentList)) foreach($arrayStudentList AS $accountRow){ 
+						
+							
+						$accCurrent="";
+						if($userId==$accountRow['id']){
+							$removeAcc="";
+							$accCurrent = '<i class="mdi mdi-check-circle accent-text"></i>';
+						}else{
+							$removeAcc='
+							<a href="'.$this->baseUrl()."/utility/profile/removing?stuId=".$accountRow['id'].'" class="removing red-text right">
+							'.$tr->translate("REMOVE_ACCOUNT").' <i class="mdi mdi-account-remove red-text"></i>
+							</a>
+							';
+						}
+					  ?>
+						<div class="collection-item ">
+							<a href="<?php echo $this->baseUrl()."/utility/profile/switching?stuId=".$accountRow['id']; ?>" class="<?php echo $current;?>">
+							<?php echo $accountRow['stuCode']." ".$accCurrent; ?>
+							</a>
+							<?php echo $removeAcc; ?>
+						</div>
+					<?php } ?>
+					<div class="collection-item text-center">
+						<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class=" ">
+						<i class="mdi mdi-account-multiple-plus"></i> <?php echo $tr->translate("ADD_MORE_ACCOUNT"); ?> 
+						</a>
+					</div>
+				  </div>
+				</div>
+				<div class="col s1 pad-0">
+				</div>
+			</div>
+        </div>
+      </div>
+	 <?php } ?> 
 <?php 
 $homeNavClass="";
 $backButton='
@@ -153,6 +204,11 @@ if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
 				<div class="col s9 infoarea">
 					<a href="#name"><span class="name"><?php echo $studenName;?></span></a>
 					<a href="#email"><span class="email"><?php echo $stuCode;?></span></a>
+					<?php if($numberAcc >1){?>
+					<a href="#modalSwitchAcc" class="waves-effect modal-trigger btn-acc"><span class="email primary-text"><?php echo $tr->translate("SWITCH_STUDENT"); ?> <i class="mdi mdi-account-switch"></i></span></a>
+					<?php }else{?>
+					<a href="<?php echo $this->baseUrl()."/utility/profile/loginmore"; ?>" class="waves-effect modal-trigger btn-acc"><span class="email primary-text"><?php echo $tr->translate("ADD_MORE_ACCOUNT"); ?> <i class="mdi mdi-account-multiple-plus"></i></span></a>
+					<?php }?>
 				</div>
 			</div>
 		</li>
@@ -180,15 +236,6 @@ if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
 						</a>
 					</div>
 				</li>
-				
-				<li class="lvl1 ">
-                    <div class=" waves-effect " >
-                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/discipline"?>">
-							<i class="mdi mdi-library-books"></i>
-							<span class="title"><?php echo $tr->translate("DISCIPLINE_POLICY"); ?></span>
-						</a>
-					</div>
-				</li>
 				<li class="lvl1 ">
                     <div class=" waves-effect " >
                         <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/grading";?>">
@@ -197,6 +244,23 @@ if($module=="utility" AND $controller=="profile" AND $action=="changepassword"){
 						</a>
 					</div>
 				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/attendance"?>">
+							<i class="mdi mdi-account-multiple-check"></i>
+							<span class="title"><?php echo $tr->translate("ATTENDANCE_POLICY"); ?></span>
+						</a>
+					</div>
+				</li>
+				<li class="lvl1 ">
+                    <div class=" waves-effect " >
+                        <a class="preloader-trigger" href="<?php echo $this->baseUrl()."/utility/discipline"?>">
+							<i class="mdi mdi-library-books"></i>
+							<span class="title"><?php echo $tr->translate("DISCIPLINE_POLICY"); ?></span>
+						</a>
+					</div>
+				</li>
+				
 				
 				<li class="lvl1 ">
                     <div class=" waves-effect " >

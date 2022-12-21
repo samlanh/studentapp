@@ -1453,7 +1453,11 @@ small.mark-as-read i {
 .program-page .tab-content {
     background: none;
 }
-
+a.removing.red-text {
+    font-size: 11px;
+    text-align: right;
+    line-height: 18px;
+}
 
 .desktop__section nav.preLogin.topbar.navigation {
     background: none;
