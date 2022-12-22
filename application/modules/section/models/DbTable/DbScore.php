@@ -187,7 +187,10 @@
 			$amountStudent = $dbGb->getNumberInkhmer($amountStudent);
 		}
 		$stringHead='
-			<div class="modal-header ">
+			<div class="modal-header " >
+				<div class="expand-modal center" onClick="expanding(event)" >
+					<i class="mdi mdi-minus"></i>
+				</div>
 				<h5>'.$scoreInfo['forTypeTitle'].' '.$forMonthTitle.'</h5>
 				<span class="modal-info">'.$tr->translate("CLASS_NAME").' <strong class="mark-title">'.$scoreInfo['groupCode'].'</strong> '.$tr->translate("ACADEMIC_YEAR").' <strong class="mark-title">'.$academicYearTitle.'</strong></span>
 			</div>

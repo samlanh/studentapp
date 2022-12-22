@@ -222,6 +222,9 @@
 				
 		$stringHead='
 			<div class="modal-header ">
+				<div class="expand-modal center" onClick="expanding(event)" >
+					<i class="mdi mdi-minus"></i>
+				</div>
 				<h5>'.$rowInfo['receiptNo'].' '.$dayPMT."-".$monthPMT."-".$yearPMT.'</h5>
 				<span class="modal-info">'.$tr->translate("CLASS_NAME").' '.$rowInfo['groupCode'].' '.$tr->translate("ACADEMIC_YEAR").' '.$rowInfo['academicYear'].'</span>
 			</div>

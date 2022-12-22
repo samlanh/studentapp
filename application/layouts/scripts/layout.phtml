@@ -277,6 +277,18 @@
 			   
 			});
 			
+
+			function expanding(event) {
+			  if ($("#modal-popup").hasClass("drageTop")) {
+				  $(".modal.bottom-sheet.modal-popup-info").removeClass("drageTop");
+				   $('ul.collection.with-header.collection-popup-info').animate({'max-height': '45vi'});
+				   $('ul.collection.with-header.collection-popup-info').animate({'height': '45vi'});
+				}else{
+					$(".modal.bottom-sheet.modal-popup-info").addClass("drageTop");
+					 $('ul.collection.with-header.collection-popup-info').animate({'max-height': '100vi'});
+					 $('ul.collection.with-header.collection-popup-info').animate({'height': '100vi'});
+				}
+			}
 		</script>
 	</body>
 </html>	 
