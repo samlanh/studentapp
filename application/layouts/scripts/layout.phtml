@@ -147,6 +147,7 @@
 
     
     <body class=" bgBody  <?php if($module=="default"){ echo "ishome  isfullscreen  ";};?> html"  data-header="light" data-footer="dark"  data-header_align="center"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light" >
+		
 		<div class="preloader-background">
 			<div class="preloader-wrapper">
 				<div class="preloader-text-img-blg">
@@ -163,6 +164,17 @@
 			<?php echo $this->render('desktopsection.phtml');?>
 		</div>
 		<div class="mobile__section">
+			<div class="offline-background">
+				<div class="content-offline">
+					<div class="offline-icon">
+						<i class="mdi mdi-wifi-off"></i> 
+					</div>
+					<div class="offline-msg">
+						<h3><?php echo $tr->translate("NO_CONNECTION"); ?></h3>
+						<p><?php echo $tr->translate("PLEASE_CHECK_YOUR_INTERNET_CONNECTION"); ?></p>
+					</div>
+				</div>
+			</div>
 		<?php 
 			if($module!="default"){
 				echo $this->render('navigation.phtml');
@@ -209,12 +221,7 @@
 		<?php } ?>
 
 		</div>
-		<!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
-
-		
-
-
-		
+	
 		<script type="text/javascript">
 			var url_changelang = '<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'changelange'));?> ';
 			function changeLange(lang){
@@ -257,7 +264,11 @@
 				indicators: true
 			  }).css("height", 200);
 		  <?php } ?>
-		   
+		    if(navigator.onLine==false){
+			   $('.offline-background').css("display","block");
+			  }else{
+			   $('.offline-background').css("display","none");
+			}
 			  
 		  });  
 			document.addEventListener("DOMContentLoaded", function(){
