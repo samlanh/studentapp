@@ -219,7 +219,16 @@
 				</ul>
 			</div>
 		<?php } ?>
-
+		
+		<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
+		<div id="install">
+		  <button id="butInstall" type="button" class="waves-effect waves-light btn btn-rounded bg-darkyellow">
+			<?php echo $tr->translate("INSTALL_NOW"); ?>
+		  </button>
+		  <span><?php echo $tr->translate("PLEASE_CLICK_INSTALL_NOW"); ?></span> <span id="installAvailable">true</span>
+		</div>
+		<?php } ?>
+		
 		</div>
 	
 		<script type="text/javascript">
@@ -264,11 +273,16 @@
 				indicators: true
 			  }).css("height", 200);
 		  <?php } ?>
-		    if(navigator.onLine==false){
-			   $('.offline-background').css("display","block");
+		  
+		  setInterval(function(){ 
+			if(navigator.onLine==false){
+			   $('.offline-background').delay(10).fadeIn('slow');
 			  }else{
-			   $('.offline-background').css("display","none");
+			   $('.offline-background').delay(10).fadeOut('slow');
 			}
+		 }, 5000);
+	 
+		    
 			  
 		  });  
 			document.addEventListener("DOMContentLoaded", function(){
@@ -301,5 +315,8 @@
 				}
 			}
 		</script>
+		<?php if($module=="default" AND $controller=="index" AND $action=="index"){ ?>
+		<script src="<?php echo $baseUrl."templates/"; ?>assets/js/custom-install.js"></script>
+		<?php } ?>
 	</body>
 </html>	 
