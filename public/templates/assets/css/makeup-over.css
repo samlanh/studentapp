@@ -1477,6 +1477,25 @@ h5.bot-20.sec-tit i {
     margin: 0;
     padding: 0;
 }
+
+div#install {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #000000a8;
+    margin: 0;
+    padding: 30px 10px;
+    z-index: 99;
+	display:none;
+}
+div#install span {
+    color: #fff;
+	font-size:12px;
+	line-height:18px;
+}
+div#install span#installAvailable{
+	display:none;
+}
 .offline-background {
     position: fixed;
     z-index: 999;
@@ -1484,6 +1503,7 @@ h5.bot-20.sec-tit i {
     top: 0;
 	height: 100vh;
     background: #0000005c;
+	display:none;
 }
 
 .offline-background .content-offline {
