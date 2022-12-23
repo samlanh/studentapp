@@ -47,9 +47,12 @@
 						</div>
 
 						<div class="row">
-							<div class="input-field col s10 offset-s1">
+							<div id="show_hide_password" class="input-field col s10 offset-s1 showHidePassword">
 								<input id="pass3" type="password" class="validate" name="password" >
 								<label for="pass3"><?php echo $tr->translate("PASSWORD");?></label>
+								<div class="input-group-addon">
+									<a href=""><i class="mdi mdi-eye" ></i></a>
+								</div>
 							</div>
 						</div>
 
@@ -73,7 +76,18 @@
 		</div>
 	</div>
 	<script>
-		
+		$("#show_hide_password a").on('click', function(event) {
+			event.preventDefault();
+			if($('#show_hide_password input#pass3').attr("type") == "text"){
+				$('#show_hide_password input#pass3').attr('type', 'password');
+				$('#show_hide_password i').addClass( "mdi-eye-off" );
+				$('#show_hide_password i').removeClass( "mdi-eye" );
+			}else if($('#show_hide_password input#pass3').attr("type") == "password"){
+				$('#show_hide_password input#pass3').attr('type', 'text');
+				$('#show_hide_password i').removeClass( "mdi-eye-off" );
+				$('#show_hide_password i').addClass( "mdi-eye" );
+			}
+		});
 		$(document).on('click', 'form button[type=submit]', function(e) {
 			var account = $('#email3').val();
 			var password = $('#pass3').val();
