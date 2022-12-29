@@ -1430,6 +1430,28 @@ small.mark-as-read i {
     line-height: inherit;
 }
 
+div.showHidePassword {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+}
+.input-group-addon {
+    padding: 10px 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #ffff;
+    text-align: center;
+    background:inherit;
+    position:absolute;
+    right:20px;
+    z-index:10;
+}
+
+.input-group-addon a {
+    color: inherit;
+}
 
 
 .bgBody-listview.gradientBluePrimary.program-page-title {
